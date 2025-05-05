@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ritwickdey.liveserver",
+        "streetsidesoftware.code-spell-checker",
+        "mhutchie.git-graph",
+        "github.vscode-pull-request-github",
+        "levertion.mcjson",
+        "minecraftcommands.syntax-mcfunction",
+        "spgoding.datapack-language-server",
+        "redhat.vscode-xml"
+    ]
+}
