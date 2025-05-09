@@ -1,5 +1,5 @@
 @echo off
-cd /d "%~dp0website"
+cd /d "%~dp0docs"
 
 :: Check if Node.js is installed
 where node >nul 2>nul
