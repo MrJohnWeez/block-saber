@@ -1,0 +1,1 @@
+Place downloaded world here and run unzip batch script to automatically copy and unzip world to your Minecraft folder
