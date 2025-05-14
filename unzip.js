@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const AdmZip = require('adm-zip');
 
-const sourceDir = path.join(__dirname, 'Downloaded_Worlds');
+const sourceDir = path.join(__dirname, 'downloaded_worlds');
 const destDir = path.join(process.env.APPDATA, '.minecraft', 'saves');
 
 if (!fs.existsSync(destDir)) {

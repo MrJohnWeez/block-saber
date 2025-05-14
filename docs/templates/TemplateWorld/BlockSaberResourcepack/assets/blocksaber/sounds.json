@@ -1,0 +1,12 @@
+{
+    "end_sound": {
+        "category": "music",
+        "subtitle": "BlockSaber: Winner sound",
+        "sounds": [
+            {
+                "name": "custom/end_sound",
+                "preload": true
+            }
+        ]
+    }
+}

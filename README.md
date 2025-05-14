@@ -4,7 +4,9 @@
 
 1. Install [Nodejs](https://nodejs.org/en/)
 2. `node -v` and `npm -v` should print versions
-3. Double click start.bat
+3. Double click server.bat
+4. Use Blockbench to edit model files
+5. Use Gimp to edit texture files
 
 * Note that the website is under the docs folder due to github's limitations
 
