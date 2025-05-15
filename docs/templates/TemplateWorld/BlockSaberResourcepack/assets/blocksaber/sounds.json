@@ -4,7 +4,7 @@
         "subtitle": "BlockSaber: Winner sound",
         "sounds": [
             {
-                "name": "custom/end_sound",
+                "name": "blocksaber:custom/end_sound",
                 "preload": true
             }
         ]

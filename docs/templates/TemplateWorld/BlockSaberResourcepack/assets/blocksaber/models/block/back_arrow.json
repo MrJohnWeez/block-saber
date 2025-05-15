@@ -3,7 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "blocksaber:block/light",
-		"1": "blocksaber:block/bomb",
+		"1": "blocksaber:block/bomb_middle",
 		"particle": "blocksaber:block/light"
 	},
 	"elements": [

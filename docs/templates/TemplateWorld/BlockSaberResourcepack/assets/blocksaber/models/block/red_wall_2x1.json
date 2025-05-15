@@ -3,7 +3,8 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "blocksaber:block/red_box_2x1",
-		"2": "blocksaber:block/red_box_1x1"
+		"2": "blocksaber:block/red_box_1x1",
+		"particle": "blocksaber:block/red_box_1x1"
 	},
 	"elements": [
 		{

@@ -259,9 +259,6 @@
 			}
 		}
 	],
-	"overrides": [
-		{"model": "item/stick", "predicate": {"custom_model_data": 1}}
-	],
 	"display": {
 		"thirdperson_righthand": {
 			"translation": [0, -2, -2],
