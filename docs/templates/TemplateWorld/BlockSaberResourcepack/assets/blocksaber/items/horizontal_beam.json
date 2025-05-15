@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "blocksaber:block/horizontal_beam"
+    }
+}

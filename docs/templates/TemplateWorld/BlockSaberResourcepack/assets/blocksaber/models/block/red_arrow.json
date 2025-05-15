@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocksaber:block/blue_glow",
-		"1": "blocksaber:block/blue_side",
-		"2": "blocksaber:block/blue_center",
-		"3": "blocksaber:block/blue_front",
-		"particle": "blocksaber:block/blue_glow"
+		"0": "blocksaber:block/red_glow",
+		"1": "blocksaber:block/red_side",
+		"2": "blocksaber:block/red_center",
+		"3": "blocksaber:block/red_front",
+		"particle": "blocksaber:block/red_glow"
 	},
 	"elements": [
 		{
