@@ -1,1 +1,1 @@
-say tick!
+function block_saber:set_player_height
