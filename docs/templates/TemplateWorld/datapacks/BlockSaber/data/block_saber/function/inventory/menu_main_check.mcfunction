@@ -1,0 +1,1 @@
+execute unless predicate block_saber:actions/game_selection_action run function block_saber:inventory/menu_selection_set

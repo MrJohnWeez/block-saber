@@ -1,1 +1,0 @@
-item replace entity @s inventory.0 with minecraft:stick[custom_name=[{"text":"Main Menu","color":"red"}],item_name=[{"text":" ","italic":false}],enchantment_glint_override=true,unbreakable={},max_stack_size=1,item_model="blocksaber:blue_dot",custom_data={blocksaber:main_menu},tooltip_display={hidden_components:[can_break,can_place_on,enchantments,tooltip_display,unbreakable]}] 1

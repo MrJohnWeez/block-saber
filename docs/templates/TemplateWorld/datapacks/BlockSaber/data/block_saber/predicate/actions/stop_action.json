@@ -4,9 +4,10 @@
     "predicate": {
         "slots": {
             "inventory.*": {
-                "count": 1,
-                "components": {
-                    "minecraft:custom_data": "{blocksaber:main_menu}"
+                "predicates": {
+                    "minecraft:custom_data": {
+                        "action": "stop"
+                    }
                 }
             }
         }

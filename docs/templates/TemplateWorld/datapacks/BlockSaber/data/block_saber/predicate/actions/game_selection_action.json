@@ -4,7 +4,11 @@
     "predicate": {
         "slots": {
             "inventory.*": {
-                "items": "minecraft:air"
+                "predicates": {
+                    "minecraft:custom_data": {
+                        "action": "game_selection"
+                    }
+                }
             }
         }
     }
