@@ -1,0 +1,5 @@
+dist/
+node_modules/
+game/
+worlds/
+assets/

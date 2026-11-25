@@ -1,11 +1,15 @@
 {
-    "recommendations": [
-        "streetsidesoftware.code-spell-checker",
-        "mhutchie.git-graph",
-        "github.vscode-pull-request-github",
-        "levertion.mcjson",
-        "minecraftcommands.syntax-mcfunction",
-        "spgoding.datapack-language-server",
-        "redhat.vscode-xml"
-    ]
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "mhutchie.git-graph",
+    "github.vscode-pull-request-github",
+    "levertion.mcjson",
+    "minecraftcommands.syntax-mcfunction",
+    "spgoding.datapack-language-server",
+    "redhat.vscode-xml",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
+    "html-validate.vscode-html-validate"
+  ]
 }

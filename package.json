@@ -1,5 +1,47 @@
 {
-  "dependencies": {
-    "adm-zip": "^0.5.16"
+  "name": "block-saber",
+  "version": "1.0.0",
+  "description": "Block Saber: a Minecraft rhythm game, plus the website that converts Beatsaber maps into datapacks.",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "build:clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build:js": "esbuild src/main.ts --bundle --outfile=dist/main.js --format=esm --target=es2022 --minify",
+    "build:copy": "cpx \"public/**/*\" dist",
+    "build:css": "esbuild public/css/styles.css --minify --outfile=dist/css/styles.css",
+    "build:world": "node dev/zip-world.mjs",
+    "build": "npm run build:clean && npm run build:js && npm run build:copy && npm run build:css && npm run build:world",
+    "predev": "npm run build",
+    "dev:js": "esbuild src/main.ts --bundle --outfile=dist/main.js --format=esm --target=es2022 --watch",
+    "dev:copy": "cpx \"public/**/*\" dist --watch",
+    "dev:serve": "node dev/serve.mjs",
+    "dev:start": "wait-on http://127.0.0.1:5000 && node -e \"import('open').then(m => m.default('http://127.0.0.1:5000'))\"",
+    "dev": "concurrently --kill-others-on-fail \"npm:dev:js\" \"npm:dev:copy\" \"npm:dev:serve\" \"npm:dev:start\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:css": "stylelint \"public/**/*.css\"",
+    "lint:html": "html-validate \"public/**/*.html\"",
+    "unzip-world": "node dev/unzip-world.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "adm-zip": "^0.5.16",
+    "concurrently": "^9.2.1",
+    "cpx": "^1.5.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-comment-length": "^2.3.1",
+    "html-validate": "^10.12.2",
+    "open": "^11.0.0",
+    "prettier": "^3.8.3",
+    "stylelint": "^17.11.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3",
+    "wait-on": "^9.0.10"
   }
 }

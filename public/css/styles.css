@@ -1,0 +1,61 @@
+:root {
+  color-scheme: light dark;
+
+  --page-bg: light-dark(#f5f6f8, #16181d);
+  --page-text: light-dark(#1c1e21, #e9eaec);
+  --accent: light-dark(#0055d8, #6aa6ff);
+  --accent-soft: color-mix(in srgb, var(--accent) 15%, transparent);
+  --gutter: 24px;
+  --block-gap: 24px;
+  --radius: 8px;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--page-text);
+  display: grid;
+  font-family: system-ui, sans-serif;
+  gap: var(--block-gap);
+  margin: 0;
+  min-height: 100vh;
+  padding: var(--gutter);
+}
+
+main {
+  display: grid;
+  gap: var(--block-gap);
+  margin: 0 auto;
+  max-width: 720px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.drop-zone {
+  align-content: center;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  padding: 48px var(--gutter);
+  text-align: center;
+}
+
+.drop-zone p {
+  margin: 0;
+}
+
+.drop-zone.is-armed {
+  background: var(--accent-soft);
+}
+
+.file-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 0 0 20px;
+}

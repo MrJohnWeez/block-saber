@@ -1,0 +1,1 @@
+Place world zips you download here, then run `npm run unzip-world` from the repository root to extract them into your Minecraft `saves` folder (Windows uses `%APPDATA%\.minecraft`, other systems use `~/.minecraft`).
