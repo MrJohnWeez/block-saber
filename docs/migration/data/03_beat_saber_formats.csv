@@ -1,0 +1,4 @@
+format,what_happens_today,why
+v2,Converts,Matches the C# field names
+v3,Fails with 'no map data',"Note arrays parse as empty (colorNotes, bombNotes, obstacles use short keys)"
+v4,"Fails earlier, as an invalid beat map","Metadata moved into song/audio objects, flat difficultyBeatmaps array, separate Lightshow file"

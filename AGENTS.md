@@ -18,13 +18,17 @@ Block Saber: a Minecraft datapack rhythm game plus the website that converts Bea
 - `dev/serve.mjs` — static dev server for `dist/` on port 5000; rejects paths outside `dist/`, no hot reload.
 - `dev/zip-world.mjs` — zips `game/template-world/` into `dist/downloads/template-world.zip` during the build.
 - `dev/unzip-world.mjs` — installs world zips from `worlds/` into `%APPDATA%\.minecraft\saves` on Windows, `~/.minecraft/saves` elsewhere.
+- `dev/make-fixtures.mjs` — regenerates the synthetic Beat Saber test zips into `test-data/synthetic/` (git-ignored).
 - `game/template-world/` — the actual game: level data, `datapacks/BlockSaber/` (mcfunctions, predicates, structures) and `BlockSaberResourcepack/` (models, textures, sounds). Git LFS for the pngs and oggs.
+- `reference/unity-converter/` — frozen C# sources and 1.18.2 templates vendored from the old `Block_Saber_Generator` repo as the port reference for the TypeScript converter; read-only, excluded from lint and formatting.
+- `test-data/` — committed Beat Saber fixture zips in `maps/` (see its README for provenance), synthetic ones generated into `synthetic/`.
+- `docs/migration/` — the exported research packet (plan report + CSVs) behind the web migration; read-only reference.
 - `assets/` — GIMP `.xcf` texture sources and app icons; input to the game's assets, never deployed.
 - `dist/` — generated and git-ignored; never edit or commit it.
 
 ## Conventions
 
-- Prettier is the formatter: 2 spaces, single quotes, semicolons, 120 columns, LF endings, final newline. Never run `prettier --write` on files under `game/` or `assets/`.
+- Prettier is the formatter: 2 spaces, single quotes, semicolons, 120 columns, LF endings, final newline. Never run `prettier --write` on files under `game/`, `assets/`, `reference/`, `test-data/maps/`, or `docs/migration/`.
 - TypeScript is strict (`tsconfig.json`, DOM lib). Avoid `any`, give exported functions explicit return types and JSDoc.
 - Every comment is exactly one sentence. Comments wrap at 120 columns; `eslint-plugin-comment-length` rewraps them on `lint:fix`.
 - Constants never get comments; put the detail in the name instead.

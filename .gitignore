@@ -7,6 +7,9 @@ dist/
 # Downloaded Beatsaber map and world archives
 worlds/*.zip
 
+# Generated synthetic Beat Saber fixtures (node dev/make-fixtures.mjs)
+test-data/synthetic/*.zip
+
 # Logs and tool caches
 *.log
 .eslintcache

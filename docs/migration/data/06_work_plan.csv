@@ -1,0 +1,6 @@
+step,task,detail,status
+1,"Port the logic to TypeScript, still producing 1.18.2 packs",Fix random IDs and diff output against the Unity build for each map in UnitTestFiles/,Not started
+2,Add the v2/v3/v4 map parser,Also fix the six existing bugs,Not started
+3,Rewrite the templates for 26.3,"Play-test, especially hit detection",Not started
+4,Set max_format,"Keep at 121, or raise and re-test against 26.4",Not started
+5,Warn users about mixing versions,Old 1.18 and new song packs shouldn't share a world,Not started

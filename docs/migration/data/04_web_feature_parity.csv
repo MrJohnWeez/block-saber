@@ -1,0 +1,10 @@
+current_feature,web_version,parity
+Pick map zips in a file dialog,"<input type=""file"" multiple accept="".zip"">",Full
+Drag and drop (Windows-only today),Standard browser drag and drop,Better: every OS
+Unzip / zip (LightBuzz),fflate or JSZip,Full
+.egg -> .ogg,Same rename; no transcoding,Full
+Cover .jpg -> pack.png,Real conversion through a canvas,Better
+"Queue of 3 conversions, progress, cancel/delete",Web Worker pool with cancel support,Full
+Error messages,Same error enum,Full
+Choose and remember an output folder,File System Access API + IndexedDB handle; downloads elsewhere,Chromium only
+'Open output folder' button,Not possible in a browser,Lost

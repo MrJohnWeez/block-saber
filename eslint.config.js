@@ -5,7 +5,7 @@ import commentLength from 'eslint-plugin-comment-length';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'game/**', 'worlds/**', 'assets/**'],
+    ignores: ['dist/**', 'node_modules/**', 'game/**', 'worlds/**', 'assets/**', 'reference/**', 'test-data/**'],
   },
 
   js.configs.recommended,
@@ -18,6 +18,7 @@ export default [
       globals: {
         console: 'readonly',
         process: 'readonly',
+        Buffer: 'readonly',
       },
     },
   },

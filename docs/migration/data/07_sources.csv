@@ -1,0 +1,12 @@
+title,url
+Block_Saber_Generator repo,https://github.com/MrJohnWeez/Block_Saber_Generator
+Minecraft Java 26.3 release (Craftdex),https://craftdex.net/updates/wilderness-bound
+26.3 pack formats (Cybrancee),https://cybrancee.com/blog/minecraft-26-3-the-new-wilderness-bound/
+26.4 Snapshot 7 (Releasebot),https://releasebot.io/updates/minecraft
+pack.mcmeta min/max format,https://www.convertmcpack.net/pages/mcmeta_template.html
+1.21 folder rename (MC-274484),https://mojira.dev/MC-274484
+Items model definition,https://wiki.ronlab.site/content/minecraftwiki_en_all_maxi_2025-11/Item_model
+1.21.5 SNBT text components (MC-279229),https://mojira.dev/MC-279229
+1.21.5 click_event/hover_event (FAWE #3179),https://github.com/IntellectualSites/FastAsyncWorldEdit/issues/3179
+BSMG Info.dat format,https://bsmg.wiki/mapping/map-format/info.html
+bsmap TypeScript library,https://jsr.io/@kvl/bsmap/3.0.0/README.md

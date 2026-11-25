@@ -1,0 +1,11 @@
+change,since_version,where_it_hits_the_repo,occurrences,source
+pack.mcmeta needs min_format and max_format,1.21.9,Both template pack.mcmeta files,2 files,https://www.convertmcpack.net/pages/mcmeta_template.html
+"Folders renamed to singular (functions->function, tags/functions->tags/function, structures->structure)",1.21,Hardcoded in Globals.cs and the template tree,,https://mojira.dev/MC-274484
+"Item components replace item NBT (Count/tag, display.Name, HideFlags, CanPlaceOn, Enchantments)",1.20.5,"Note, wall, saber and menu item commands",Count:/tag:{} 39 times in 28 files,
+Item model definitions in assets/<ns>/items/ replace overrides,1.21.4,"stick, name_tag, spectral_arrow item models (notes, walls, sabers go invisible)",3 model files,https://wiki.ronlab.site/content/minecraftwiki_en_all_maxi_2025-11/Item_model
+ActiveEffects -> active_effects with string IDs,1.20.2,Every note's magma cube,19 files,
+ArmorItems -> equipment,1.21.5,Every note and wall armor stand,24 places,
+"Text components SNBT not JSON; clickEvent->click_event, hoverEvent->hover_event",1.21.5,"Menus, CustomName strings, _difficultyChat and _mainMenuBack templates","21 click/hover events, ~138 CustomName strings",https://mojira.dev/MC-279229; https://github.com/IntellectualSites/FastAsyncWorldEdit/issues/3179
+Sign NBT Text1 -> front_text.messages,1.20,Combo and multiplier displays,,
+Item checks via nbt={Item:{tag:{display:{Name:...}}}},1.20.5,Saber and menu item pickup,6 places,
+"Old GUI textures (icons.png, widgets.png) and unicode_page_20.png no longer used",1.20 / 1.20.2,Resource pack texture overrides (from memory; confirm in-game),3 files,

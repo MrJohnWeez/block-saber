@@ -1,0 +1,7 @@
+bug,detail,fix
+Covers aren't converted,"jpg->png step only renames, so pack.png is really a JPEG",Real image conversion
+Possible broken output on some locales,No InvariantCulture; comma decimals would break teleport commands,Locale-independent number formatting
+Characteristics collide,Files named by difficulty only (Standard Expert and Lawless Expert share expert.mcfunction),Include characteristic in names
+Timing ignores BPM changes and song time offset,Tempo-changing songs drift out of sync,Apply BPM events and offset
+Wall length is truncated,Obstacle _duration is an int; v2 uses fractional beats,Use a float
+Linux/macOS can't find info.dat,Case-sensitive lookup; v4 requires Info.dat,Case-insensitive file matching

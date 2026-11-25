@@ -1,0 +1,5 @@
+part,size,notes
+Unity app,"~3,300 lines of C# (Unity 2021.3)",Last updated April 2022
+Conversion logic,"~1,500 lines","DataPack.cs, ResourcePack.cs, ConvertZip.cs, MapLoader.cs and the map data classes"
+Platform glue,the rest,"File wrappers with retries, Windows drive-mapping workaround, native file picker, Windows-only drag-and-drop hook, UI; not needed in a browser"
+Minecraft templates,"83 .mcfunction files (1,445 lines) + TemplateStrings.json","Plus resource pack with item models, textures and sounds; targets 1.18.2 (data pack 9, resource pack 8)"
