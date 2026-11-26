@@ -239,7 +239,8 @@ and on `public/index.html`). There is no zero-touch alternative that survives th
 The converter's **tick table (M2 `tick-table.ts`) is authoritative**: it already applies BPM-change segments and the
 song time offset (`_timeOffset` / `customData.offset`, B4) and emits integer game ticks. Emitter rules:
 
-- `gameTick(n) = floor(20 × secondsSinceSongStart(n))` — computed per note/wall/event from the normalized model.
+- `gameTick(n) = round(20 × secondsSinceSongStart(n))` — nearest integer, computed per note/wall/event from the
+  normalized model (`tick-table.ts` uses `Math.round`; floor would bias every event up to one tick early).
 - Note speed constant (port of `DataPackData.cs`): `metersPerTick = bpm/60 × 24 × 0.21 / 20`; lead distance
   `LEAD_M = clamp(bpm/6, 7, 20) m`; `LEAD_TICKS = trunc(LEAD_M / metersPerTick)` (per difficulty; BPM of the first
   segment). The spawn origin marker is placed `LEAD_TICKS × metersPerTick` meters in front of `game_origin`
@@ -255,7 +256,7 @@ Worked example (BPM change, so the engine author can spot-check sync):
 
 ```text
 BPM 120 beat 0 → BPM 150 at beat 16; offset 0.0
-seconds(beat 20) = 16 × 60/120 + 4 × 60/150 = 8 + 1.6 = 9.6 s → gameTick = floor(192) = 192
+seconds(beat 20) = 16 × 60/120 + 4 × 60/150 = 8 + 1.6 = 9.6 s → gameTick = round(192) = 192
 LEAD_M = clamp(120/6,7,20) = 20 m; metersPerTick = 120/60 × 24 × 0.21/20 = 0.504 → LEAD_TICKS = 39
 → playsound gated at curr_tick 39. Note spawns at curr_tick 192, reaches player at tick 231
   = 39 + 192 → (231−39)/20 = 9.6 s after audio start = beat 20 under the changed-BPM clock. ✓
@@ -264,20 +265,23 @@ LEAD_M = clamp(120/6,7,20) = 20 m; metersPerTick = 120/60 × 24 × 0.21/20 = 0.5
 ### 3.2 Per-difficulty dispatcher — `<token>_play.mcfunction`
 
 Emitted first in every group; runs as the playing player from `game_loop` every tick. It is the port of the old
-`<difficulty>.mcfunction` (`_baseCommand` batching). Example for `expert_standard` (2 note levels, 1 wall, 1 light,
-last command at game tick 9377):
+`<difficulty>.mcfunction` (`_baseCommand` batching). Example for `expert_standard` (2 note levels, 1 wall, 1 light;
+last note command at tick 7939, last wall command at 9377, last light command at 7103; `LEAD_TICKS = 39`):
 
 ```mcfunction
 execute if score @s curr_tick matches 39 run playsound bsong_443f3a1b music @a 0.0 0.0 0.0 1 1
 execute if score @s curr_tick matches 0..3927 run function bs_443f3a1b:expert_standard_notes_lvl_1
-execute if score @s curr_tick matches 3928..7939 run function bs_443f3a1b:expert_standard_notes_lvl_2
-execute if score @s curr_tick matches 0..7939 run function bs_443f3a1b:expert_standard_walls_lvl_1
-execute if score @s curr_tick matches 0..7939 if score #CONST bs_lightshow matches 1 run function bs_443f3a1b:expert_standard_lights_lvl_1
+execute if score @s curr_tick matches 3928..7979 run function bs_443f3a1b:expert_standard_notes_lvl_2
+execute if score @s curr_tick matches 0..9417 run function bs_443f3a1b:expert_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..7143 if score #CONST bs_lightshow matches 1 run function bs_443f3a1b:expert_standard_lights_lvl_1
 ```
 
-Range boundaries are inclusive `[minTick, maxTick]` of the level file's actual commands + lead; level files self-gate
-per command, so boundaries only guard function-call cost. `#CONST bs_lightshow` (0/1, engine-owned, settings-toggled —
-port of `LightShowEnabled`) gates light files so disabled lightshows cost one score test, not thousands.
+Gates are **contiguous per stream**: first file `0..b1`, each next file `b(n−1)+1..bn`, and the **last file of each
+stream ends at that stream's `doneTick`** (§3.7 = stream's last command tick + `LEAD_TICKS` + 1), because the
+stream's done flag lives in its last file as a self-gated command at `doneTick`. Boundaries are inclusive and only
+guard function-call cost — level files self-gate every command. `#CONST bs_lightshow` (0/1, engine-owned,
+settings-toggled — port of `LightShowEnabled`) gates light files so disabled lightshows cost one score test, not
+thousands.
 
 ### 3.3 Notes — `<token>_notes_lvl_<n>.mcfunction`
 
@@ -332,14 +336,18 @@ Wall-shape mapping (port of `ObstacleDataToCommands`; `tall` = "must duck/stretc
 
 | width (note lanes) | v2 `_type` | v3/v4 `{w,h}` | emitted pieces (in order)                                                                       | y offset                          |
 | ------------------ | ---------- | ------------- | ----------------------------------------------------------------------------------------------- | --------------------------------- |
-| 1                  | 0 tall     | `w:1, h≥3`    | `walls/wall_1x1` at `x=0.3×x0`                                                                  | `y=0.300000`                      |
-| 1                  | 1 short    | `w:1, h<3`    | `walls/wall_1x3` at `x=0.3×x0`                                                                  | `y=0.600000`                      |
+| 1                  | 0 tall     | tall (below)  | `walls/wall_1x1` at `x=0.3×x0`                                                                  | `y=0.300000`                      |
+| 1                  | 1 short    | short (below) | `walls/wall_1x3` at `x=0.3×x0`                                                                  | `y=0.600000`                      |
 | 2                  | any        | `w:2`         | `walls/wall_2x1` at `x=0.3×x0`                                                                  | tall `0.300000`, short `0.600000` |
 | 3                  | any        | `w:3`         | `walls/wall_2x1` at `x=0.3×x0` + `walls/wall_1x1` at `x=0.3×(x0+2)` (tall) / `wall_1x3` (short) | as above                          |
 | 4                  | any        | `w:4`         | `walls/wall_2x1` at `x=0.3×x0` + `walls/wall_2x1` at `x=0.3×(x0+2)`                             | as above                          |
 | ≥5 / unknown       | any        | `w≥5`         | clamp to the `w:4` rule                                                                         | as above                          |
 
-`h`/`_type` decide tall-vs-short as shown (the old `isHeightTall = _type == 0`); the two `y` constants are the exact
+Tall-vs-short on the normalized model (replacing the old `isHeightTall = _type == 0`, which cannot see bsmap's
+normalized `{y,h}`): **`tall ⇔ y ≤ 1 && h ≥ 3`**, verified against bsmap's v2 mapping (`_type:0 → {y:0,h:5}`,
+`_type:1 → {y:2,h:3}`) so v2 full-height walls stay tall, crouch walls stay short, genuine v3/v4 crouch walls float
+(`y ≥ 2`) and pass-through walls (`h ≤ 1`) fall to the short rule (known v1 approximation — the old tool never saw
+either). The two `y` constants are the exact
 port of old `0.6 − 0.3×isHeightTall` relative to `bs_node_origin`. Which model geometry (`wall_1x1` = 1-block-high box,
 `wall_1x3` = 3-blocks-high box, per the RP models) intersects a player at scale 1 / 1.5 (jump key) / 0.5 (sneak) is
 engine M4c's hit-check logic — the song pack guarantees only the table above.
@@ -371,10 +379,30 @@ Light event mapping — **DECISION (D6)** (which source events drive which fixtu
 | `side_lasers_left` / `side_lasers_right` | 10 / 11         | v4 tinted `laserLeft/Right` second channel — not modeled in v1 | v4 gradient/easing metadata ignored; first color only                       |
 | (dropped)                                | 8, 9            | v3/v4 `white` laser arrays (v3.4+)                             | unused in BS itself / no fixture                                            |
 
-Event **values** (port of `EventDataToCommands`): `0`→off; `1,2`→on + color(blue if the mapped array/group is the
-blue side else red per table); `3` **flash** → on at tick `T` + converter-emitted explicit off at `T+40`; `4`→off;
-`5..11` → on red (v2 blue/red value split collapses to the mapped color). `bs_light_color` gets the mapped 16/24,
-`0` when off. Auto-off bookkeeping stays fully in the emitted commands (engine is stateless here).
+Event **values** (port of `EventDataToCommands`) run through ONE v2-semantics decoder — `0`→off; `1,2`→on + color
+(blue if the mapped array/group is the blue side else red per table); `3` **flash** → on at tick `T` +
+converter-emitted explicit off at `T+40`; `4`→off; `5..11` → on (the value split collapses to the mapped color) —
+but formats other than v2 must first be **normalized into that semantics by the converter**, because raw v3/v4
+fields do not carry v2 type/value meanings. Normalization (amendment 2026-11-25, from M3):
+
+- **v2:** `type`/`value` used as-is (the group table and decoder above).
+- **v3:** the typed arrays (`colorLeft`, `colorRight`, `laserLeft`, `laserRight`, `specialLeft`, `specialRight`)
+  map to groups per the D6 table; each event's color index is decoded by the same v2 value table (BSID value
+  semantics unchanged).
+- **v4:** lightshow **simple event arrays** are read directly — `colorLeft`/`colorRight`/`specialLeft`/
+  `specialRight` inside `lightColorEventBoxGroups` and `simpleLaserEvents` inside `lightRotationEventBoxGroups` —
+  never bsmap's synthesized `basicEvents`, whose `type`/`value` fields carry v4 enum values and light indices, not
+  v2 semantics. The referenced `lightColorEvents[i].t` (v4 `LightshowType`) decodes as: On variants
+  (`0,2,6,10,16,17`) → on; Fade/Boost variants (`5,9,13,14`) → on; Flash variants (`4,8,12`) → flash; Off
+  variants (`1,3,7,11`) → off; `15` (Warmup) and unknown → skipped. Laser side comes from the rotation group's
+  `indexFilter`: ids `0–11` → `rotating_left`, `12–23` → `rotating_right`, missing/covering both → emit to both.
+  Color is never taken from `t` — it comes from the source array side (D6 table), same as v3.
+- **v1 exclusions** (skipped, logged): Chroma/`customData`, v4 event **boxes** (gradients, easing, frequency,
+  dyes/rotations), `indexFilter` subset semantics (a filtered group is treated as the whole group), v4 `white*`
+  laser arrays (D6).
+
+`bs_light_color` gets the mapped 16/24, `0` when off. Auto-off bookkeeping stays fully in the emitted commands
+(engine is stateless here).
 
 ### 3.6 Bombs
 
@@ -533,7 +561,7 @@ vanilla SNBT, which is locale-free — this section is purely a converter-side b
 | D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED           | as §2.1                                                                                                                                                                                                   | approved 2026-11-25                |
 | D4  | Audio category `music`, `stream:true`                        | LOCKED           | as §5                                                                                                                                                                                                     | approved 2026-11-25                |
 | D5  | Arcs skipped; chains → dots                                  | LOCKED           | as §3.3                                                                                                                                                                                                   | approved 2026-11-25                |
-| D6  | v3/v4 → light group mapping + skips                          | LOCKED           | as §3.5 table                                                                                                                                                                                             | approved 2026-11-25                |
+| D6  | v3/v4 → light group mapping + skips                          | LOCKED (amended) | as §3.5 table + per-format value normalization amendment (2026-11-25, M3): v4 simple arrays + `LightshowType` decode, never bsmap `basicEvents`                                                           | approved with amendment 2026-11-25 |
 | D7  | v4 white notes                                               | LOCKED (amended) | **dedicated white note**: `block_saber:notes/white_*` engine functions + white item model/texture in the base resource pack, judged hittable by **either** saber (engine M4b; emitter never picks a side) | approved with amendment 2026-11-25 |
 | D8  | Pause = stop-only in v1; `_pause`/`_resume` hooks optional   | LOCKED           | §3.7                                                                                                                                                                                                      | approved 2026-11-25                |
 | D9  | Menu song order unsorted in v1                               | LOCKED           | §2.3, sort later                                                                                                                                                                                          | approved 2026-11-25                |
