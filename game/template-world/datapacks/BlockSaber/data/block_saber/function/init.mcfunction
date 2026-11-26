@@ -37,6 +37,10 @@ scoreboard objectives add bs_note_health dummy
 scoreboard objectives add bs_row dummy
 scoreboard objectives add bs_temp dummy
 scoreboard objectives add bs_movespeed dummy
+
+# Wall engine (bs_wall_hit = once-per-piece overlap flag, replaces the old per-tick HealthPoints drain; bs_wall_temp = eye/band scratch)
+scoreboard objectives add bs_wall_hit dummy
+scoreboard objectives add bs_wall_temp dummy
 scoreboard players set #bs_row bs_row 0
 scoreboard players set #bs_mpt bs_movespeed 0
 scoreboard players set #bs_lead_m bs_movespeed 0

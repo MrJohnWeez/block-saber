@@ -11,6 +11,8 @@ scoreboard objectives remove bs_note_health
 scoreboard objectives remove bs_row
 scoreboard objectives remove bs_temp
 scoreboard objectives remove bs_movespeed
+scoreboard objectives remove bs_wall_hit
+scoreboard objectives remove bs_wall_temp
 scoreboard objectives remove song_contract
 scoreboard objectives remove bs_finished
 scoreboard objectives remove bs_light_on
