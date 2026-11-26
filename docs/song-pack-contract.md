@@ -389,17 +389,26 @@ fields do not carry v2 type/value meanings. Normalization (amendment 2026-11-25,
 - **v3:** the typed arrays (`colorLeft`, `colorRight`, `laserLeft`, `laserRight`, `specialLeft`, `specialRight`)
   map to groups per the D6 table; each event's color index is decoded by the same v2 value table (BSID value
   semantics unchanged).
-- **v4:** lightshow **simple event arrays** are read directly — `colorLeft`/`colorRight`/`specialLeft`/
-  `specialRight` inside `lightColorEventBoxGroups` and `simpleLaserEvents` inside `lightRotationEventBoxGroups` —
-  never bsmap's synthesized `basicEvents`, whose `type`/`value` fields carry v4 enum values and light indices, not
-  v2 semantics. The referenced `lightColorEvents[i].t` (v4 `LightshowType`) decodes as: On variants
-  (`0,2,6,10,16,17`) → on; Fade/Boost variants (`5,9,13,14`) → on; Flash variants (`4,8,12`) → flash; Off
-  variants (`1,3,7,11`) → off; `15` (Warmup) and unknown → skipped. Laser side comes from the rotation group's
-  `indexFilter`: ids `0–11` → `rotating_left`, `12–23` → `rotating_right`, missing/covering both → emit to both.
-  Color is never taken from `t` — it comes from the source array side (D6 table), same as v3.
-- **v1 exclusions** (skipped, logged): Chroma/`customData`, v4 event **boxes** (gradients, easing, frequency,
-  dyes/rotations), `indexFilter` subset semantics (a filtered group is treated as the whole group), v4 `white*`
-  laser arrays (D6).
+- **v4:** the released 4.0.0 box-group layout (re-verified 2026-11-25 against the bsmg.wiki lightshow reference,
+  bsmap's v4 schema and a real BeatSaver lightshow — the first version of this amendment described a shape that
+  does not exist): read `eventBoxGroups` entries with `t === 1` (color) only. The group's `g` is the **standard
+  environment light id** and decides the D6 group: `0–11` → `rotating_left` (type 2), `12–23` → `rotating_right`
+  (3), `24–43` → `center` (4), `44–47` → `side_lasers_left` (10), `48–51` → `side_lasers_right` (11), `52–63` →
+  `boost` (5), `64–87` → `rings` (1); `88–131` (white laser/light ids, D6) and `≥ 132` (`ALL` pseudo-ids) are
+  skipped. Timing is `group.b + box.l[].b` (group beat + per-event beat offset) referencing
+  `lightColorEvents[i]`, whose fields are `{p: transition 0|1-extend, e: easing, c: color 0-primary/1-secondary/
+2-white, b: brightness, f: strobe frequency, sb, sf}`: `p === 1` (Extend — preserves the previous state) →
+  skip; `b <= 0` → off; `f > 0` (strobe) → flash; otherwise on. Color is never taken from `c` — it comes from the
+  mapped group side (D6 table), same as v3.
+  **Calibration flag (M6):** the light-id ranges above 23 are community-documented standard-environment values;
+  no fixture exercises them (the real fixture's color groups are all `g ∈ 5..21`, a laser-only choreography).
+  Verify on a ring/boost-heavy v4 lightshow at the M6 playtest and correct the table in
+  `src/converter/v4-lights.ts` if the game disagrees.
+- **v1 exclusions** (skipped): Chroma/`customData`; event-box distribution/easing/strobe detail (`w/d/s/t` and
+  `sb`/`sf` — every event renders as a discrete on/off/flash at its own beat); `indexFilters` subset semantics
+  (filters are emission patterns over a group's lights, not light selectors; every event applies to the whole
+  mapped group); the `c` color channel (per-event primary/secondary/white — side color comes from the D6 group);
+  rotation/translation/FX box groups (`t ∈ {2,3,4}`); white light ids (88–131); `basicEventTypesWithKeywords`.
 
 `bs_light_color` gets the mapped 16/24, `0` when off. Auto-off bookkeeping stays fully in the emitted commands
 (engine is stateless here).
@@ -554,19 +563,19 @@ vanilla SNBT, which is locale-free — this section is purely a converter-side b
 
 ## 8. Decisions register (owner-reviewed 2026-11-25)
 
-| #   | Topic                                                        | Status           | Decision                                                                                                                                                                                                  | Owner sign-off                     |
-| --- | ------------------------------------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| D1  | Slug algorithm                                               | LOCKED           | sha1(BeatSaver key ∨ Info-hash) → 8 hex → `bs_<slug>`, grow on collision                                                                                                                                  | approved 2026-11-25                |
-| D2  | Registration = manual `/function bs_<slug>:install` + marker | LOCKED           | as §2 (only tag-merge-safe mechanism)                                                                                                                                                                     | approved 2026-11-25                |
-| D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED           | as §2.1                                                                                                                                                                                                   | approved 2026-11-25                |
-| D4  | Audio category `music`, `stream:true`                        | LOCKED           | as §5                                                                                                                                                                                                     | approved 2026-11-25                |
-| D5  | Arcs skipped; chains → dots                                  | LOCKED           | as §3.3                                                                                                                                                                                                   | approved 2026-11-25                |
-| D6  | v3/v4 → light group mapping + skips                          | LOCKED (amended) | as §3.5 table + per-format value normalization amendment (2026-11-25, M3): v4 simple arrays + `LightshowType` decode, never bsmap `basicEvents`                                                           | approved with amendment 2026-11-25 |
-| D7  | v4 white notes                                               | LOCKED (amended) | **dedicated white note**: `block_saber:notes/white_*` engine functions + white item model/texture in the base resource pack, judged hittable by **either** saber (engine M4b; emitter never picks a side) | approved with amendment 2026-11-25 |
-| D8  | Pause = stop-only in v1; `_pause`/`_resume` hooks optional   | LOCKED           | §3.7                                                                                                                                                                                                      | approved 2026-11-25                |
-| D9  | Menu song order unsorted in v1                               | LOCKED           | §2.3, sort later                                                                                                                                                                                          | approved 2026-11-25                |
-| D10 | Songs-RP `pack.png` = static logo                            | LOCKED           | §5                                                                                                                                                                                                        | approved 2026-11-25                |
-| D11 | `max_format: 121.99`                                         | PROPOSED         | hold until 26.4 stable (M6 re-raises at datapack 126.0)                                                                                                                                                   | deferred to M6                     |
-| D12 | Hit detection stays magma-cube (not `interaction`) in v1     | PROPOSED         | keeps the proven 1.18 mechanics under 26.3; the white-note either-saber judgment (§3.3) rides on top of it; revisit in M4b with playtest gate                                                             | deferred to M4b                    |
+| #   | Topic                                                        | Status           | Decision                                                                                                                                                                                                       | Owner sign-off                     |
+| --- | ------------------------------------------------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| D1  | Slug algorithm                                               | LOCKED           | sha1(BeatSaver key ∨ Info-hash) → 8 hex → `bs_<slug>`, grow on collision                                                                                                                                       | approved 2026-11-25                |
+| D2  | Registration = manual `/function bs_<slug>:install` + marker | LOCKED           | as §2 (only tag-merge-safe mechanism)                                                                                                                                                                          | approved 2026-11-25                |
+| D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED           | as §2.1                                                                                                                                                                                                        | approved 2026-11-25                |
+| D4  | Audio category `music`, `stream:true`                        | LOCKED           | as §5                                                                                                                                                                                                          | approved 2026-11-25                |
+| D5  | Arcs skipped; chains → dots                                  | LOCKED           | as §3.3                                                                                                                                                                                                        | approved 2026-11-25                |
+| D6  | v3/v4 → light group mapping + skips                          | LOCKED (amended) | as §3.5 table + per-format value normalization amendments (2026-11-25, M3; v4 half corrected same day vs bsmg.wiki + real lightshow: `eventBoxGroups`, `g` = standard-env light ids, ≥24 ranges M6-calibrated) | approved with amendment 2026-11-25 |
+| D7  | v4 white notes                                               | LOCKED (amended) | **dedicated white note**: `block_saber:notes/white_*` engine functions + white item model/texture in the base resource pack, judged hittable by **either** saber (engine M4b; emitter never picks a side)      | approved with amendment 2026-11-25 |
+| D8  | Pause = stop-only in v1; `_pause`/`_resume` hooks optional   | LOCKED           | §3.7                                                                                                                                                                                                           | approved 2026-11-25                |
+| D9  | Menu song order unsorted in v1                               | LOCKED           | §2.3, sort later                                                                                                                                                                                               | approved 2026-11-25                |
+| D10 | Songs-RP `pack.png` = static logo                            | LOCKED           | §5                                                                                                                                                                                                             | approved 2026-11-25                |
+| D11 | `max_format: 121.99`                                         | PROPOSED         | hold until 26.4 stable (M6 re-raises at datapack 126.0)                                                                                                                                                        | deferred to M6                     |
+| D12 | Hit detection stays magma-cube (not `interaction`) in v1     | PROPOSED         | keeps the proven 1.18 mechanics under 26.3; the white-note either-saber judgment (§3.3) rides on top of it; revisit in M4b with playtest gate                                                                  | deferred to M4b                    |
 
 Everything else in this document is locked; changes require editing this file and bumping `BS_API_VERSION`.
