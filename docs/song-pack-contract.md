@@ -276,7 +276,8 @@ port of `LightShowEnabled`) gates light files so disabled lightshows cost one sc
 
 ### 3.3 Notes — `<token>_notes_lvl_<n>.mcfunction`
 
-Port of the old `TickCount` batching + cursor: every note = exactly 3 commands (old `NodeDataToCommands` count), no
+Port of the old `TickCount` batching + cursor: every note = exactly 2 commands (teleport + dispatch; the third
+command of the old `NodeDataToCommands` was a row-id score command, now moved engine-side), no
 score command (row id handling moves engine-side). Real example lines:
 
 ```mcfunction
@@ -397,7 +398,7 @@ emitter does **not** ship them.
 
 ### 3.8 Command budget & file splitting
 
-- Count: 3/note, 2/wall-segment, 2/light-event — same accounting as `DataPack.cs`.
+- Count: 2/note, 2/wall-segment-piece, 2/light-event (old `DataPack.cs` accounting minus the engine-side row-id score command).
 - A level file holds ≤ `COMMAND_LIMIT = 10000` counted commands; a file is never split mid-note/wall/light (the
   whole event's commands move to the next file).
 - Numbering `lvl_1, lvl_2, …` is per stream, ordered by tick; the dispatcher emits one range-gated call per level

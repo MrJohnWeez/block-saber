@@ -19,6 +19,8 @@
     "dev:start": "wait-on http://127.0.0.1:5000 && node -e \"import('open').then(m => m.default('http://127.0.0.1:5000'))\"",
     "dev": "concurrently --kill-others-on-fail \"npm:dev:js\" \"npm:dev:copy\" \"npm:dev:serve\" \"npm:dev:start\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:build": "esbuild tests/*.test.ts --bundle --outdir=.tmp-tests --format=esm --platform=node --target=node22",
+    "test": "npm run test:build && node --test .tmp-tests/*.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint \"public/**/*.css\"",
@@ -43,5 +45,9 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.3",
     "wait-on": "^9.0.10"
+  },
+  "dependencies": {
+    "bsmap": "^3.1.4",
+    "fflate": "^0.8.3"
   }
 }

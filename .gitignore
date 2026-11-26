@@ -15,6 +15,9 @@ test-data/synthetic/*.zip
 .eslintcache
 .stylelintcache
 
+# Bundled test output (npm run test)
+.tmp-tests/
+
 # Editor and OS junk
 .DS_Store
 Thumbs.db
