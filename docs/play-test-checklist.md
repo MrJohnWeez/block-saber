@@ -7,9 +7,10 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 ## M4a — note spawn + movement (no judgment yet)
 
 - [ ] `/function block_saber:init` runs clean (no red chat, no errors in F3 logs); `uninstall` then `init` twice is idempotent.
+- [ ] Note-cube summon keys audited against the 26.3 entity format (2026-11-25): `Team`, `NoGravity`, `Silent`, `NoAI`, `DeathLootTable`, `DeathTime`, `PersistenceRequired`, `Size` are still PascalCase; only `active_effects`/`equipment`/`fall_distance`/`drop_chances` were renamed — do not "modernize" the others. Watch first spawn for silent team/size failures.
 - [ ] Install a converted `syn-v2-basic` song pack: `/reload`, `/function bs_<slug>:install`, chat shows the green install line; one song marker visible via `/data get entity @e[tag=bs_song,limit=1] bs`.
 - [ ] Start the song from the inventory menu: music starts at the expected tick; notes spawn from the origin line and travel toward the player in the correct lanes/heights.
-- [ ] Cut direction models visible and distinct for up/down/left/right/diagonal/dot, red vs blue; white note (syn-v4-basic) renders with the white model.
+- [ ] Cut direction models visible and distinct for up/down/left/right/diagonal/dot, red vs blue; white note (syn-v4-basic) renders with the white model. Visuals are billboard-centered display entities rolled by `transformation` quaternions (entity `Rotation` is ignored under billboard); if directions read mirrored (up/right swapped etc.), negate the third quaternion component in all 24 directional `function/notes/*.mcfunction` display lines; if they're off by a fixed 45°, rotate the angle table. Arrow glyph lives on the model's north face — if arrows render with a blank side toward the player, flip faces by composing each quaternion with a 180° roll about the view axis (`[0.0f,0.0f,1.0f,0.0f]`).
 - [ ] Notes reach the player plane in sync with a metronome-plain section (head-check on first 8 notes).
 - [ ] Notes despawn behind the player without lag spikes or stray particles; `/kill @e[tag=blocksaber,tag=!bs_song]` during play does not error the loop.
 

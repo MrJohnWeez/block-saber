@@ -1,3 +1,3 @@
 # Bomb note, no row stamping (port of _types:bomb)
 execute at @s run summon minecraft:magma_cube ~ ~ ~ {Tags:["bs_note_bomb","bs_note","bs_node","blocksaber"],Team:"team_no_collide",NoGravity:1b,Silent:1b,NoAI:1b,DeathLootTable:"minecraft:air",DeathTime:19s,PersistenceRequired:1b,Size:0,active_effects:[{id:"minecraft:invisibility",duration:99999999,amplifier:0b,show_icon:false,show_particles:false}]}
-execute at @s run summon minecraft:display ~ ~ ~ {Tags:["bs_note_visual","bs_node","blocksaber"],item_stack:{id:"minecraft:stick",count:1,components:{"minecraft:item_model":"blocksaber:bomb"}},item_display:"fixed",block_light:15,sky_light:15,Rotation:[0.0f,180.0f,0.0f]}
+execute at @s run summon minecraft:display ~ ~ ~ {Tags:["bs_note_visual","bs_node","blocksaber"],item_stack:{id:"minecraft:stick",count:1,components:{"minecraft:item_model":"blocksaber:bomb"}},item_display:"fixed",block_light:15,sky_light:15,billboard:"center"}
