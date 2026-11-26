@@ -1,6 +1,7 @@
 # Song Pack Contract — converter ↔ in-game engine interface (Minecraft 26.3)
 
-**Status: M1 draft for owner review.** This document is the complete interface between the browser converter's emitted
+**Status: LOCKED contract v1 (`BS_API_VERSION = 1`) — owner-reviewed 2026-11-25; D1–D10 approved (D7 amended: dedicated
+white note), D11/D12 deferred to M6/M4b.** This document is the interface between the browser converter's emitted
 per-map datapacks ("song packs") and the shared `block_saber` datapack engine in `game/template-world`. Two engineers
 implementing (a) the converter emitter and (b) the in-game engine from this file alone should never need to talk to each
 other. Every change to the interface happens here first. Research background: [`docs/migration/`](migration/) (MD report +
@@ -292,16 +293,17 @@ Cursor offsets relative to `bs_node_origin` (engine places the origin centered o
 
 Node-type dispatch table (port of `Globals.noteTypes`; engine **defines** these, song packs **only call** them):
 
-| BS color × cut                                  | engine function                                                 |     | BS color × cut | engine function               |
-| ----------------------------------------------- | --------------------------------------------------------------- | --- | -------------- | ----------------------------- |
-| red up / down / left / right                    | `block_saber:notes/red_up` `_down` `_left` `_right`             |     | blue ×same 4   | `block_saber:notes/blue_up` … |
-| red up-left / up-right / down-left / down-right | `…/red_up_left` `red_up_right` `red_down_left` `red_down_right` |     | blue ×same 4   | `…/blue_*`                    |
-| red dot                                         | `block_saber:notes/red_dot`                                     |     | blue dot       | `block_saber:notes/blue_dot`  |
-| bomb (any direction field)                      | `block_saber:notes/bomb` (single)                               |     |                |                               |
+| BS color × cut                                  | engine function                                                                                                                                                                                                                              |     | BS color × cut | engine function               |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- | -------------- | ----------------------------- |
+| red up / down / left / right                    | `block_saber:notes/red_up` `_down` `_left` `_right`                                                                                                                                                                                          |     | blue ×same 4   | `block_saber:notes/blue_up` … |
+| red up-left / up-right / down-left / down-right | `…/red_up_left` `red_up_right` `red_down_left` `red_down_right`                                                                                                                                                                              |     | blue ×same 4   | `…/blue_*`                    |
+| red dot                                         | `block_saber:notes/red_dot`                                                                                                                                                                                                                  |     | blue dot       | `block_saber:notes/blue_dot`  |
+| white ×same 9 (v4 color 2)                      | `block_saber:notes/white_up` … `white_dot` — **DECISION (D7, owner-approved)**: dedicated white note entity + item model/texture in the base resource pack, judged hittable by **either** saber (engine M4b; the emitter never picks a side) |     |                |                               |
+| bomb (any direction field)                      | `block_saber:notes/bomb` (single)                                                                                                                                                                                                            |     |                |                               |
 
 Format normalization (converter side): v2 `Type` 0→red, 1→blue, 3→bomb (`CutDirection` >8 or unknown → `dot`, unknown
 type → `red_dot`, mirroring old clamping); v3 `colorNotes[].c` 0→red (`ColorLeft`), 1→blue (`ColorRight`), plus
-`bombNotes`; v4 `colorNotesData[].c` 0→red, 1→blue, 2→white→**red** **DECISION (D7)**, type 3→bomb. **Arcs: skipped.
+`bombNotes`; v4 `colorNotesData[].c` 0→red, 1→blue, 2→white (see table), type 3→bomb. **Arcs: skipped.
 Chains (v3 `c` continuation, v4 chain bits): expanded to
 their constituent head-note as plain dots at the chain endpoint — DECISION (D5)** — a chain has no independent MC
 strum model, and dots
@@ -516,21 +518,21 @@ vanilla SNBT, which is locale-free — this section is purely a converter-side b
 
 ---
 
-## 8. Open decisions register
+## 8. Decisions register (owner-reviewed 2026-11-25)
 
-| #   | Topic                                                        | Status   | Recommendation                                                                | Needs owner sign-off |
-| --- | ------------------------------------------------------------ | -------- | ----------------------------------------------------------------------------- | -------------------- |
-| D1  | Slug algorithm                                               | DECISION | sha1(BeatSaver key ∨ Info-hash) → 8 hex → `bs_<slug>`, grow on collision      | yes                  |
-| D2  | Registration = manual `/function bs_<slug>:install` + marker | DECISION | as §2 (only tag-merge-safe mechanism)                                         | yes                  |
-| D3  | Marker fixed position `0 5 0` + prune pass                   | DECISION | as §2.1                                                                       | yes                  |
-| D4  | Audio category `music`, `stream:true`                        | DECISION | as §5                                                                         | yes                  |
-| D5  | Arcs skipped; chains → dots                                  | DECISION | as §3.3                                                                       | yes                  |
-| D6  | v3/v4 → light group mapping + skips                          | DECISION | as §3.5 table                                                                 | yes                  |
-| D7  | v4 white notes → red                                         | DECISION | §3.3                                                                          | yes                  |
-| D8  | Pause = stop-only in v1; `_pause`/`_resume` hooks optional   | DECISION | §3.7                                                                          | yes                  |
-| D9  | Menu song order unsorted in v1                               | DECISION | §2.3, sort later                                                              | yes                  |
-| D10 | Songs-RP `pack.png` = static logo                            | DECISION | §5                                                                            | yes                  |
-| D11 | `max_format: 121.99`                                         | PROPOSED | hold until 26.4 stable (M6 re-raises at datapack 126.0)                       | later (M6)           |
-| D12 | Hit detection stays magma-cube (not `interaction`) in v1     | PROPOSED | keeps the proven 1.18 mechanics under 26.3; revisit in M4b with playtest gate | later (M4b)          |
+| #   | Topic                                                        | Status           | Decision                                                                                                                                                                                                  | Owner sign-off                     |
+| --- | ------------------------------------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| D1  | Slug algorithm                                               | LOCKED           | sha1(BeatSaver key ∨ Info-hash) → 8 hex → `bs_<slug>`, grow on collision                                                                                                                                  | approved 2026-11-25                |
+| D2  | Registration = manual `/function bs_<slug>:install` + marker | LOCKED           | as §2 (only tag-merge-safe mechanism)                                                                                                                                                                     | approved 2026-11-25                |
+| D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED           | as §2.1                                                                                                                                                                                                   | approved 2026-11-25                |
+| D4  | Audio category `music`, `stream:true`                        | LOCKED           | as §5                                                                                                                                                                                                     | approved 2026-11-25                |
+| D5  | Arcs skipped; chains → dots                                  | LOCKED           | as §3.3                                                                                                                                                                                                   | approved 2026-11-25                |
+| D6  | v3/v4 → light group mapping + skips                          | LOCKED           | as §3.5 table                                                                                                                                                                                             | approved 2026-11-25                |
+| D7  | v4 white notes                                               | LOCKED (amended) | **dedicated white note**: `block_saber:notes/white_*` engine functions + white item model/texture in the base resource pack, judged hittable by **either** saber (engine M4b; emitter never picks a side) | approved with amendment 2026-11-25 |
+| D8  | Pause = stop-only in v1; `_pause`/`_resume` hooks optional   | LOCKED           | §3.7                                                                                                                                                                                                      | approved 2026-11-25                |
+| D9  | Menu song order unsorted in v1                               | LOCKED           | §2.3, sort later                                                                                                                                                                                          | approved 2026-11-25                |
+| D10 | Songs-RP `pack.png` = static logo                            | LOCKED           | §5                                                                                                                                                                                                        | approved 2026-11-25                |
+| D11 | `max_format: 121.99`                                         | PROPOSED         | hold until 26.4 stable (M6 re-raises at datapack 126.0)                                                                                                                                                   | deferred to M6                     |
+| D12 | Hit detection stays magma-cube (not `interaction`) in v1     | PROPOSED         | keeps the proven 1.18 mechanics under 26.3; the white-note either-saber judgment (§3.3) rides on top of it; revisit in M4b with playtest gate                                                             | deferred to M4b                    |
 
 Everything else in this document is locked; changes require editing this file and bumping `BS_API_VERSION`.
