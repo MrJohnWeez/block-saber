@@ -1,0 +1,145 @@
+## entries
+text   README-install.txt
+text   data/bs_b58b8d06/function/expert_standard_lights_lvl_1.mcfunction
+text   data/bs_b58b8d06/function/expert_standard_notes_lvl_1.mcfunction
+text   data/bs_b58b8d06/function/expert_standard_play.mcfunction
+text   data/bs_b58b8d06/function/expert_standard_walls_lvl_1.mcfunction
+text   data/bs_b58b8d06/function/install.mcfunction
+text   data/bs_b58b8d06/function/probe.mcfunction
+text   data/bs_b58b8d06/function/uninstall.mcfunction
+text   pack.mcmeta
+bin    pack.png
+
+## README-install.txt (full)
+Block Saber song pack — Synthetic v3 walls (make-fixtures)
+Namespace: bs_b58b8d06 — song contract 1 — 1 difficulty entries
+
+1. Keep this file's .zip intact and drop it into your world's datapacks folder:
+   .minecraft/saves/<world>/datapacks/
+2. The world must also run the BlockSaber base datapack (game/template-world) — song packs are data only.
+3. Start Minecraft 26.3+ (data pack format 121), load the world, then run /reload.
+4. Register the song by running this command in chat:
+
+   /function bs_b58b8d06:install
+
+5. Audio lives in the cumulative "Block Saber Songs" resource pack, not here. Put that zip into
+   .minecraft/resourcepacks/ and enable it in Video Settings -> Resource Packs.
+
+To uninstall: run /function bs_b58b8d06:uninstall, then delete this zip from datapacks/.
+
+## data/bs_b58b8d06/function/expert_standard_lights_lvl_1.mcfunction (first 60 of 5 lines)
+execute if score @s curr_tick matches 855 run scoreboard players set #rings bs_light_on 1
+execute if score @s curr_tick matches 855 run scoreboard players set #rings bs_light_color 24
+execute if score @s curr_tick matches 935 run scoreboard players set #rings bs_light_on 0
+execute if score @s curr_tick matches 935 run scoreboard players set #rings bs_light_color 0
+execute if score @s curr_tick matches 975 run scoreboard players set #bs_lights bs_finished 1
+
+
+## data/bs_b58b8d06/function/expert_standard_notes_lvl_1.mcfunction (first 60 of 9 lines)
+execute if score @s curr_tick matches 875 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~0.000000
+execute if score @s curr_tick matches 875 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_dot
+execute if score @s curr_tick matches 895 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.000000 ~0.000000
+execute if score @s curr_tick matches 895 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 915 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~0.000000
+execute if score @s curr_tick matches 915 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 935 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.000000 ~0.000000
+execute if score @s curr_tick matches 935 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/bomb
+execute if score @s curr_tick matches 975 run scoreboard players set #bs_notes bs_finished 1
+
+
+## data/bs_b58b8d06/function/expert_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 39 run playsound bsong_b58b8d06 music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..975 run function bs_b58b8d06:expert_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..867 run function bs_b58b8d06:expert_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..975 if score #CONST bs_lightshow matches 1 run function bs_b58b8d06:expert_standard_lights_lvl_1
+
+## data/bs_b58b8d06/function/expert_standard_walls_lvl_1.mcfunction (first 60 of 247 lines)
+execute if score @s curr_tick matches 595 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.000000
+execute if score @s curr_tick matches 595 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 595 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.210000
+execute if score @s curr_tick matches 595 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 595 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.420000
+execute if score @s curr_tick matches 595 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 596 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.126000
+execute if score @s curr_tick matches 596 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 596 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.336000
+execute if score @s curr_tick matches 596 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 597 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.042000
+execute if score @s curr_tick matches 597 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 615 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~0.000000
+execute if score @s curr_tick matches 615 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 615 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~-0.210000
+execute if score @s curr_tick matches 615 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 615 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~-0.420000
+execute if score @s curr_tick matches 615 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 616 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~-0.126000
+execute if score @s curr_tick matches 616 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 616 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~-0.336000
+execute if score @s curr_tick matches 616 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 617 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.600000 ~-0.042000
+execute if score @s curr_tick matches 617 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x3
+execute if score @s curr_tick matches 635 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~0.000000
+execute if score @s curr_tick matches 635 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 635 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.210000
+execute if score @s curr_tick matches 635 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 635 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.420000
+execute if score @s curr_tick matches 635 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 636 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.126000
+execute if score @s curr_tick matches 636 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 636 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.336000
+execute if score @s curr_tick matches 636 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 637 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.042000
+execute if score @s curr_tick matches 637 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 655 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.000000
+execute if score @s curr_tick matches 655 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 655 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.210000
+execute if score @s curr_tick matches 655 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 655 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.420000
+execute if score @s curr_tick matches 655 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 656 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.126000
+execute if score @s curr_tick matches 656 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 656 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.336000
+execute if score @s curr_tick matches 656 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 657 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.042000
+execute if score @s curr_tick matches 657 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 675 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~0.000000
+execute if score @s curr_tick matches 675 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 675 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~-0.210000
+execute if score @s curr_tick matches 675 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 675 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~-0.420000
+execute if score @s curr_tick matches 675 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 676 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~-0.126000
+execute if score @s curr_tick matches 676 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 676 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~-0.336000
+execute if score @s curr_tick matches 676 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 677 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.600000 ~-0.042000
+execute if score @s curr_tick matches 677 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+
+## data/bs_b58b8d06/function/install.mcfunction (full)
+# bs_b58b8d06 — Synthetic v3 walls (make-fixtures) — Block Saber song contract 1
+execute unless score #CONST song_contract matches 1 run tellraw @s {text:"[BlockSaber] Install the base BlockSaber datapack first.",color:"red"}
+execute unless score #CONST song_contract matches 1 run return 0
+execute unless function block_saber:notes/red_dot run tellraw @s {text:"[BlockSaber] Base engine too old (missing block_saber:notes).",color:"red"}
+execute unless function block_saber:notes/red_dot run return 0
+function bs_b58b8d06:uninstall
+summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_b58b8d06","blocksaber"],bs:{slug:"b58b8d06",contract:1,sound:"bsong_b58b8d06",title:"Synthetic v3 walls",artist:"make-fixtures",level:"Standard Expert",diffs:[{id:"expert_standard",diff:"Expert",char:"Standard",notes:4,end_tick:975,mpt_millionths:504000,lead_m:20}]}}
+scoreboard players set #b58b8d06_expert_standard bs_complete 0
+tellraw @s [{text:"[BlockSaber] ",color:"green"},{text:"Synthetic v3 walls installed (1 difficulties).",color:"white"}]
+
+## data/bs_b58b8d06/function/probe.mcfunction (full)
+# bs_b58b8d06 — Synthetic v3 walls (make-fixtures) — probe file; its existence marks this song installed (contract §2.4).
+
+## data/bs_b58b8d06/function/uninstall.mcfunction (full)
+# bs_b58b8d06 — removes the song marker and completion entries installed by bs_b58b8d06:install.
+kill @e[tag=bs_b58b8d06]
+scoreboard players reset #b58b8d06_expert_standard bs_complete
+
+## pack.mcmeta (full)
+{
+  "pack": {
+    "pack_format": 121.0,
+    "min_format": 121.0,
+    "max_format": 121.99,
+    "description": "Block Saber song: Synthetic v3 walls by make-fixtures [bs_b58b8d06 / song contract 1]"
+  }
+}

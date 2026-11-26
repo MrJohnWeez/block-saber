@@ -16,6 +16,7 @@ const SNAPSHOT_FIXTURES = [
   'synthetic/syn-v2-basic.zip',
   'synthetic/syn-v3-basic.zip',
   'synthetic/syn-v3-bpm.zip',
+  'synthetic/syn-v3-walls.zip',
   'synthetic/syn-v3-two-characteristics.zip',
   'synthetic/syn-v4-basic.zip',
   'synthetic/syn-info-lowercase.zip',
@@ -38,6 +39,46 @@ function textOf(pack: EmittedDataPack, suffix: string): string {
 
 function lineCount(text: string, needle: string): number {
   return text.split('\n').filter((line) => line.includes(needle)).length;
+}
+
+interface WallPiece {
+  tick: number;
+  x: string;
+  y: string;
+  z: string;
+  fn: string;
+}
+
+function wallPieces(text: string): WallPiece[] {
+  const teleports = Array.from(
+    text.matchAll(
+      /matches (\d+) at @e\[type=marker,tag=bs_node_origin,limit=1\] run teleport @e\[type=marker,tag=bs_node_cursor,limit=1\] ~(-?\d+\.\d{6}) ~(-?\d+\.\d{6}) ~(-?\d+\.\d{6})/g,
+    ),
+  );
+  const dispatches = Array.from(
+    text.matchAll(
+      /matches (\d+) as @e\[type=marker,tag=bs_node_cursor,limit=1\] run function block_saber:walls\/(wall_\dx\d)/g,
+    ),
+  );
+  assert.equal(dispatches.length, teleports.length, 'every wall teleport carries exactly one dispatch');
+  for (const [index, teleport] of teleports.entries()) {
+    assert.equal(dispatches[index][1], teleport[1], 'dispatch shares its teleport tick');
+  }
+  return teleports.map((teleport, index) => ({
+    tick: Number(teleport[1]),
+    x: teleport[2],
+    y: teleport[3],
+    z: teleport[4],
+    fn: dispatches[index][2],
+  }));
+}
+
+function pieceLabel(piece: WallPiece): string {
+  return `${piece.fn} ~${piece.x} ~${piece.y}`;
+}
+
+function piecesAt(pieces: WallPiece[], tick: number): string[] {
+  return [...new Set(pieces.filter((piece) => piece.tick === tick).map(pieceLabel))];
 }
 
 function baseInfo(overrides: Partial<SongInfo> = {}): SongInfo {
@@ -234,6 +275,55 @@ test('fractional wall durations run the §3.4 segment loop', async () => {
   assert.match(walls, /matches 619 .* run function block_saber:walls\/wall_1x3/);
   assert.ok(walls.includes('block_saber:walls/wall_1x1'));
   assert.ok(walls.includes('block_saber:walls/wall_2x1'));
+});
+
+test('syn-v3-walls emits the full §3.4 band + width matrix including the short (crouch) band', async () => {
+  const { pack } = await emitFixture('synthetic/syn-v3-walls.zip');
+  const walls = textOf(pack, 'expert_standard_walls_lvl_1.mcfunction');
+  const expert = pack.difficulties.find((difficulty) => difficulty.token === 'expert_standard') as EmittedDifficulty;
+  assert.equal(expert.walls, 12);
+  const pieces = wallPieces(walls);
+  // Band classification: tall ⇔ y ≤ 1 && h ≥ 3 anchors at ~0.300000, everything else is short at ~0.600000.
+  assert.deepEqual(piecesAt(pieces, 595), ['wall_1x1 ~0.000000 ~0.300000']); // b60 full {y:0,h:5}
+  assert.deepEqual(piecesAt(pieces, 615), ['wall_1x3 ~0.300000 ~0.600000']); // b62 crouch {y:2,h:3} — the checklist gap
+  assert.deepEqual(piecesAt(pieces, 635), ['wall_1x1 ~0.300000 ~0.300000']); // b64 tall boundary {y:1,h:3}
+  assert.deepEqual(piecesAt(pieces, 675), ['wall_2x1 ~0.000000 ~0.600000']); // b68 crouch w2
+  assert.deepEqual(piecesAt(pieces, 775), ['wall_1x3 ~0.900000 ~0.600000']); // b78 floor strip {h:1} — collapses to short
+  assert.deepEqual(piecesAt(pieces, 795), ['wall_1x3 ~0.600000 ~0.600000']); // b80 {h:2} wall — collapses to short
+  // Width decomposition: 2 = one wall_2x1, 3 = 2x1 + 1x-tall/short at lane+2, 4 = two wall_2x1.
+  assert.deepEqual(piecesAt(pieces, 655), ['wall_2x1 ~0.000000 ~0.300000']); // b66 tall w2
+  assert.deepEqual(piecesAt(pieces, 695), ['wall_2x1 ~0.300000 ~0.300000', 'wall_1x1 ~0.900000 ~0.300000']); // b70 tall w3
+  assert.deepEqual(piecesAt(pieces, 715), ['wall_2x1 ~0.000000 ~0.600000', 'wall_1x3 ~0.600000 ~0.600000']); // b72 short w3
+  assert.deepEqual(piecesAt(pieces, 735), ['wall_2x1 ~0.000000 ~0.300000', 'wall_2x1 ~0.600000 ~0.300000']); // b74 w4
+  // Width ≥ 5 clamps to the w:4 rule: b76 w5 emits the exact piece/z pattern of b74 w4.
+  const pattern = (from: number) =>
+    pieces
+      .filter((piece) => piece.tick >= from && piece.tick <= from + 2)
+      .map((piece) => `${pieceLabel(piece)} ~${piece.z}`);
+  assert.deepEqual(pattern(755), pattern(735), 'w5 wall clamps to the w4 piece pattern');
+  // B5: segment count is trunc(duration x 24) with per-segment z fractions preserved, never integer-truncated duration.
+  assert.deepEqual(
+    pieces.filter((piece) => piece.tick >= 595 && piece.tick <= 597).map((piece) => `${piece.tick}:${piece.z}`),
+    ['595:0.000000', '595:-0.210000', '595:-0.420000', '596:-0.126000', '596:-0.336000', '597:-0.042000'],
+    'per-segment wall z fractions (B5)',
+  );
+  const segmentCounts = new Map<string, number>();
+  for (const piece of pieces) {
+    const key = pieceLabel(piece);
+    segmentCounts.set(key, (segmentCounts.get(key) ?? 0) + 1);
+  }
+  assert.deepEqual(Object.fromEntries(segmentCounts), {
+    'wall_1x1 ~0.000000 ~0.300000': 6, // b60 d0.25 -> 6 segments
+    'wall_1x3 ~0.300000 ~0.600000': 6, // b62 d0.25
+    'wall_1x1 ~0.300000 ~0.300000': 6, // b64 d0.25
+    'wall_2x1 ~0.000000 ~0.300000': 18, // b66 d0.25 + b74 + b76 w4/clamped w5
+    'wall_2x1 ~0.300000 ~0.300000': 6, // b70 w3 first piece
+    'wall_1x1 ~0.900000 ~0.300000': 6, // b70 w3 second piece
+    'wall_2x1 ~0.000000 ~0.600000': 42, // b68 d0.25 + b72 w3 + b82 d1.25 -> 30 segments (B5)
+    'wall_1x3 ~0.600000 ~0.600000': 18, // b72 w3 second piece + b80 d0.5
+    'wall_2x1 ~0.600000 ~0.300000': 12, // b74 + b76 second pieces
+    'wall_1x3 ~0.900000 ~0.600000': 3, // b78 d0.125 -> trunc(3) segments, not 1 (B5)
+  });
 });
 
 test('done flags sit at last stream tick plus LEAD plus one, empty streams stub at LEAD plus one', async () => {

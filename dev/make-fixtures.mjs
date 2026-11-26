@@ -51,6 +51,26 @@ const LIGHT_EVENTS = [
   { time: 20, type: 9, value: 0 },
 ];
 
+const WALL_SHAPES = [
+  { beat: 60, duration: 0.25, x: 0, y: 0, w: 1, h: 5 },
+  { beat: 62, duration: 0.25, x: 1, y: 2, w: 1, h: 3 },
+  { beat: 64, duration: 0.25, x: 1, y: 1, w: 1, h: 3 },
+  { beat: 66, duration: 0.25, x: 0, y: 0, w: 2, h: 4 },
+  { beat: 68, duration: 0.25, x: 0, y: 2, w: 2, h: 3 },
+  { beat: 70, duration: 0.25, x: 1, y: 0, w: 3, h: 5 },
+  { beat: 72, duration: 0.25, x: 0, y: 2, w: 3, h: 3 },
+  { beat: 74, duration: 0.25, x: 0, y: 0, w: 4, h: 4 },
+  { beat: 76, duration: 0.25, x: 0, y: 0, w: 5, h: 4 },
+  { beat: 78, duration: 0.125, x: 3, y: 0, w: 1, h: 1 },
+  { beat: 80, duration: 0.5, x: 2, y: 0, w: 1, h: 2 },
+  { beat: 82, duration: 1.25, x: 0, y: 2, w: 2, h: 3 },
+];
+
+const WALL_LIGHT_EVENTS = [
+  { time: 86, type: 1, value: 1 },
+  { time: 94, type: 1, value: 0 },
+];
+
 function writeZip(name, files) {
   const zip = new AdmZip();
   for (const [entryName, data] of Object.entries(files)) {
@@ -201,6 +221,32 @@ function v3Beatmap(bpmEvents = []) {
   };
 }
 
+function v3WallsBeatmap() {
+  // Full §3.4 wall-shape matrix: bsmap's full {y:0,h:5} and crouch {y:2,h:3} shapes, the tall-boundary row y=1/h=3, the
+  // low walls (h <= 2) that collapse into the crouch band, widths 1-5 with 5 clamped to the w:4 rule, and binary-exact
+  // fractional durations so trunc(duration x 24) segment counts pin B5.
+  return {
+    ...v3Beatmap(),
+    colorNotes: [
+      { b: 88, x: 0, y: 0, c: 0, d: 8, dn: 0, a: 0 },
+      { b: 90, x: 2, y: 1, c: 1, d: 0, dn: 0, a: 0 },
+      { b: 92, x: 3, y: 2, c: 0, d: 1, dn: 0, a: 0 },
+    ],
+    bombNotes: [{ b: 94, x: 1, y: 1 }],
+    obstacles: WALL_SHAPES.map((wall) => ({
+      b: wall.beat,
+      d: wall.duration,
+      x: wall.x,
+      y: wall.y,
+      w: wall.w,
+      h: wall.h,
+    })),
+    sliders: [],
+    burstSliders: [],
+    basicBeatmapEvents: WALL_LIGHT_EVENTS.map((e) => ({ b: e.time, et: e.type, i: e.value, f: 1 })),
+  };
+}
+
 function v4Info() {
   return {
     version: '4.0.0',
@@ -346,6 +392,12 @@ writeZip('syn-v3-basic.zip', {
   'Info.dat': v3Info([['Standard', ['Easy', 'Expert']]]),
   'EasyStandard.dat': v3Beatmap(),
   'ExpertStandard.dat': v3Beatmap(),
+  ...shared,
+});
+
+writeZip('syn-v3-walls.zip', {
+  'Info.dat': v3Info([['Standard', ['Expert']]], { songName: 'Synthetic v3 walls' }),
+  'ExpertStandard.dat': v3WallsBeatmap(),
   ...shared,
 });
 

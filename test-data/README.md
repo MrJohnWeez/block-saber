@@ -24,6 +24,7 @@ Tiny deterministic maps (120 BPM) for parser and emitter unit tests. Audio is a 
 | `syn-v2-basic.zip`               | v2 full cut-direction spread, bombs as `_type: 3`, all 4 wall shapes, light events, `_timeOffset`                                            |
 | `syn-v3-basic.zip`               | v3 short-key schema, `customData.offset`, fractional-duration walls (B5), sliders/burst-sliders (must be skipped or dotted per contract doc) |
 | `syn-v3-bpm.zip`                 | v3 `bpmEvents` 120 → 180 at beat 8 — the BPM-change timing math (B4)                                                                         |
+| `syn-v3-walls.zip`               | v3 wall-shape matrix (contract §3.4): tall vs floating-crouch bands, `y ≤ 1 && h ≥ 3` boundary, low walls collapsing to short, widths 1–5 (≥5 clamp), fractional durations (B5) |
 | `syn-v3-two-characteristics.zip` | Standard Expert + Lawless Expert (B3 characteristic collision)                                                                               |
 | `syn-v4-basic.zip`               | v4 flat `difficultyBeatmaps`, `colorNotesData` index indirection, separate lightshow file                                                    |
 | `syn-info-lowercase.zip`         | lowercase `info.dat` entry name (B6 case-insensitive lookup)                                                                                 |

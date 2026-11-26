@@ -112,6 +112,35 @@ test('syn-v3-bpm keeps bpm change events through normalization', () => {
   assertSpreadBeatmap(map.beatmaps[1]);
 });
 
+test('syn-v3-walls keeps raw v3 wall geometry and fractional durations through normalization', () => {
+  const map = parseFixture('synthetic/syn-v3-walls.zip');
+  assert.equal(map.info.formatVersion, 3 satisfies BeatmapFormatVersion);
+  assert.equal(map.beatmaps.length, 1);
+  const beatmap = map.beatmaps[0];
+  assert.equal(beatmap.characteristic, 'Standard');
+  assert.equal(beatmap.difficulty, 'Expert');
+  assert.equal(beatmap.obstacles.length, 12);
+  assert.deepEqual(
+    beatmap.obstacles.map(
+      (wall) => `b${wall.beat} d${wall.durationBeats} x${wall.x} y${wall.y} ${wall.width}x${wall.height}`,
+    ),
+    [
+      'b60 d0.25 x0 y0 1x5',
+      'b62 d0.25 x1 y2 1x3',
+      'b64 d0.25 x1 y1 1x3',
+      'b66 d0.25 x0 y0 2x4',
+      'b68 d0.25 x0 y2 2x3',
+      'b70 d0.25 x1 y0 3x5',
+      'b72 d0.25 x0 y2 3x3',
+      'b74 d0.25 x0 y0 4x4',
+      'b76 d0.25 x0 y0 5x4',
+      'b78 d0.125 x3 y0 1x1',
+      'b80 d0.5 x2 y0 1x2',
+      'b82 d1.25 x0 y2 2x3',
+    ],
+  );
+});
+
 test('syn-v3-two-characteristics keeps both Expert entries distinct', () => {
   const map = parseFixture('synthetic/syn-v3-two-characteristics.zip');
   assert.equal(map.beatmaps.length, 2);
