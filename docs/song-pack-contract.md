@@ -92,7 +92,10 @@ Namespace = `bs_` + slug → `bs_443f3a1b` (11 chars; always ≤ 16). Characters
 
 - **Collision:** if two different songs hash to the same slug, both grow to 12 hex; a third collision is a hard
   converter error (`ConversionError.SlugCollision`). The songs-resource-pack sound file name and marker metadata use
-  the same slug string.
+  the same slug string. _(Web converter amendment 2026-11-25, M5: a browser cannot rename an already-downloaded
+  pack — the **first issuer keeps its delivered 8-hex slug**, a colliding latecomer grows to 12 hex, and a slug
+  that still collides at 12 hex is the hard `SlugCollision` error. Site identity per slug = SHA-256 of the map
+  zip bytes, so re-converting the same zip is an in-place overwrite and never grows.)_
 - Slug is stable across re-converts of the same map ⇒ reinstall is an in-place upgrade (§2.3).
 
 ### 1.3 Characteristic + difficulty naming (B3 fix)

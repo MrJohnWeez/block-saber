@@ -12,10 +12,51 @@
   <body>
     <main>
       <h1>Block Saber</h1>
-      <div id="drop-zone" class="drop-zone">
-        <p>Drag one or more Beatsaber map files here to convert them to Minecraft datapacks.</p>
-      </div>
-      <ul id="file-list" class="file-list" aria-live="polite"></ul>
+      <p class="tagline">Turn Beat Saber map zips into Minecraft datapacks for the Block Saber game world.</p>
+
+      <section class="converter" aria-label="Map converter">
+        <div id="drop-zone" class="drop-zone">
+          <p>Drag one or more Beat Saber map <code>.zip</code> files here to convert them to Minecraft datapacks.</p>
+          <button id="choose-files" class="button" type="button">Choose map zips</button>
+          <input id="file-input" class="visually-hidden" type="file" accept=".zip,application/zip" multiple />
+        </div>
+
+        <ul id="queue" class="queue" aria-live="polite"></ul>
+
+        <div class="pack-actions">
+          <button id="download-songs-pack" class="button" type="button" disabled>Download songs pack</button>
+          <button id="choose-output-folder" class="button button-secondary" type="button">Choose output folder</button>
+          <output id="output-status" class="output-status"></output>
+        </div>
+      </section>
+
+      <section class="install" aria-label="Install instructions">
+        <h2>Installing your converted packs</h2>
+        <ol>
+          <li>
+            Download each song's <strong>datapack</strong> with the button on its row above, and drop the zips
+            (unzipped) into your Block Saber world's <code>datapacks</code> folder:
+            <code>.minecraft/saves/&lt;world&gt;/datapacks/</code>.
+          </li>
+          <li>
+            Download the <strong>songs pack</strong> ("Block Saber Songs") and put that single zip into
+            <code>.minecraft/resourcepacks/</code> — do not unzip it.
+          </li>
+          <li>
+            In Minecraft, open <em>Options → Video Settings → Resource Packs</em>, move "Block Saber Songs" to the
+            selected list, and apply. Re-download and replace it whenever you convert new songs.
+          </li>
+          <li>
+            Open your Block Saber world and run <code>/reload</code> (or re-enter the world) to load the new songs.
+          </li>
+        </ol>
+
+        <aside class="warning">
+          <strong>Minecraft 26.3 or newer is required.</strong> Song packs made by this site use the new song contract
+          and are <em>not</em> compatible with packs from the old 1.18.2-era generator — delete any old Block Saber song
+          datapacks and resource packs before installing. The base game will refuse mismatched packs in chat.
+        </aside>
+      </section>
     </main>
   </body>
 </html>
