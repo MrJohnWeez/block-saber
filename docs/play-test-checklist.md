@@ -28,7 +28,8 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 - [ ] Each of wall_1x1/1x3/2x1/2x3 (RedWallTest + synthetics) renders at the right height; standing/crouching/jumping pass/fail matrix matches old tool behavior.
 - [ ] Fractional-duration walls (syn-v3-basic) hit for their full duration, not truncated (B5).
 - [ ] Wide walls (width 2–4, clamped ≥5) block the correct lanes.
-- [ ] **Crouch/short-wall band has ZERO fixture coverage** (snapshots emit no `wall_1x3`/short pieces) — build a hand-made crouch-wall test map and verify short-band classification (anchor Y +0.6 off `bs_node_origin`) and the stand-through/jump-hit/sneak-clear matrix.
+- [ ] **Crouch/short-wall band coverage now exists** (`syn-v3-walls.zip`, golden snapshot `bs_b58b8d06`): verify in-world the short band (anchor `~+0.3 ~+0.6` → `wall_1x3`) classifies as crouch-to-clear, the tall boundary (`y≤1 ∧ h≥3`, beat 64) as stand-block, and the width matrix incl. the w5≡w4 clamp and fractional-duration tails (beats 60–82).
+- [ ] **Crouch-vs-jump collapse (v1 known approximation):** a Beat Saber jump-over strip (`y:0, h:1`) and a crouch wall (`y:2, h:3`) both emit the same short `wall_1x3` piece at the same anchor — the band model is binary. Play it: does jumping ever read as the correct dodge for strips that should be jumped? If the feel is wrong, the fix is a contract amendment (third band + piece), not a fixture change.
 - [ ] Confirm the player stands at `game_origin` Y during play — the whole height model is origin-relative; also check `set_player_height`'s sneak-over-jump branch order matches the intended dodge bands (+0.0/+0.3/+0.6).
 - [ ] `x−0.3` wide-wall sample offset: does a safe pocket appear beside 2-wide walls in play? (faithful-to-old quirk; fix = `~-0.3`→`~+0.3` in both `wall_check_*_wide.mcfunction` if the owner calls it).
 
