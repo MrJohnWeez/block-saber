@@ -148,12 +148,16 @@ Marker schema (summoned by the song pack, read only by the engine):
 summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_443f3a1b","blocksaber"],bs:{\
   slug:"443f3a1b",contract:1,sound:"bsong_443f3a1b",\
   title:"Blueberry Dream",artist:"QooBee",level:"Standard Expert / ExpertPlus",\
-  diffs:[{id:"expert_standard",diff:"Expert",char:"Standard",notes:964,end_tick:9417},\
-         {id:"expert_plus_standard",diff:"ExpertPlus",char:"Standard",notes:1418,end_tick:9417}]}}
+  diffs:[{id:"expert_standard",diff:"Expert",char:"Standard",notes:964,end_tick:9417,mpt_millionths:504000,lead_m:20},\
+         {id:"expert_plus_standard",diff:"ExpertPlus",char:"Standard",notes:1418,end_tick:9417,mpt_millionths:504000,lead_m:20}]}}
 ```
 
 - `bs.diffs[].id` is exactly the §1.3 token and the prefix of every per-difficulty function file.
 - `bs.diffs[].end_tick` = absolute game tick of the last emitted command (`§3.7`) — engine uses it for result timing.
+- `bs.diffs[].mpt_millionths` = `metersPerTick × 1e6` (§3.1, integer) and `bs.diffs[].lead_m` = lead meters (§3.1,
+  integer). The play-start sequence (§2.3) copies both into the engine's movement state before the first tick — the
+  runtime handoff for the constants the converter derives from BPM. (Amendment 2026-11-25 from M4a: without these,
+  the engine cannot move notes.)
 - `bs.contract` is validated at play time (§4.2).
 - Strings: SNBT-quoted, `"`/`\` escaped, title/artist truncated to 64 chars by the converter.
 - Marker NBT is preserved on chunk save (custom entity NBT via `/data` semantics); position `0 5 0` is inside the
@@ -192,7 +196,8 @@ Existing inventory menus (`game/template-world/.../inventory/*`) keep their `cus
   — engine-internal). **DECISION (D9):** v1 page order = marker selector order (undefined); sort by title in v2.
 
 **Play start sequence (engine `block_saber:song/start`, called with slug+diff from the menu):**
-`block_saber:stop` cleanup → contract check (§4.2) → `summon` origin/cursor markers around `game_origin` →
+`block_saber:stop` cleanup → contract check (§4.2) → copy `mpt_millionths`/`lead_m` from the marker's `bs.diffs[]`
+entry into the engine's movement state → `summon` origin/cursor markers around `game_origin` →
 reset `curr_tick 0`, `bs_finished` flags, `bs_light_*` scores →
 `execute as @s run function bs_<slug>:<diff_char>_play` runs every tick from `game_loop` (in player context), replacing
 today's hardcoded single-scene `block_saber:play` body. `block_saber:stop` must kill markers **except** song markers:

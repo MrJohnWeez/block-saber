@@ -7,4 +7,6 @@ gamemode adventure
 summon marker -0.0 -0.0 0.0 {Tags:["game_origin","blocksaber"]}
 teleport @s -0.0 -0.0 0.0 -180.0 4.0
 execute at @e[type=marker,tag=game_origin,distance=3..,limit=1] run function block_saber:setup_game_scene
+function block_saber:notes/spawn_begin
+function block_saber:song/give_sabers
 say is playing!
