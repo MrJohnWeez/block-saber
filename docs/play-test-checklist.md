@@ -28,12 +28,18 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 - [ ] Each of wall_1x1/1x3/2x1/2x3 (RedWallTest + synthetics) renders at the right height; standing/crouching/jumping pass/fail matrix matches old tool behavior.
 - [ ] Fractional-duration walls (syn-v3-basic) hit for their full duration, not truncated (B5).
 - [ ] Wide walls (width 2–4, clamped ≥5) block the correct lanes.
+- [ ] **Crouch/short-wall band has ZERO fixture coverage** (snapshots emit no `wall_1x3`/short pieces) — build a hand-made crouch-wall test map and verify short-band classification (anchor Y +0.6 off `bs_node_origin`) and the stand-through/jump-hit/sneak-clear matrix.
+- [ ] Confirm the player stands at `game_origin` Y during play — the whole height model is origin-relative; also check `set_player_height`'s sneak-over-jump branch order matches the intended dodge bands (+0.0/+0.3/+0.6).
+- [ ] `x−0.3` wide-wall sample offset: does a safe pocket appear beside 2-wide walls in play? (faithful-to-old quirk; fix = `~-0.3`→`~+0.3` in both `wall_check_*_wide.mcfunction` if the owner calls it).
 
 ## M4d — scoring display + completion
 
 - [ ] Combo/multiplier displays update without sign/entity name truncation; no `§`-junk.
 - [ ] Song end: done-flags fire, results appear, `bs_complete` entry set; re-play same song resets cleanly.
 - [ ] Empty-difficulty songs end without hanging (empty-stream stubs).
+- [ ] Display positions: five `text_display`s at old armor-stand coords +0.5 y (nameplate-to-center transform) — calibrate heights vs the M4a `~2.2` origin constant; combo/multiplier values render **live from score components** — if they ever show stale/frozen numbers, switch to the change-detected `data modify entity … text` fallback noted in `song/score/displays_spawn.mcfunction`.
+- [ ] Fail path: drain health (miss ~6 notes) → `LEVEL FAILED` chat+actionbar, run stops, **no `bs_complete` written**; multiplier growth feel (full pool ×2/tick up to 8) and the godmode-health-only quirk (GodMode keeps score/combo penalties).
+- [ ] Wall penalty feel: once-per-piece (−2 HP per piece, not old per-tick drain) — joint M4c/M4d call on whether long walls bite enough.
 
 ## M4e — lights
 
