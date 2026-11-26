@@ -89,6 +89,29 @@ export interface BombModel {
   y: number;
 }
 
+/**
+ * A chain (v3 `burstSliders`, v4 `chains`+`chainsData`) linking a head note position to a tail position.
+ *
+ * The emitter expands chains into plain dots at head and tail per contract §3.3 decision D5; v2 arcs and
+ * v3 `sliders` / v4 `arcs` never reach this model.
+ */
+export interface ChainModel {
+  /** Head beat time of the chain. */
+  beat: number;
+  /** Head grid column, 0 to 3. */
+  x: number;
+  /** Head grid row, 0 to 2. */
+  y: number;
+  /** Chain color: 0 red, 1 blue, -1 undefined. */
+  color: number;
+  /** Tail beat time of the chain. */
+  tailBeat: number;
+  /** Tail grid column, 0 to 3. */
+  tailX: number;
+  /** Tail grid row, 0 to 2. */
+  tailY: number;
+}
+
 /** A wall obstacle; `durationBeats` keeps its fractional part (fixes Unity bug B5). */
 export interface ObstacleModel {
   /** Beat time the wall starts. */
@@ -105,15 +128,21 @@ export interface ObstacleModel {
   height: number;
 }
 
-/** A basic light event in beat space. */
+/**
+ * A basic light event in beat space, normalized by the parser to v2 LightWithId semantics (§3.5).
+ *
+ * `type` is the v2 group enum (0 back lasers, 1 rings, 2/3 rotating lasers, 4 center, 5 boost, 6/7
+ * extra lights, 10/11 side lasers; 8/9 pass through but the emitter drops them) and `value` is in
+ * the v2 light-value domain {0 off, 1/2 on, 3 flash, 4 off, 5..11 on}.
+ */
 export interface LightEventModel {
   /** Beat time of the event. */
   beat: number;
-  /** Beat Saber event type, e.g. 1 ring lights, 9 ring zoom. */
+  /** v2 LightWithId group type, e.g. 1 ring lights, 9 ring zoom. */
   type: number;
-  /** Beat Saber event value. */
+  /** v2 light value; v3/v4 sources are normalized into this domain by the parser. */
   value: number;
-  /** Event float value (v3+). */
+  /** Event float value (v3+); brightness for normalized v4 events. */
   floatValue: number;
 }
 
@@ -145,6 +174,8 @@ export interface Beatmap {
   notes: NoteModel[];
   /** Bombs, split out from v2 `_notes` with `_type: 3` (fixes the Unity bomb bug). */
   bombs: BombModel[];
+  /** Chains (v3 burst sliders, v4 chains); expanded to dots by the emitter per decision D5. */
+  chains: ChainModel[];
   /** Walls, in file order. */
   obstacles: ObstacleModel[];
   /** Light events, from the v2/v3 data file or the v4 lightshow file. */

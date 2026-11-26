@@ -2,12 +2,14 @@ import { v2, v3, v4, type IWrapBeatmap } from 'bsmap/schema';
 
 import { ConversionError, ConversionErrorKind } from './conversion-error';
 import { decodeEntryText, lookupMapPath, type OpenedMapZip } from './read-map-zip';
+import { normalizeV4Lights } from './v4-lights';
 import type {
   Beatmap,
   BeatmapFormatVersion,
   BeatmapRef,
   BombModel,
   BpmChangeEvent,
+  ChainModel,
   LightEventModel,
   NoteModel,
   ObstacleModel,
@@ -44,8 +46,9 @@ export function parseBeatmap(zip: OpenedMapZip): ParsedMap {
       ConversionErrorKind.MissingSongData,
       'Beatmap data file',
     );
-    const wrap = deserializeBeatmapFile(decodeEntryText(zip.entries, dataHit), info.formatVersion);
-    const lightEvents = lightEventsFor(zip, info.formatVersion, ref, wrap, lightshowCache);
+    const beatmapData = parseJson(decodeEntryText(zip.entries, dataHit), 'Beatmap data file');
+    const wrap = deserializeBeatmapData(beatmapData, info.formatVersion);
+    const lightEvents = lightEventsFor(zip, info.formatVersion, ref, wrap, beatmapData, lightshowCache);
     const bpmChanges = wrap.difficulty.bpmEvents.map((event) => ({ beat: event.time, bpm: event.bpm }));
     beatmaps.push({
       characteristic: ref.characteristic,
@@ -57,6 +60,7 @@ export function parseBeatmap(zip: OpenedMapZip): ParsedMap {
       bpmChanges: bpmChanges.length > 0 ? bpmChanges : audioBpmChanges,
       notes: wrap.difficulty.colorNotes.map(toNoteModel),
       bombs: wrap.difficulty.bombNotes.map(toBombModel),
+      chains: wrap.difficulty.chains.map(toChainModel),
       obstacles: wrap.difficulty.obstacles.map(toObstacleModel),
       lightEvents,
     });
@@ -177,8 +181,7 @@ function customDataOffset(data: RawData): number | null {
   return typeof custom['offset'] === 'number' ? custom['offset'] : null;
 }
 
-function deserializeBeatmapFile(text: string, mapMajor: BeatmapFormatVersion): IWrapBeatmap {
-  const data = parseJson(text, 'Beatmap data file');
+function deserializeBeatmapData(data: RawData, mapMajor: BeatmapFormatVersion): IWrapBeatmap {
   const fileMajor = versionMajor(data['_version'] ?? data['version'], mapMajor);
   if (fileMajor === 2) return v2.deserializeDifficulty(untyped(data));
   if (fileMajor === 3) {
@@ -200,32 +203,22 @@ function lightEventsFor(
   formatVersion: BeatmapFormatVersion,
   ref: BeatmapRef,
   wrap: IWrapBeatmap,
+  beatmapData: RawData,
   cache: Map<string, LightEventModel[]>,
 ): LightEventModel[] {
-  if (formatVersion !== 4 || ref.lightshowDataFilename === null) {
+  if (formatVersion !== 4) {
     return wrap.lightshow.basicEvents.map(toLightModel);
+  }
+  if (ref.lightshowDataFilename === null) {
+    return normalizeV4Lights(beatmapData);
   }
   const lightshowPath = lookupMapPath(zip.entries, ref.lightshowDataFilename);
   if (lightshowPath === null) return [];
   const cached = cache.get(lightshowPath);
   if (cached !== undefined) return cached;
-  const events = deserializeLightshowFile(
-    decodeEntryText(zip.entries, lightshowPath),
-    formatVersion,
-  ).lightshow.basicEvents.map(toLightModel);
+  const events = normalizeV4Lights(parseJson(decodeEntryText(zip.entries, lightshowPath), 'Lightshow file'));
   cache.set(lightshowPath, events);
   return events;
-}
-
-function deserializeLightshowFile(text: string, mapMajor: BeatmapFormatVersion): IWrapBeatmap {
-  const data = parseJson(text, 'Lightshow file');
-  const fileMajor = versionMajor(data['version'], mapMajor);
-  if (fileMajor === 3) {
-    sanitizeV3FxReferences(data);
-    return v3.deserializeLightshow(untyped(data));
-  }
-  sanitizeV4LightshowIndexRefs(data);
-  return v4.deserializeLightshow(untyped(data));
 }
 
 function bpmChangesFromAudioData(zip: OpenedMapZip, filename: string): BpmChangeEvent[] {
@@ -287,32 +280,6 @@ function sanitizeV4BeatmapIndexRefs(data: RawData): void {
   clampRefs(data, 'spawnRotations', ['i'], 'spawnRotationsData');
   clampRefs(data, 'njsEvents', ['i'], 'njsEventData');
 }
-
-function sanitizeV4LightshowIndexRefs(data: RawData): void {
-  clampRefs(data, 'waypoints', ['i'], 'waypointsData');
-  clampRefs(data, 'basicEvents', ['i'], 'basicEventsData');
-  clampRefs(data, 'colorBoostEvents', ['i'], 'colorBoostEventsData');
-  const groups = data['eventBoxGroups'];
-  if (!Array.isArray(groups)) return;
-  for (const group of groups) {
-    const type = asRecord(group)['t'];
-    const names = EVENT_BOX_ARRAYS[typeof type === 'number' ? type : 0];
-    const boxes = asRecord(group)['e'];
-    if (names === undefined || !Array.isArray(boxes)) continue;
-    for (const box of boxes) {
-      clampRefObjects([box], 'e', data, names.boxes);
-      clampRefObjects([box], 'f', data, 'indexFilters');
-      if (Array.isArray(asRecord(box)['l'])) clampRefObjects(asRecord(box)['l'] as unknown[], 'i', data, names.events);
-    }
-  }
-}
-
-const EVENT_BOX_ARRAYS: Record<number, { boxes: string; events: string }> = {
-  1: { boxes: 'lightColorEventBoxes', events: 'lightColorEvents' },
-  2: { boxes: 'lightRotationEventBoxes', events: 'lightRotationEvents' },
-  3: { boxes: 'lightTranslationEventBoxes', events: 'lightTranslationEvents' },
-  4: { boxes: 'fxEventBoxes', events: 'floatFxEvents' },
-};
 
 function clampRefs(data: RawData, refArrayField: string, indexFields: string[], dataField: string): void {
   const refs = data[refArrayField];
@@ -405,6 +372,18 @@ function toNoteModel(note: IWrapBeatmap['difficulty']['colorNotes'][number]): No
 
 function toBombModel(bomb: IWrapBeatmap['difficulty']['bombNotes'][number]): BombModel {
   return { beat: bomb.time, x: bomb.posX, y: bomb.posY };
+}
+
+function toChainModel(chain: IWrapBeatmap['difficulty']['chains'][number]): ChainModel {
+  return {
+    beat: chain.time,
+    x: chain.posX,
+    y: chain.posY,
+    color: chain.color,
+    tailBeat: chain.tailTime,
+    tailX: chain.tailPosX,
+    tailY: chain.tailPosY,
+  };
 }
 
 function toObstacleModel(wall: IWrapBeatmap['difficulty']['obstacles'][number]): ObstacleModel {

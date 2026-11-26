@@ -243,8 +243,8 @@ function v4Beatmap() {
     bombNotesData: [{ x: BOMB_NOTE.line, y: BOMB_NOTE.layer }],
     arcs: [],
     arcsData: [],
-    chains: [],
-    chainsData: [],
+    chains: [{ hb: 56, tb: 56.5, i: 2, ci: 0 }],
+    chainsData: [{ tx: 0, ty: 2, c: 3, s: 1 }],
     obstacles: WALLS.map((w, i) => ({ b: w.time, r: 0, i })),
     obstaclesData: WALLS.map((w) => ({
       x: w.line,
@@ -259,24 +259,57 @@ function v4Beatmap() {
 }
 
 function v4Lightshow() {
+  // Official v4 box-group layout (contract §3.5): group `g` is a standard-environment light id, events
+  // reference shared lightColorEvents rows. Exercises every modeled bucket (lasers 5/17, center 26,
+  // side lasers 45/49, boost 54, rings 70) plus skipped decoys: white id 90, ALL pseudo-id 132,
+  // rotation/translation/FX groups, and basicEvents/colorBoostEvents the v4 path must IGNORE.
+  const on = { p: 0, e: -1, c: 0, b: 1, f: 0, sb: 0, sf: 0 };
+  const off = { p: 0, e: -1, c: 0, b: 0, f: 0, sb: 0, sf: 0 };
+  const white = { p: 0, e: -1, c: 2, b: 1, f: 0, sb: 0, sf: 0 };
+  const strobe = { p: 0, e: -1, c: 0, b: 1, f: 2, sb: 0.5, sf: 0 };
+  const extend = { p: 1, e: -1, c: 0, b: 1, f: 0, sb: 0, sf: 0 };
+  const box = { w: 0, d: 1, s: 0, t: 1, b: 0, e: -1 };
+  const filter = { f: 1, p: 1, t: 0, r: 0, c: 0, n: 0, s: 0, l: 0, d: 0 };
+  const colorGroup = (beat, id, lane) => ({ b: beat, g: id, t: 1, e: [{ f: 0, e: 0, l: [{ b: 0, i: lane }] }] });
   return {
-    version: '2.0.0',
-    basicEvents: LIGHT_EVENTS.map((e, i) => ({ b: e.time, i: e.value, i2: e.value, et: 0, es: 0, er: 0, id: i % 2 })),
-    basicEventsData: [{ b: true }, { b: false }],
-    colorBoostEvents: [],
-    colorBoostEventsData: [],
+    version: '4.0.0',
+    basicEvents: [
+      { b: 9, i: 0 },
+      { b: 13, i: 0 },
+    ],
+    basicEventsData: [{ t: 1, i: 1, f: 1 }],
+    colorBoostEvents: [{ b: 8, i: 0 }],
+    colorBoostEventsData: [{ b: 1 }],
     waypoints: [],
     waypointsData: [],
-    indexFilters: [],
-    eventBoxGroups: [],
-    lightColorEventBoxes: [],
-    lightColorEvents: [],
-    lightRotationEventBoxes: [],
-    lightRotationEvents: [],
+    indexFilters: [filter],
+    lightColorEventBoxes: [box],
+    lightColorEvents: [on, off, white, strobe, extend],
+    eventBoxGroups: [
+      colorGroup(8, 70, 0),
+      colorGroup(8, 5, 0),
+      colorGroup(8, 17, 2),
+      colorGroup(10, 45, 0),
+      colorGroup(10, 49, 0),
+      colorGroup(12, 70, 1),
+      colorGroup(12, 26, 3),
+      colorGroup(16, 70, 3),
+      colorGroup(16, 5, 4),
+      colorGroup(20, 26, 1),
+      colorGroup(20, 17, 1),
+      colorGroup(24, 54, 0),
+      { b: 10, g: 5, t: 2, e: [{ f: 0, e: 0, l: [{ b: 0, i: 0 }] }] },
+      { b: 11, g: 17, t: 3, e: [{ f: 0, e: 0, l: [{ b: 0, i: 0 }] }] },
+      { b: 12, g: 70, t: 4, e: [{ f: 0, e: 0, l: [{ b: 0, i: 0 }] }] },
+      colorGroup(28, 90, 0),
+      colorGroup(28, 132, 0),
+    ],
+    lightRotationEventBoxes: [box],
+    lightRotationEvents: [{ p: 0, e: 0, r: 20, d: 1, l: 0 }],
     lightTranslationEventBoxes: [],
     lightTranslationEvents: [],
     fxEventBoxes: [],
-    floatFxEvents: [],
+    floatFxEvents: [{ p: 0, e: 0, v: 1 }],
     basicEventTypesWithKeywords: {},
     useNormalEventsAsCompatibleEvents: true,
   };

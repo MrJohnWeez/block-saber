@@ -1,0 +1,1041 @@
+## entries
+text   README-install.txt
+text   data/bs_f4ed447b/function/easy_standard_lights_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/easy_standard_notes_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/easy_standard_play.mcfunction
+text   data/bs_f4ed447b/function/easy_standard_walls_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_plus_standard_lights_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_plus_standard_notes_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_plus_standard_play.mcfunction
+text   data/bs_f4ed447b/function/expert_plus_standard_walls_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_standard_lights_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_standard_notes_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/expert_standard_play.mcfunction
+text   data/bs_f4ed447b/function/expert_standard_walls_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/hard_standard_lights_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/hard_standard_notes_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/hard_standard_play.mcfunction
+text   data/bs_f4ed447b/function/hard_standard_walls_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/install.mcfunction
+text   data/bs_f4ed447b/function/normal_standard_lights_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/normal_standard_notes_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/normal_standard_play.mcfunction
+text   data/bs_f4ed447b/function/normal_standard_walls_lvl_1.mcfunction
+text   data/bs_f4ed447b/function/probe.mcfunction
+text   data/bs_f4ed447b/function/uninstall.mcfunction
+text   pack.mcmeta
+bin    pack.png
+
+## README-install.txt (full)
+Block Saber song pack — 15 Minutes (Sabrina Carpenter)
+Namespace: bs_f4ed447b — song contract 1 — 5 difficulty entries
+
+1. Keep this file's .zip intact and drop it into your world's datapacks folder:
+   .minecraft/saves/<world>/datapacks/
+2. The world must also run the BlockSaber base datapack (game/template-world) — song packs are data only.
+3. Start Minecraft 26.3+ (data pack format 121), load the world, then run /reload.
+4. Register the song by running this command in chat:
+
+   /function bs_f4ed447b:install
+
+5. Audio lives in the cumulative "Block Saber Songs" resource pack, not here. Put that zip into
+   .minecraft/resourcepacks/ and enable it in Video Settings -> Resource Packs.
+
+To uninstall: run /function bs_f4ed447b:uninstall, then delete this zip from datapacks/.
+
+## data/bs_f4ed447b/function/easy_standard_lights_lvl_1.mcfunction (first 60 of 8085 lines)
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_color 16
+
+## data/bs_f4ed447b/function/easy_standard_notes_lvl_1.mcfunction (first 60 of 837 lines)
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 53 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.016909
+execute if score @s curr_tick matches 53 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 58 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.235089
+execute if score @s curr_tick matches 58 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 71 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.117716
+execute if score @s curr_tick matches 71 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 76 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.134281
+execute if score @s curr_tick matches 76 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 171 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.117597
+execute if score @s curr_tick matches 171 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_right
+execute if score @s curr_tick matches 180 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.167955
+execute if score @s curr_tick matches 180 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 189 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.218313
+execute if score @s curr_tick matches 189 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_left
+execute if score @s curr_tick matches 198 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.268671
+execute if score @s curr_tick matches 198 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 208 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.235370
+execute if score @s curr_tick matches 208 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 217 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.185012
+execute if score @s curr_tick matches 217 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 230 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.167724
+execute if score @s curr_tick matches 230 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 239 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.218082
+execute if score @s curr_tick matches 239 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 244 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033939
+execute if score @s curr_tick matches 244 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_right
+execute if score @s curr_tick matches 253 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.016419
+execute if score @s curr_tick matches 253 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 262 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.066777
+execute if score @s curr_tick matches 262 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 271 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.117135
+execute if score @s curr_tick matches 271 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 280 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.167493
+execute if score @s curr_tick matches 280 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 289 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.217851
+execute if score @s curr_tick matches 289 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 298 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.268209
+execute if score @s curr_tick matches 298 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 312 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.066546
+execute if score @s curr_tick matches 312 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 317 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.185474
+execute if score @s curr_tick matches 317 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 326 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.135116
+execute if score @s curr_tick matches 326 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_left
+
+## data/bs_f4ed447b/function/easy_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 36 run playsound bsong_f4ed447b music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..3754 run function bs_f4ed447b:easy_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..3821 run function bs_f4ed447b:easy_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..3849 if score #CONST bs_lightshow matches 1 run function bs_f4ed447b:easy_standard_lights_lvl_1
+
+## data/bs_f4ed447b/function/easy_standard_walls_lvl_1.mcfunction (first 60 of 8543 lines)
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.134250
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.075750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.285750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.495750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.151351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.361351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.016953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.226953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.436953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.092554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.302554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.512554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~0.134250
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.075750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.285750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.495750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.151351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.361351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.016953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.226953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.436953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.092554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.302554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.512554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.117366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.327366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.537366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.192967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.402967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.058569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+
+## data/bs_f4ed447b/function/expert_plus_standard_lights_lvl_1.mcfunction (first 60 of 8085 lines)
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_color 16
+
+## data/bs_f4ed447b/function/expert_plus_standard_notes_lvl_1.mcfunction (first 60 of 2071 lines)
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 53 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.000000 ~-0.016909
+execute if score @s curr_tick matches 53 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 58 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.235089
+execute if score @s curr_tick matches 58 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 71 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.000000 ~-0.117716
+execute if score @s curr_tick matches 71 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 76 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.134281
+execute if score @s curr_tick matches 76 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 81 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.230039
+execute if score @s curr_tick matches 81 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_dot
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_left
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_left
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_right
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 126 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.000000 ~0.134260
+execute if score @s curr_tick matches 126 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_left
+
+## data/bs_f4ed447b/function/expert_plus_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 36 run playsound bsong_f4ed447b music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..3754 run function bs_f4ed447b:expert_plus_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..3821 run function bs_f4ed447b:expert_plus_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..3849 if score #CONST bs_lightshow matches 1 run function bs_f4ed447b:expert_plus_standard_lights_lvl_1
+
+## data/bs_f4ed447b/function/expert_plus_standard_walls_lvl_1.mcfunction (first 60 of 8537 lines)
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.478948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 149 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.134549
+execute if score @s curr_tick matches 149 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 149 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.344549
+execute if score @s curr_tick matches 149 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.000151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.210151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.420151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.075752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.285752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.495752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.151353
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.361353
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.117366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.327366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.537366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.192967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.402967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.058569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.268569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.478569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.134170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.344170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.554170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.209771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.419771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.075372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.285372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.495372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.150974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.360974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+
+## data/bs_f4ed447b/function/expert_standard_lights_lvl_1.mcfunction (first 60 of 8085 lines)
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_color 16
+
+## data/bs_f4ed447b/function/expert_standard_notes_lvl_1.mcfunction (first 60 of 1875 lines)
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 53 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.000000 ~-0.016909
+execute if score @s curr_tick matches 53 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 58 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.235089
+execute if score @s curr_tick matches 58 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 71 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.000000 ~-0.117716
+execute if score @s curr_tick matches 71 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 76 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.134281
+execute if score @s curr_tick matches 76 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 81 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.230039
+execute if score @s curr_tick matches 81 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_dot
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_left
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_left
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 126 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.134260
+execute if score @s curr_tick matches 126 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_right
+
+## data/bs_f4ed447b/function/expert_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 36 run playsound bsong_f4ed447b music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..3754 run function bs_f4ed447b:expert_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..3821 run function bs_f4ed447b:expert_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..3849 if score #CONST bs_lightshow matches 1 run function bs_f4ed447b:expert_standard_lights_lvl_1
+
+## data/bs_f4ed447b/function/expert_standard_walls_lvl_1.mcfunction (first 60 of 8069 lines)
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.478948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 149 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.134549
+execute if score @s curr_tick matches 149 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 149 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.344549
+execute if score @s curr_tick matches 149 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.000151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.210151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.420151
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.075752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.285752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.495752
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.151353
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.361353
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.117366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.327366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.537366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.192967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.402967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.058569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.268569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.478569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.134170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.344170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.554170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.209771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.419771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.075372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.285372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.495372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.150974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.360974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+
+## data/bs_f4ed447b/function/hard_standard_lights_lvl_1.mcfunction (first 60 of 8085 lines)
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_color 16
+
+## data/bs_f4ed447b/function/hard_standard_notes_lvl_1.mcfunction (first 60 of 1415 lines)
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 53 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.016909
+execute if score @s curr_tick matches 53 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 58 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.235089
+execute if score @s curr_tick matches 58 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 71 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.117716
+execute if score @s curr_tick matches 71 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 76 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~0.134281
+execute if score @s curr_tick matches 76 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_right
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_right
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.300000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 126 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.134260
+execute if score @s curr_tick matches 126 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 126 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~0.134260
+execute if score @s curr_tick matches 126 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 130 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.168141
+execute if score @s curr_tick matches 130 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 135 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.083857
+execute if score @s curr_tick matches 135 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 139 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.218545
+execute if score @s curr_tick matches 139 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 139 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.300000 ~-0.218545
+execute if score @s curr_tick matches 139 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 144 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.033453
+execute if score @s curr_tick matches 144 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 144 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~0.033453
+execute if score @s curr_tick matches 144 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_left
+
+## data/bs_f4ed447b/function/hard_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 36 run playsound bsong_f4ed447b music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..3754 run function bs_f4ed447b:hard_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..3821 run function bs_f4ed447b:hard_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..3849 if score #CONST bs_lightshow matches 1 run function bs_f4ed447b:hard_standard_lights_lvl_1
+
+## data/bs_f4ed447b/function/hard_standard_walls_lvl_1.mcfunction (first 60 of 8017 lines)
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~0.209850
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.000150
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.210150
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 150 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.420150
+execute if score @s curr_tick matches 150 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.075751
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.285751
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.495751
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.151352
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.300000 ~-0.361352
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_2x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.117366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.327366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.537366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.192967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.402967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.058569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.268569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.478569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.134170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.344170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 224 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.554170
+execute if score @s curr_tick matches 224 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.209771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 225 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.419771
+execute if score @s curr_tick matches 225 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.075372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.285372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 226 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.495372
+execute if score @s curr_tick matches 226 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.150974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 227 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.360974
+execute if score @s curr_tick matches 227 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 228 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.016575
+execute if score @s curr_tick matches 228 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 228 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.226575
+execute if score @s curr_tick matches 228 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 228 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.436575
+execute if score @s curr_tick matches 228 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+
+## data/bs_f4ed447b/function/install.mcfunction (full)
+# bs_f4ed447b — 15 Minutes (Sabrina Carpenter) — Block Saber song contract 1
+execute unless score #CONST song_contract matches 1 run tellraw @s {text:"[BlockSaber] Install the base BlockSaber datapack first.",color:"red"}
+execute unless score #CONST song_contract matches 1 run return 0
+execute unless function block_saber:notes/red_dot run tellraw @s {text:"[BlockSaber] Base engine too old (missing block_saber:notes).",color:"red"}
+execute unless function block_saber:notes/red_dot run return 0
+function bs_f4ed447b:uninstall
+summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_f4ed447b","blocksaber"],bs:{slug:"f4ed447b",contract:1,sound:"bsong_f4ed447b",title:"15 Minutes",artist:"Sabrina Carpenter",level:"Standard Easy / Normal / Hard / Expert / ExpertPlus",diffs:[{id:"easy_standard",diff:"Easy",char:"Standard",notes:418,end_tick:3849,mpt_millionths:554399,lead_m:20},{id:"normal_standard",diff:"Normal",char:"Standard",notes:568,end_tick:3849,mpt_millionths:554399,lead_m:20},{id:"hard_standard",diff:"Hard",char:"Standard",notes:707,end_tick:3849,mpt_millionths:554399,lead_m:20},{id:"expert_standard",diff:"Expert",char:"Standard",notes:937,end_tick:3849,mpt_millionths:554399,lead_m:20},{id:"expert_plus_standard",diff:"ExpertPlus",char:"Standard",notes:1035,end_tick:3849,mpt_millionths:554399,lead_m:20}]}}
+scoreboard players set #f4ed447b_easy_standard bs_complete 0
+scoreboard players set #f4ed447b_normal_standard bs_complete 0
+scoreboard players set #f4ed447b_hard_standard bs_complete 0
+scoreboard players set #f4ed447b_expert_standard bs_complete 0
+scoreboard players set #f4ed447b_expert_plus_standard bs_complete 0
+tellraw @s [{text:"[BlockSaber] ",color:"green"},{text:"15 Minutes installed (5 difficulties).",color:"white"}]
+
+## data/bs_f4ed447b/function/normal_standard_lights_lvl_1.mcfunction (first 60 of 8085 lines)
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 44 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 48 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 55 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 62 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 67 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 73 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_on 0
+execute if score @s curr_tick matches 80 run scoreboard players set #rotating_right bs_light_color 0
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 85 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 89 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 94 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_left bs_light_color 24
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 98 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 103 run scoreboard players set #rotating_right bs_light_color 16
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_on 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_left bs_light_color 0
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_on 1
+execute if score @s curr_tick matches 108 run scoreboard players set #rotating_right bs_light_color 16
+
+## data/bs_f4ed447b/function/normal_standard_notes_lvl_1.mcfunction (first 60 of 1137 lines)
+execute if score @s curr_tick matches 44 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~-0.300000 ~0.033495
+execute if score @s curr_tick matches 44 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 53 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.016909
+execute if score @s curr_tick matches 53 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 58 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.235089
+execute if score @s curr_tick matches 58 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 62 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.067312
+execute if score @s curr_tick matches 62 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 71 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.117716
+execute if score @s curr_tick matches 71 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 76 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.134281
+execute if score @s curr_tick matches 76 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 80 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.168120
+execute if score @s curr_tick matches 80 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 85 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~0.083878
+execute if score @s curr_tick matches 85 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 89 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.218524
+execute if score @s curr_tick matches 89 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 94 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.033474
+execute if score @s curr_tick matches 94 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 98 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.268927
+execute if score @s curr_tick matches 98 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 103 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.016930
+execute if score @s curr_tick matches 103 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 108 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.235068
+execute if score @s curr_tick matches 108 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 112 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.067333
+execute if score @s curr_tick matches 112 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 117 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.184664
+execute if score @s curr_tick matches 117 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 121 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.117737
+execute if score @s curr_tick matches 121 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 126 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.134260
+execute if score @s curr_tick matches 126 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 130 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.168141
+execute if score @s curr_tick matches 130 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 135 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~0.300000 ~0.083857
+execute if score @s curr_tick matches 135 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 139 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.218545
+execute if score @s curr_tick matches 139 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 144 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~0.033453
+execute if score @s curr_tick matches 144 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~-0.300000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 148 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.268948
+execute if score @s curr_tick matches 148 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+execute if score @s curr_tick matches 158 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.235139
+execute if score @s curr_tick matches 158 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up
+execute if score @s curr_tick matches 167 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~0.184781
+execute if score @s curr_tick matches 167 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up
+execute if score @s curr_tick matches 171 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.300000 ~-0.300000 ~-0.117597
+execute if score @s curr_tick matches 171 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down_right
+execute if score @s curr_tick matches 180 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~-0.300000 ~0.000000 ~-0.167955
+execute if score @s curr_tick matches 180 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_up_left
+execute if score @s curr_tick matches 189 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~-0.218313
+execute if score @s curr_tick matches 189 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_down_left
+execute if score @s curr_tick matches 198 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.600000 ~0.000000 ~-0.268671
+execute if score @s curr_tick matches 198 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/blue_up_right
+execute if score @s curr_tick matches 208 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~-0.300000 ~0.235370
+execute if score @s curr_tick matches 208 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:notes/red_down
+
+## data/bs_f4ed447b/function/normal_standard_play.mcfunction (full)
+execute if score @s curr_tick matches 36 run playsound bsong_f4ed447b music @a 0.0 0.0 0.0 1 1
+execute if score @s curr_tick matches 0..3754 run function bs_f4ed447b:normal_standard_notes_lvl_1
+execute if score @s curr_tick matches 0..3821 run function bs_f4ed447b:normal_standard_walls_lvl_1
+execute if score @s curr_tick matches 0..3849 if score #CONST bs_lightshow matches 1 run function bs_f4ed447b:normal_standard_lights_lvl_1
+
+## data/bs_f4ed447b/function/normal_standard_walls_lvl_1.mcfunction (first 60 of 7669 lines)
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~0.134250
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.075750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.285750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.495750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.151351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.361351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.016953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.226953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.436953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.092554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.302554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.000000 ~0.300000 ~-0.512554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~0.134250
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.075750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.285750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 151 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.495750
+execute if score @s curr_tick matches 151 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.151351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 152 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.361351
+execute if score @s curr_tick matches 152 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.016953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.226953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 153 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.436953
+execute if score @s curr_tick matches 153 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.092554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.302554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 154 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.512554
+execute if score @s curr_tick matches 154 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.117366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.327366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 221 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.537366
+execute if score @s curr_tick matches 221 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.192967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 222 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.402967
+execute if score @s curr_tick matches 222 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+execute if score @s curr_tick matches 223 at @e[type=marker,tag=bs_node_origin,limit=1] run teleport @e[type=marker,tag=bs_node_cursor,limit=1] ~0.900000 ~0.300000 ~-0.058569
+execute if score @s curr_tick matches 223 as @e[type=marker,tag=bs_node_cursor,limit=1] run function block_saber:walls/wall_1x1
+
+## data/bs_f4ed447b/function/probe.mcfunction (full)
+# bs_f4ed447b — 15 Minutes (Sabrina Carpenter) — probe file; its existence marks this song installed (contract §2.4).
+
+## data/bs_f4ed447b/function/uninstall.mcfunction (full)
+# bs_f4ed447b — removes the song marker and completion entries installed by bs_f4ed447b:install.
+kill @e[tag=bs_f4ed447b]
+scoreboard players reset #f4ed447b_easy_standard bs_complete
+scoreboard players reset #f4ed447b_normal_standard bs_complete
+scoreboard players reset #f4ed447b_hard_standard bs_complete
+scoreboard players reset #f4ed447b_expert_standard bs_complete
+scoreboard players reset #f4ed447b_expert_plus_standard bs_complete
+
+## pack.mcmeta (full)
+{
+  "pack": {
+    "pack_format": 121.0,
+    "min_format": 121.0,
+    "max_format": 121.99,
+    "description": "Block Saber song: 15 Minutes by Sabrina Carpenter [bs_f4ed447b / song contract 1]"
+  }
+}

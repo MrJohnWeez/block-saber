@@ -138,11 +138,92 @@ test('syn-v4-basic uses flat info entries and loads the separate lightshow', () 
     expert.obstacles.map((wall) => wall.durationBeats),
     SPREAD_WALL_DURATIONS,
   );
-  assert.equal(expert.lightEvents.length, 4);
+  assert.equal(expert.lightEvents.length, 11);
   assert.deepEqual(
-    expert.lightEvents.map((light) => light.beat),
-    [8, 12, 16, 20],
+    expert.lightEvents.map((light) => [light.beat, light.type, light.value]),
+    [
+      [8, 1, 1],
+      [8, 2, 1],
+      [8, 3, 1],
+      [10, 10, 1],
+      [10, 11, 1],
+      [12, 1, 0],
+      [12, 4, 3],
+      [16, 1, 3],
+      [20, 4, 0],
+      [20, 3, 0],
+      [24, 5, 1],
+    ],
   );
+});
+
+test('syn-v4 light normalization: env light-id groups, flash via strobe, skips honored', () => {
+  const map = parseFixture('synthetic/syn-v4-basic.zip');
+  const expert = map.beatmaps[0];
+  assert.deepEqual(
+    expert.lightEvents.filter((light) => light.type === 2).map((light) => [light.beat, light.value]),
+    [[8, 1]],
+    'rotating_left only from laser ids 0-11 (id 5); the Extend event at beat 16 and rotation/translation/FX groups are skipped',
+  );
+  assert.deepEqual(
+    expert.lightEvents.filter((light) => light.type === 3).map((light) => [light.beat, light.value]),
+    [
+      [8, 1],
+      [20, 0],
+    ],
+    'rotating_right from laser ids 12-23 (id 17); its white `c` channel reads as on (§3.5 color exclusion)',
+  );
+  assert.deepEqual(
+    expert.lightEvents
+      .filter((light) => light.type === 10 || light.type === 11)
+      .map((light) => [light.beat, light.type]),
+    [
+      [10, 10],
+      [10, 11],
+    ],
+    'side_lasers_left from ids 44-47, side_lasers_right from 48-51',
+  );
+  assert.ok(
+    expert.lightEvents.every((light) => light.beat !== 9 && light.beat !== 13 && light.beat !== 28),
+    'basicEvents at 9/13 and the white-id 90 / pseudo-id 132 groups at 28 never emit',
+  );
+  assert.deepEqual(
+    expert.lightEvents.filter((light) => light.type === 5).map((light) => [light.beat, light.value]),
+    [[24, 1]],
+    'boost only from ids 52-63, never from colorBoostEvents at beat 8',
+  );
+  assert.ok(
+    expert.lightEvents.every((light) => [0, 1, 3].includes(light.value)),
+    'normalized values only',
+  );
+});
+
+test('v3 basicBeatmapEvents keep v2 LightWithId semantics through bsmap', () => {
+  const observed = new Map<string, Array<[number, number]>>();
+  for (const fixture of ['synthetic/syn-v3-basic.zip', 'maps/bsmg-v3-official-sample.zip']) {
+    for (const beatmap of parseFixture(fixture).beatmaps) {
+      observed.set(
+        fixture,
+        beatmap.lightEvents.map((light) => [light.type, light.value]),
+      );
+    }
+  }
+  assert.deepEqual(observed.get('synthetic/syn-v3-basic.zip'), [
+    [1, 1],
+    [1, 0],
+    [9, 3],
+    [9, 0],
+  ]);
+  assert.deepEqual(observed.get('maps/bsmg-v3-official-sample.zip'), [[1, 3]]);
+  for (const pairs of observed.values()) {
+    for (const [type, value] of pairs) {
+      assert.ok(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].includes(type),
+        'type within the D6 group enum (8/9 dropped later)',
+      );
+      assert.ok(Number.isInteger(value) && value >= 0 && value <= 12, 'value in the v2 light-value domain');
+    }
+  }
 });
 
 test('syn-info-lowercase parses identically to its Info.dat twin', () => {
@@ -151,6 +232,11 @@ test('syn-info-lowercase parses identically to its Info.dat twin', () => {
   assert.equal(map.info.title, 'Synthetic lowercase info.dat');
   assert.equal(map.beatmaps.length, 2);
   for (const beatmap of map.beatmaps) assertSpreadBeatmap(beatmap);
+});
+
+test('v2 maps carry an empty chain array while arcs stay dropped (decision D5)', () => {
+  const map = parseFixture('synthetic/syn-v2-basic.zip');
+  for (const beatmap of map.beatmaps) assert.deepEqual(beatmap.chains, []);
 });
 
 test('audio and cover assets resolve from the zip, .egg audio accepted', () => {

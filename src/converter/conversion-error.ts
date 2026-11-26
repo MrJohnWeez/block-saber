@@ -14,6 +14,10 @@ export enum ConversionErrorKind {
   FailedToCopyFile = 'FailedToCopyFile',
   NoMapData = 'NoMapData',
   UnzipError = 'UnzipError',
+  DuplicateDifficulty = 'DuplicateDifficulty',
+  WallTooLong = 'WallTooLong',
+  SongTooLong = 'SongTooLong',
+  SlugCollision = 'SlugCollision',
   OtherFail = 'OtherFail',
   Canceled = 'Canceled',
 }
