@@ -1,5 +1,6 @@
 # Stop all games
 execute as @a run function block_saber:stop
+kill @e[type=minecraft:text_display,tag=bs_score_display]
 
 # Define Teams
 team remove team_no_collide
@@ -19,12 +20,20 @@ scoreboard objectives remove bs_light_on
 scoreboard objectives remove bs_light_color
 scoreboard objectives remove bs_lightshow
 scoreboard objectives remove bs_complete
+scoreboard objectives remove bs_health
+scoreboard objectives remove bs_combo
+scoreboard objectives remove bs_combo_max
+scoreboard objectives remove bs_multiplier
+scoreboard objectives remove bs_score
+scoreboard objectives remove bs_failed
+scoreboard objectives remove bs_godmode
 
 # Consts
 scoreboard objectives remove MAIN_MENU
 scoreboard objectives remove SELECTION_MENU
 scoreboard objectives remove PAUSE_MENU
 scoreboard objectives remove CONST_0
+scoreboard objectives remove CONST_2
 
 # Temp vars
 scoreboard objectives remove temp_var_1

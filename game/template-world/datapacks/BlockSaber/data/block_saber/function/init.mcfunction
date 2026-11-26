@@ -55,6 +55,23 @@ scoreboard objectives add bs_lightshow dummy
 scoreboard players set #CONST bs_lightshow 1
 scoreboard objectives add bs_complete dummy
 
+# Scoring (bs_* renames of 1.18 HealthPoints/Combo/Multiplier/PlayerScore, all on fake player #GLOBAL
+# where 1.18 used #BlockSaberGlobal; bs_combo_max is new - the old pack tracked no max combo, the
+# result screen shows it; bs_failed = one-run fail latch, old ended via PlayingSong=0 in spawn_level_failed_titles)
+scoreboard objectives add bs_health dummy
+scoreboard objectives add bs_combo dummy
+scoreboard objectives add bs_combo_max dummy
+scoreboard objectives add bs_multiplier dummy
+scoreboard objectives add bs_score dummy
+scoreboard objectives add bs_failed dummy
+
+# GodMode (port of 1.18 GodModeEnabled; #CONST fake player like bs_lightshow)
+# TODO(M4f): settings-menu toggle, port of settings_menu + settings_menu_toggle_godmode
+scoreboard objectives add bs_godmode dummy
+scoreboard players set #CONST bs_godmode 0
+scoreboard objectives add CONST_2 dummy
+scoreboard players set #CONST CONST_2 2
+
 # Temp vars
 scoreboard objectives add temp_var_1 dummy
 scoreboard objectives add display dummy

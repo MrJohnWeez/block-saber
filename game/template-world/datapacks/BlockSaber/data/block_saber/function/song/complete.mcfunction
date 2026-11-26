@@ -1,3 +1,4 @@
-# Song finished: record completion and end the run (port of map_difficulty_completed; results display is TODO(M4d))
+# Song finished: record completion (contract §3.7), show results (M4d port of map_difficulty_completed), end the run
 execute if data storage bs:engine play.entry run function block_saber:song/complete_record with storage bs:engine play
+function block_saber:song/score/result
 function block_saber:stop
