@@ -187,13 +187,23 @@ Existing inventory menus (`game/template-world/.../inventory/*`) keep their `cus
 - iterate `@e[type=marker,tag=bs_song]`, read each marker's `bs` compound into `storage bs:menu`, and place one item
   per song via an engine-internal `$`-macro `item replace`:
   `minecraft:stick[custom_name=[{"text":"Blueberry Dream — QooBee"}],custom_data={action:"bs_song",slug:"443f3a1b",menu_item:1b},...]`
-- clicking a song (new predicate `block_saber:actions/song_action`, checks `custom_data.action == "bs_song"`) opens
-  the difficulty page: one item per `bs.diffs[]` entry with
+- clicking a song opens the difficulty page: one item per `bs.diffs[]` entry with
   `custom_data={action:"bs_play",slug:"443f3a1b",diff:"expert_standard",menu_item:1b}`.
-- clicking a difficulty item → engine extracts `slug`+`diff` from the clicked slot's `custom_data`
-  (`data get entity @s Inventory[...]` → `storage bs:menu`) and starts the song.
-- 27-slot page, slots 1–24 for songs, slot 0 = back, slot 26 = next/prev page (`custom_data={action:"bs_page",page:N}`
+- clicking a difficulty item starts the song (`block_saber:song/start` with `{slug, diff, diff_entry}`).
+- 27-slot page, slots 1–24 for songs, slot 0 = back, slot 26 = page button (`custom_data={action:"bs_page",page:N}`
   — engine-internal). **DECISION (D9):** v1 page order = marker selector order (undefined); sort by title in v2.
+
+**Click detection (M4f amendment 2026-11-25):** menus are physical items and a "click" is dropping the item (killed
+by `tick`), so the clicked item is gone by detection time — the originally drafted read of "the clicked slot's
+`custom_data`" and a `song_action` predicate are impossible: every browser item shares one `action` value and
+wildcard `inventory.*` predicates cannot say _which_ one left. Engine mechanism instead: every page fills all 27
+slots with `menu_item:1b` items (buttons + invisible filler panes); a `menu_empty_slot` predicate (not "all slots
+still hold a menu_item") fires on a drop, a per-slot `Slot:Nb` scan claims the first slot missing its item, and the
+slot's identity resolves through per-page lists staged into `storage bs:menu page` at render time
+(`page.song<k>`/`page.diff<k>` — the whole `bs.diffs[]` entry is staged, so `start` gets `mpt_millionths`/`lead_m`
+without re-reading the marker). `custom_data` action names are kept as identification metadata per the shapes
+above; fixed single-action pages (pause, settings) keep the pure `actions/*` predicate idiom. v1 page button is
+next-only (back restarts at page 1).
 
 **Play start sequence (engine `block_saber:song/start`, called with slug+diff from the menu):**
 `block_saber:stop` cleanup → contract check (§4.2) → copy `mpt_millionths`/`lead_m` from the marker's `bs.diffs[]`

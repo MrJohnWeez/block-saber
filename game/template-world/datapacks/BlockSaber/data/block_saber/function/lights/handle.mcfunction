@@ -1,5 +1,6 @@
 # Per-tick light render pass (port of _root_class:handle_lights); off groups cost one score test, on groups 25 tests + one particle per fixture
-# TODO(M4f): settings-menu toggle for #CONST bs_lightshow (port of settings_menu + settings_menu_toggle_lightshow)
+# #CONST bs_lightshow is toggled on the pause-menu settings page (inventory/settings_action, port of the 1.18
+# settings_menu_toggle_lightshow chat button; init keeps the default 1) - the gate below is the tested behavior
 execute unless score #CONST bs_lightshow matches 1 run return 0
 execute if score #back_lasers bs_light_on matches 1 run function block_saber:lights/back_lasers
 execute if score #rings bs_light_on matches 1 run function block_saber:lights/rings

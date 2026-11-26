@@ -1,5 +1,5 @@
 # Engine start for a song run: clear leftovers, reset flags, place cursor + spawn-origin markers (port of _root_class:play marker block + folder set_spawn_origin)
-# M4f must score #bs_mpt (metersPerTick x1000000) and #bs_lead_m (lead meters) in bs_movespeed before calling
+# song/start_run scores #bs_mpt (metersPerTick x1000000) and #bs_lead_m (lead meters) in bs_movespeed before calling (contract §2.1)
 kill @e[tag=bs_node]
 kill @e[type=minecraft:marker,tag=bs_node_cursor]
 kill @e[type=minecraft:marker,tag=bs_node_origin]

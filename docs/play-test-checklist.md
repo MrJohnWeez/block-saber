@@ -52,7 +52,12 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 - [ ] Two songs installed → both listed; two-characteristics song shows separate Expert entries (Standard + Lawless).
 - [ ] Removing a song's datapack + `/reload` → its menu entry disappears within a tick (prune pass); no chat spam for other songs.
 - [ ] `uninstall` of a song pack cleans marker + scores; base `uninstall` leaves a vanilla-legal world.
-- [ ] Cross-version guard: installing an old-format pack or playing a marker with `bs.contract ≠ #CONST song_contract` shows the red refusal line.
+- [ ] Cross-version guard: installing an old-format pack or playing a marker with `bs.contract ≠ #CONST song_contract` shows the red refusal line; hand-corrupted pack (missing `<token>_play`) refuses with the "missing files" line (regression: that check once looked at `bs_bs_<slug>` and refused **everything**).
+- [ ] **First true end-to-end playthrough**: menu → song → difficulty → teleport/scene, music starts from the dispatcher at tick 39 (category `music` — song follows the Music volume slider), notes move at the marker's `mpt_millionths`/`lead_m`, results screen shows real title/artist/diff, Stop/main-menu exits leave no stale `bs:engine play`.
+- [ ] Drop-click feel: one drop = one action; verify picking an item up (instead of dropping) behaves acceptably (both remove the slot's item — detection can't tell them apart); filler-pane drops just re-render.
+- [ ] Settings toggles round-trip both ways with correct ON/OFF labels (regression: the old `*= -1` flip froze god mode at 0 and made the lightshow button vanish at −1) and apply live mid-run.
+- [ ] Pagination: with 25+ song packs installed, page forward, then pick a song from page 2 — difficulty page must show its entries (regression: song/difficulty pages once shared the page cursor).
+- [ ] Refusal after mid-run song-pack removal (marker pruned) is loud, and the run's dispatcher failing until the player quits is understood as v1 behavior.
 
 ## M6 — end-to-end
 

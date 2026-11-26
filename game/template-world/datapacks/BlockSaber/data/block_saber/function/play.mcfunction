@@ -1,3 +1,7 @@
+# Scene start for the song selected via song/start (bs:engine play holds the run state and #bs_mpt/#bs_lead_m the
+# movement constants; M4a's debug direct-call defaults from init still run the scene with frozen notes). Runs in
+# the playing player's context (game_loop / song/start): gamemode, attribute @s and the §3.2 @s curr_tick gates
+# all land on the player, matching the old folder_uuid play -> _root_class play chain.
 function block_saber:inventory/menu_pause_set
 scoreboard players set @s is_playing 1
 scoreboard players set @s curr_tick 0
@@ -11,4 +15,3 @@ function block_saber:notes/spawn_begin
 function block_saber:song/give_sabers
 function block_saber:song/score/reset
 function block_saber:song/score/displays_spawn
-say is playing!

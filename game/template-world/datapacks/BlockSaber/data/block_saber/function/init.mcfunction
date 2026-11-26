@@ -17,11 +17,15 @@ team modify team_no_collide deathMessageVisibility never
 scoreboard objectives add MAIN_MENU dummy
 scoreboard objectives add SELECTION_MENU dummy
 scoreboard objectives add PAUSE_MENU dummy
+scoreboard objectives add SONG_MENU dummy
+scoreboard objectives add SETTINGS_MENU dummy
 scoreboard objectives add CONST_0 dummy
 scoreboard players set #CONST CONST_0 0
 scoreboard players set #CONST MAIN_MENU 1
 scoreboard players set #CONST SELECTION_MENU 2
 scoreboard players set #CONST PAUSE_MENU 3
+scoreboard players set #CONST SONG_MENU 4
+scoreboard players set #CONST SETTINGS_MENU 5
 
 # Globals
 scoreboard objectives add game_session_id dummy
@@ -65,12 +69,21 @@ scoreboard objectives add bs_multiplier dummy
 scoreboard objectives add bs_score dummy
 scoreboard objectives add bs_failed dummy
 
-# GodMode (port of 1.18 GodModeEnabled; #CONST fake player like bs_lightshow)
-# TODO(M4f): settings-menu toggle, port of settings_menu + settings_menu_toggle_godmode
+# GodMode (port of 1.18 GodModeEnabled; #CONST fake player like bs_lightshow; toggled on the pause-menu settings
+# page - inventory/settings_action, port of settings_menu_toggle_godmode)
 scoreboard objectives add bs_godmode dummy
 scoreboard players set #CONST bs_godmode 0
 scoreboard objectives add CONST_2 dummy
 scoreboard players set #CONST CONST_2 2
+
+# Menu browser state (bs_menu_page = current 0-based page of the song/difficulty browsers; the constants feed the
+# 24-songs-per-page window math and the ON/OFF toggle flip)
+scoreboard objectives add bs_menu_page dummy
+scoreboard players set @a bs_menu_page 0
+scoreboard objectives add CONST_1 dummy
+scoreboard players set #CONST CONST_1 1
+scoreboard objectives add CONST_24 dummy
+scoreboard players set #CONST CONST_24 24
 
 # Temp vars
 scoreboard objectives add temp_var_1 dummy

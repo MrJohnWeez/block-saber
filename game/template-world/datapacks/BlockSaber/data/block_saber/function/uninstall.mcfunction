@@ -27,13 +27,18 @@ scoreboard objectives remove bs_multiplier
 scoreboard objectives remove bs_score
 scoreboard objectives remove bs_failed
 scoreboard objectives remove bs_godmode
+scoreboard objectives remove bs_menu_page
 
 # Consts
 scoreboard objectives remove MAIN_MENU
 scoreboard objectives remove SELECTION_MENU
 scoreboard objectives remove PAUSE_MENU
+scoreboard objectives remove SONG_MENU
+scoreboard objectives remove SETTINGS_MENU
 scoreboard objectives remove CONST_0
+scoreboard objectives remove CONST_1
 scoreboard objectives remove CONST_2
+scoreboard objectives remove CONST_24
 
 # Temp vars
 scoreboard objectives remove temp_var_1
