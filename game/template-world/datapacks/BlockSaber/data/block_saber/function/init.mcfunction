@@ -47,6 +47,8 @@ scoreboard players set #CONST song_contract 1
 scoreboard objectives add bs_finished dummy
 scoreboard objectives add bs_light_on dummy
 scoreboard objectives add bs_light_color dummy
+scoreboard objectives add bs_lightshow dummy
+scoreboard players set #CONST bs_lightshow 1
 scoreboard objectives add bs_complete dummy
 
 # Temp vars

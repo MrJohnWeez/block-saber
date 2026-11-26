@@ -5,5 +5,6 @@ attribute @s minecraft:jump_strength base reset
 attribute @s minecraft:step_height base reset
 kill @e[type=minecraft:marker]
 kill @e[tag=bs_node]
+function block_saber:lights/clear
 gamemode creative
 say stopped!

@@ -15,6 +15,7 @@ scoreboard objectives remove song_contract
 scoreboard objectives remove bs_finished
 scoreboard objectives remove bs_light_on
 scoreboard objectives remove bs_light_color
+scoreboard objectives remove bs_lightshow
 scoreboard objectives remove bs_complete
 
 # Consts
