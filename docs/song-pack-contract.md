@@ -216,12 +216,30 @@ next-only (back restarts at page 1).
 
 **Play start sequence (engine `block_saber:song/start`, called with slug+diff from the menu):**
 `block_saber:stop` cleanup → contract check (§4.2) → copy `mpt_millionths`/`lead_m` from the registry record's
-`diffs[]` entry into the engine's movement state → `summon` origin/cursor markers around `game_origin` →
+`diffs[]` entry into the engine's movement state → snapshot the player's gamemode into `bs_gamemode` (restored by
+`block_saber:stop`; the run itself is always adventure) → `summon` origin/cursor markers around `game_origin` →
 reset `curr_tick 0`, `bs_finished` flags, `bs_light_*` scores →
 `execute as @s run function bs_<slug>:<diff_char>_play` runs every tick from `game_loop` (in player context), replacing
 today's hardcoded single-scene `block_saber:play` body. `block_saber:stop` kills engine markers only
 (`kill @e[type=marker,tag=blocksaber,tag=!bs_song]`) — a leftover-tag guard for pre-storage-registry installs; the
 registry itself never lived in entities as of §2.1 amendment 2026-11-27b.
+
+**Scene anchor (amended 2026-11-27 after the first full-world playtest found NO environment ever built):**
+`block_saber:play` anchors the stage at the old game's fixed End spot `0 150 500` (the Overworld `0 0 0` anchor this
+replaces sat on ungenerated terrain, so notes converged on a bare field), and teleports the player to the old
+`reset_player_position` target `0 151 500` facing `-Z` — the template's own black-concrete floor sits at Y150, so
+anchoring the feet at 150 would bury the player in it; the `game_origin` marker stays at 150 exactly like the old
+origin marker. `block_saber:setup_game_scene` — now called
+unconditionally (its old `distance=3..` guard could never fire, so the scene build never ran at all) — places the
+base pack's three vendored 1.18.2 `default_environment*` structures with `place template` (26.3's command for
+datapack `data/<ns>/structure/*.nbt` files — `place structure` only resolves `minecraft:structure` registry entries
+and rejects file ids, even vanilla's own; the old `platform.nbt` stub has been deleted). The cubes are 48³
+block-only files that DataFixer-upgrades from DataVersion 2975 on load; the pt_2/pt_3 ids match the powered-0
+`structure_block` deco the original author saved inside pt_1, which therefore never re-trigger. Corner offsets from
+the anchor: `default_environment` `-24 -22 -46` (the stage cube holding the player), `default_environment_pt2`
+`-24 -22 -94` (the incoming-note runway), `default_environment_pt3` `-24 -22 2` (behind the player), then the light
+rig is summoned at `game_origin`. The game therefore builds its full environment in **any** world;
+`template-world.zip` is an optional convenience download, no longer a requirement.
 
 ### 2.4 Lifecycle files
 
@@ -320,6 +338,9 @@ song time offset (`_timeOffset` / `customData.offset`, B4) and emits integer gam
 - Note speed constant (port of `DataPackData.cs`): `metersPerTick = bpm/60 × 24 × 0.21 / 20`; lead distance
   `LEAD_M = clamp(bpm/6, 7, 20) m`; `LEAD_TICKS = trunc(LEAD_M / metersPerTick)` (per difficulty; BPM of the first
   segment). The spawn origin marker is placed `LEAD_TICKS × metersPerTick` meters in front of `game_origin`
+(amendment 2026-11-27: as the old pack had it, a RELATIVE offset — `block_saber:notes/spawn_begin` folds
+`#bs_lead_m` into the anchor's real `Pos[2]` via millionths, since an absolute `Pos[2] = -lead` write only looked
+right at a Z=0 anchor and stranded the whole note track ~500 blocks off-stage once the anchor moved to the End).
   (engine side, from `bs`-independent engine constants passed by the play dispatcher §3.2 line 1).
 - One clock: spawn ticks and `curr_tick` are the same timeline. A note at `gameTick T` spawns at the cursor with
   `z = -(frac)` and **arrives at the player at tick `T + LEAD_TICKS`**, so audio must start at game tick

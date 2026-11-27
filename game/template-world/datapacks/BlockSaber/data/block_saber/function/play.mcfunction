@@ -7,10 +7,16 @@ scoreboard players set @s is_playing 1
 scoreboard players set @s curr_tick 0
 attribute @s minecraft:jump_strength base set 0
 attribute @s minecraft:step_height base set 0
+execute if entity @s[gamemode=survival] run scoreboard players set @s bs_gamemode 0
+execute if entity @s[gamemode=creative] run scoreboard players set @s bs_gamemode 1
+execute if entity @s[gamemode=adventure] run scoreboard players set @s bs_gamemode 2
+execute if entity @s[gamemode=spectator] run scoreboard players set @s bs_gamemode 3
 gamemode adventure
-summon marker -0.0 -0.0 0.0 {Tags:["game_origin","blocksaber"]}
-teleport @s -0.0 -0.0 0.0 -180.0 4.0
-execute at @e[type=marker,tag=game_origin,distance=3..,limit=1] run function block_saber:setup_game_scene
+# The run anchors at the old game's fixed End stage spot (0 150 500) - deterministic fit with the
+# default-environment structure and no Overworld interference, ported from the old tick's setup anchor.
+execute in minecraft:the_end run summon minecraft:marker 0.0 150.0 500.0 {Tags:["game_origin","blocksaber"]}
+execute in minecraft:the_end run teleport @s 0.0 151.0 500.0 -180.0 0.0
+execute in minecraft:the_end positioned 0.0 150.0 500.0 run function block_saber:setup_game_scene
 function block_saber:notes/spawn_begin
 function block_saber:song/give_sabers
 function block_saber:song/score/reset

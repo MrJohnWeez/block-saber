@@ -30,5 +30,12 @@ scoreboard players set #side_lasers_right bs_light_color 0
 execute store result storage bs:engine move_args.speed double 0.000001 run scoreboard players get #bs_mpt bs_movespeed
 execute at @e[type=minecraft:marker,tag=game_origin,limit=1] run summon minecraft:marker ~ ~ ~ {Tags:["bs_node_cursor","blocksaber"]}
 execute at @e[type=minecraft:marker,tag=game_origin,limit=1] run summon minecraft:marker ~ ~2.2 ~ {Tags:["bs_node_origin","blocksaber"]}
-# bs_node_origin sits one full song-lead up the saber column axis (negative Z in front of the player)
-execute store result entity @e[type=minecraft:marker,tag=bs_node_origin,limit=1] Pos[2] double -0.000001 run scoreboard players get #bs_lead_m bs_movespeed
+# bs_node_origin sits one full song-lead up the saber column axis (negative Z), folded into the anchor's real Z in
+# millionths because the old folder_uuid:set_spawn_origin summoned it at the RELATIVE offset ~-lead and the absolute
+# Pos[2] write this replaces only looked right while the stage anchor sat at Z=0 (#bs_lead_m holds plain meters).
+execute store result score #bs_o_z bs_temp run data get entity @e[type=minecraft:marker,tag=game_origin,limit=1] Pos[2] 1000000
+scoreboard players operation #bs_o_lead bs_temp = #bs_lead_m bs_movespeed
+scoreboard players set #bs_million bs_temp 1000000
+scoreboard players operation #bs_o_lead bs_temp *= #bs_million bs_temp
+scoreboard players operation #bs_o_z bs_temp -= #bs_o_lead bs_temp
+execute store result entity @e[type=minecraft:marker,tag=bs_node_origin,limit=1] Pos[2] double 0.000001 run scoreboard players get #bs_o_z bs_temp

@@ -32,6 +32,7 @@ scoreboard players set #GLOBAL game_session_id 1
 # General Vars
 scoreboard objectives add current_menu dummy
 scoreboard objectives add is_playing dummy
+scoreboard objectives add bs_gamemode dummy
 scoreboard objectives add curr_tick dummy
 
 # Note engine (bs_* renames of 1.18 NoteHealth/NodeRowID/TempVar2; bs_movespeed carries per-song metersPerTick x1000000 and lead meters)

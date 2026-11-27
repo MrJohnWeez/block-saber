@@ -17,5 +17,11 @@ kill @e[type=minecraft:marker,tag=blocksaber,tag=!bs_song]
 kill @e[tag=bs_node]
 kill @e[type=minecraft:text_display,tag=bs_score_display]
 function block_saber:lights/clear
-gamemode creative
+# Restore the mode play captured (the old pack only ever set adventure at play and forced nothing after;
+# the gamemode creative this replaces dumped players out of their own mode after every run).
+execute if score @s bs_gamemode matches 0 run gamemode survival @s
+execute if score @s bs_gamemode matches 1 run gamemode creative @s
+execute if score @s bs_gamemode matches 2 run gamemode adventure @s
+execute if score @s bs_gamemode matches 3 run gamemode spectator @s
+execute unless score @s bs_gamemode matches 0..3 run gamemode adventure @s
 data remove storage bs:engine play
