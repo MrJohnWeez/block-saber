@@ -429,7 +429,8 @@ port of old `0.6 − 0.3×isHeightTall` relative to `bs_node_origin`. Which mode
 engine M4c's hit-check logic — the song pack guarantees only the table above.
 Duration: `_duration` (v2, beats) and `duration` (v3/v4) × 24 segments of `0.21 m`, each segment its own 2-command
 group at `gameTick + trunc(i×0.21/metersPerTick)`; wall `z` fraction preserved per segment (B5). Walls with
-`duration ≥ 16 beats` → hard error (§7).
+`duration ≥ 16 beats` are split into equal consecutive chunks of ≤12 beats (§7 amendment 2026-11-27) — the in-game
+slice stream is identical, only the emission is tiled, so arbitrarily long crouch tunnels convert.
 
 ### 3.5 Lights — `<token>_lights_lvl_<n>.mcfunction`
 
@@ -634,7 +635,7 @@ vanilla SNBT, which is locale-free — this section is purely a converter-side b
 | unknown note type/color beyond §3.3 clamps                | clamp per §3.3 (`red_dot`/`blue_dot`), never error                                                                             |
 | unknown light event type / dropped type in §3.5 table     | silently skip, no command emitted                                                                                              |
 | wall `width` ≥ 5                                          | clamp to §3.4 w:4 rule (never error)                                                                                           |
-| wall `duration ≥ 16` beats                                | hard `WallTooLong` (segment explosion guard)                                                                                   |
+| wall `duration ≥ 16` beats                                | split into consecutive ≤12-beat chunks at emission (amended 2026-11-27; was hard `WallTooLong`)                                |
 | per-difficulty tick range exceeds `2^31` ticks            | hard `SongTooLong` (≥ ~3.5 years; belt-and-braces)                                                                             |
 | `>COMMAND_LIMIT` in one stream                            | §3.8 split — never an error                                                                                                    |
 | audio/cover file missing from zip                         | hard (M2 `ConversionError` ports)                                                                                              |

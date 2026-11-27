@@ -27,7 +27,6 @@ const ERROR_COPY: Record<ConversionErrorKind, string> = {
   [ConversionErrorKind.NoMapData]: 'Failed: no playable map data',
   [ConversionErrorKind.UnzipError]: 'Failed: unzip error',
   [ConversionErrorKind.DuplicateDifficulty]: 'Failed: duplicate difficulty in Info.dat',
-  [ConversionErrorKind.WallTooLong]: 'Failed: a wall is longer than the game supports',
   [ConversionErrorKind.SongTooLong]: 'Failed: the song is longer than the game supports',
   [ConversionErrorKind.SlugCollision]: 'Failed: this map collides with another song namespace',
   [ConversionErrorKind.OtherFail]: 'Failed!',

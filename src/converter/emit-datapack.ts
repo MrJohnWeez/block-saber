@@ -37,8 +37,11 @@ const GRID_STEP = 0.3;
 /** One wall segment length in meters, 24 per beat (contract §3.1/§3.4). */
 const WALL_SEGMENT_METERS = 0.21;
 
-/** Maximum wall duration in beats before the segment explosion guard fires (§7). */
-const MAX_WALL_DURATION_BEATS = 16;
+/** Walls reaching this many beats get split so no single wall entry can flood a level file (§7). */
+const WALL_CHUNK_TRIGGER_BEATS = 16;
+
+/** Duration of each chunk a long wall is cut into (a chunk stays far below `COMMAND_LIMIT`). */
+const WALL_CHUNK_BEATS = 12;
 
 /** Hard tick-range cap before a map is rejected as absurd (§7 `SongTooLong`). */
 const MAX_SONG_TICK_RANGE = 2 ** 31;
@@ -134,7 +137,7 @@ export function fmtInt(value: number): string {
  * @param options Cover image converter used for `pack.png`.
  * @returns Zip-ready file map plus emission summary.
  * @throws ConversionError With `SlugCollision` (malformed/oversized namespace), `DuplicateDifficulty`,
- *   `WallTooLong`, or `SongTooLong` per contract §7.
+ *   or `SongTooLong` per contract §7.
  */
 export async function emitSongPack(song: ParsedSong, options: EmitDataPackOptions): Promise<EmittedDataPack> {
   const namespace = validateSlug(song.slug);
@@ -174,16 +177,12 @@ interface DifficultyEmission {
 }
 
 function emitDifficulty(namespace: string, token: string, beatmap: Beatmap, info: SongInfo): DifficultyEmission {
-  for (const wall of beatmap.obstacles) {
-    if (wall.durationBeats >= MAX_WALL_DURATION_BEATS) {
-      throw new ConversionError(
-        ConversionErrorKind.WallTooLong,
-        `Wall at beat ${wall.beat} of ${beatmap.characteristic}/${beatmap.difficulty} lasts ${wall.durationBeats} beats; the limit is ${MAX_WALL_DURATION_BEATS}`,
-      );
-    }
-  }
   const chainDots = expandChainsToDots(beatmap, info);
-  const expanded: Beatmap = { ...beatmap, notes: [...beatmap.notes, ...chainDots] };
+  const expanded: Beatmap = {
+    ...beatmap,
+    notes: [...beatmap.notes, ...chainDots],
+    obstacles: beatmap.obstacles.flatMap(chunkWall),
+  };
   const events = buildSpawnEvents(expanded, info);
   const range = events.reduce(
     (span, event) => Math.max(span, event.tick, event.kind === 'wall' ? event.endTick : event.tick),
@@ -377,6 +376,26 @@ function noteFunction(note: NoteModel): string {
 }
 
 const CUT_NAMES = ['up', 'down', 'left', 'right', 'up_left', 'up_right', 'down_left', 'down_right', 'dot'];
+
+/**
+ * Cut a wall at or past the trigger duration into equal consecutive chunks (§7).
+ *
+ * A wall emits one segment pair per 0.21 m of its length and `buildStream` can only split level files
+ * between entries, so an unchunked 31-beat crouch tunnel would pile ~1500 lines into a single entry.
+ *
+ * @param wall The parsed obstacle.
+ * @returns The wall itself, or equal-duration consecutive copies tiling the same span.
+ */
+function chunkWall(wall: ObstacleModel): ObstacleModel[] {
+  if (wall.durationBeats < WALL_CHUNK_TRIGGER_BEATS) return [wall];
+  const parts = Math.ceil(wall.durationBeats / WALL_CHUNK_BEATS);
+  const duration = wall.durationBeats / parts;
+  return Array.from({ length: parts }, (_, index) => ({
+    ...wall,
+    beat: wall.beat + duration * index,
+    durationBeats: duration,
+  }));
+}
 
 function wallEntry(tick: number, wall: ObstacleModel, exact: number, metersPerTick: number): StreamEntry {
   // Contract §3.4 (amended): a wall is tall iff it starts at row 0-1 AND spans >= 3 rows; bsmap maps v2
