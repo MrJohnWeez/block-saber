@@ -16,16 +16,19 @@ data remove storage bs:menu page
 $data modify storage bs:menu page.slug set value "$(slug)"
 $data modify storage bs:menu page.title set from storage bs:songs $(slug).title
 $data modify storage bs:menu page.diffs set from storage bs:songs $(slug).diffs
-execute if data storage bs:menu page.title run tellraw @s [{text:"[BlockSaber] ",color:"gold"},{text:"Selected Song: ",color:"yellow"},{text:"",color:"aqua",nbt:"page.title",storage:"bs:menu"}]
+execute if data storage bs:menu page.title run tellraw @s [{text:"[BlockSaber] ",color:"gold"},{text:"Selected Song: ",color:"yellow"},{color:"aqua",nbt:"page.title",storage:"bs:menu"}]
 scoreboard players set #menu_more bs_temp 0
 execute unless score @s bs_menu_page matches -2147483648..2147483647 run scoreboard players set @s bs_menu_page 0
 execute store result storage bs:engine menu_ctx.page int 1 run scoreboard players get @s bs_menu_page
 function block_saber:inventory/menu_page_window with storage bs:engine menu_ctx
 scoreboard players operation #menu_probe bs_temp = #menu_win_hi bs_temp
-scoreboard players add #menu_probe bs_temp 1
 execute store result storage bs:engine menu_ctx.probe int 1 run scoreboard players get #menu_probe bs_temp
 function block_saber:inventory/menu_diff_more with storage bs:engine menu_ctx
-execute store result storage bs:engine diff_ctx.i int 1 run scoreboard players get #menu_win_lo bs_temp
+scoreboard players operation #diff_i bs_temp = #menu_win_lo bs_temp
+scoreboard players remove #diff_i bs_temp 1
+scoreboard players set #diff_slot bs_temp 0
+execute store result storage bs:engine diff_ctx.i int 1 run scoreboard players get #diff_i bs_temp
+execute store result storage bs:engine diff_ctx.slot int 1 run scoreboard players get #diff_slot bs_temp
 function block_saber:inventory/menu_diff_iter with storage bs:engine diff_ctx
 scoreboard players operation #menu_next bs_temp = @s bs_menu_page
 execute if score #menu_more bs_temp matches 1 run scoreboard players add #menu_next bs_temp 1

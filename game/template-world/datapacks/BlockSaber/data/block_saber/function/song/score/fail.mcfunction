@@ -7,7 +7,7 @@ scoreboard players set #GLOBAL bs_failed 1
 kill @e[tag=bs_node]
 stopsound @a music
 tellraw @a [{text:"[BlockSaber] ",color:"red"},{text:"LEVEL FAILED",color:"red",bold:true}]
-execute if data storage bs:engine play.title run tellraw @a [{text:"",color:"aqua",nbt:"play.title",storage:"bs:engine"},{text:" ",color:"white"},{text:"-",color:"gray"},{text:" Score: ",color:"yellow"},{score:{name:"#GLOBAL",objective:"bs_score"}},{text:"  Max combo: ",color:"aqua"},{score:{name:"#GLOBAL",objective:"bs_combo_max"}}]
+execute if data storage bs:engine play.title run tellraw @a [{color:"aqua",nbt:"play.title",storage:"bs:engine"},{text:" ",color:"white"},{text:"-",color:"gray"},{text:" Score: ",color:"yellow"},{score:{name:"#GLOBAL",objective:"bs_score"}},{text:"  Max combo: ",color:"aqua"},{score:{name:"#GLOBAL",objective:"bs_combo_max"}}]
 execute unless data storage bs:engine play.title run tellraw @a [{text:"Score: ",color:"yellow"},{score:{name:"#GLOBAL",objective:"bs_score"}},{text:"  Max combo: ",color:"aqua"},{score:{name:"#GLOBAL",objective:"bs_combo_max"}}]
 title @s actionbar [{text:"LEVEL FAILED",color:"red"}]
 function block_saber:stop

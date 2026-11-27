@@ -241,7 +241,14 @@ skips the callback) and **not** for `run function` into a function without an ex
 result, nothing stored). `store result` additionally rejects result-less commands (`run data modify`, `run
 function`) at parse time; `as` does not re-anchor position (`at` does); `function … with <storage>` requires a
 compound; free-form entity NBT is schema-dropped at summon and by `data modify entity`; a failed `execute`
-condition inside a function does not stop its later lines.
+condition inside a function does not stop its later lines. Two more, from the first in-world playtest:
+**chat-component content keys are exclusive** — `{text:""}` and `{nbt:…,storage:…}` in ONE object renders just
+the empty text (26.3's codec picks a single content), so NBT read-outs must be their own array element
+`{color:…,nbt:"page.title",storage:"bs:menu"}` (the bare `storage:` source form is still accepted). And a macro
+function instantiates **atomically**: a `$(var)` referenced by any `$`-line but absent from the caller's
+compound fails the whole call — a silent no-op when nested in a function context — so all walk/recursion state
+travels in the caller storage (the menu diff walk passes both `i` and `slot` in `diff_ctx`); `$`-lines with
+zero variables are a compile error.
 
 - `probe.mcfunction` — liveness sentinel the engine uses to detect removed packs: during the per-reload prune
   rotation (§2.1 amendment 2026-11-27b) `block_saber:song/prune_step` rotates one `bs:songs order` entry per tick
