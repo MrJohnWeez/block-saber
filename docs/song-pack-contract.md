@@ -229,8 +229,9 @@ registry itself never lived in entities as of §2.1 amendment 2026-11-27b.
 replaces sat on ungenerated terrain, so notes converged on a bare field), and teleports the player to the old
 `reset_player_position` target `0 151 500` facing `-Z` — the template's own black-concrete floor sits at Y150, so
 anchoring the feet at 150 would bury the player in it; the `game_origin` marker stays at 150 exactly like the old
-origin marker. `block_saber:setup_game_scene` — now called
-unconditionally (its old `distance=3..` guard could never fire, so the scene build never ran at all) — places the
+origin marker. `block_saber:setup_game_scene` — called by `block_saber:build_stage_tick` whenever
+`#bs_scene_pending` (set by `play`) is 1 and the chunks are confirmed loaded (its old `distance=3..` guard could
+never fire, so the scene build never ran at all) — places the
 base pack's three vendored 1.18.2 `default_environment*` structures with `place template` (26.3's command for
 datapack `data/<ns>/structure/*.nbt` files — `place structure` only resolves `minecraft:structure` registry entries
 and rejects file ids, even vanilla's own; the old `platform.nbt` stub has been deleted). The cubes are 48³
@@ -238,7 +239,10 @@ block-only files that DataFixer-upgrades from DataVersion 2975 on load; the pt_2
 `structure_block` deco the original author saved inside pt_1, which therefore never re-trigger. Corner offsets from
 the anchor: `default_environment` `-24 -22 -46` (the stage cube holding the player), `default_environment_pt2`
 `-24 -22 -94` (the incoming-note runway), `default_environment_pt3` `-24 -22 2` (behind the player), then the light
-rig is summoned at `game_origin`. The game therefore builds its full environment in **any** world;
+rig is summoned at `game_origin`. The load gate exists because block commands issued in the SAME tick as the run
+teleport die with "That position is not loaded" in a world that has never visited these End chunks (the first
+shipped End-anchor build did exactly that and players fell into the void); the gate waits for `execute if loaded`
+on the anchor and both far cube corners. The game therefore builds its full environment in **any** world;
 `template-world.zip` is an optional convenience download, no longer a requirement.
 
 ### 2.4 Lifecycle files

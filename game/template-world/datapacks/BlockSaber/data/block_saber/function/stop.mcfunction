@@ -2,6 +2,8 @@
 # selected-song state clear (§3.7): bs:engine play is removed here, and score/fail and song/complete both route
 # through stop, so completion/failure paths never keep a stale dispatcher selection.
 scoreboard players set @s is_playing 0
+# A stage build still queued when the run ends (player stopped mid chunk-load) must not fire later.
+scoreboard players set #bs_scene_pending bs_temp 0
 # Contract §3.7 optional pause hook (D8: stock emitters ship none) - called in player context before teardown
 execute if data storage bs:engine play.slug run function block_saber:song/pause_hook with storage bs:engine play
 stopsound @a music

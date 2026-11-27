@@ -16,7 +16,9 @@ gamemode adventure
 # default-environment structure and no Overworld interference, ported from the old tick's setup anchor.
 execute in minecraft:the_end run summon minecraft:marker 0.0 150.0 500.0 {Tags:["game_origin","blocksaber"]}
 execute in minecraft:the_end run teleport @s 0.0 151.0 500.0 -180.0 0.0
-execute in minecraft:the_end positioned 0.0 150.0 500.0 run function block_saber:setup_game_scene
+# The stage builds itself via build_stage_tick once the teleport has actually loaded the End chunks: block
+# commands issued in the same tick as the teleport all die with "That position is not loaded".
+scoreboard players set #bs_scene_pending bs_temp 1
 function block_saber:notes/spawn_begin
 function block_saber:song/give_sabers
 function block_saber:song/score/reset

@@ -4,6 +4,8 @@ execute as @a[scores={is_playing=1}] run function block_saber:game_loop
 # Contract §2.4 (26.3 amendment): the song registry is bs:songs storage, not marker NBT (26.3 dropped free-form
 # entity data). One prune rotation runs per reload - a single registry entry is checked per tick below.
 execute if score #prune bs_temp matches 1 run function block_saber:song/prune_step
+# Stage-build gate: one pending check per tick until the End chunks at the run anchor are loaded (§2.3 scene anchor).
+execute if score #bs_scene_pending bs_temp matches 1 run function block_saber:build_stage_tick
 # Bring-up self-healing (load tags run before any player is online, so init's @a handout never reaches joins at
 # world start): a playing player with no menu page in the inventory is a crashed session - stop it; a not-playing
 # player with no menu page is a join, a death, or a thrown-out menu - hand the main menu back.
