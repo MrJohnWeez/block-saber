@@ -16,7 +16,7 @@ data remove storage bs:menu page
 $data modify storage bs:menu page.slug set value "$(slug)"
 $data modify storage bs:menu page.title set from storage bs:songs $(slug).title
 $data modify storage bs:menu page.diffs set from storage bs:songs $(slug).diffs
-execute if data storage bs:menu page.title run tellraw @s [{text:"[BlockSaber] ",color:"gold"},{text:"Selected Song: ",color:"yellow"},{color:"aqua",nbt:"page.title",storage:"bs:menu"}]
+execute if data storage bs:menu page.title run tellraw @s [{text:"[BlockSaber] ",color:"gold"},{text:"Selected Song: ",color:"yellow"},{color:"aqua",nbt:"page.title",storage:"bs:menu",interpret:true}]
 scoreboard players set #menu_more bs_temp 0
 execute unless score @s bs_menu_page matches -2147483648..2147483647 run scoreboard players set @s bs_menu_page 0
 execute store result storage bs:engine menu_ctx.page int 1 run scoreboard players get @s bs_menu_page

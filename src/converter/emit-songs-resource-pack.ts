@@ -49,7 +49,9 @@ export function emitSongsResourcePack(
   const files = new Map<string, string | Uint8Array>();
   files.set('pack.mcmeta', songsMcMeta(sorted.length));
   files.set('pack.png', options.logoPng);
-  files.set('assets/bsong/sounds.json', soundsJson(sorted));
+  // The sounds.json folder decides the event id's namespace, and the emitted play functions call the
+  // unqualified `bsong_<slug>` (i.e. `minecraft:bsong_<slug>`), so the registry file lives in `minecraft`.
+  files.set('assets/minecraft/sounds.json', soundsJson(sorted));
   for (const song of sorted) files.set(`assets/bsong/sounds/${song.slug}.ogg`, song.audioBytes);
   return { files, songCount: sorted.length };
 }

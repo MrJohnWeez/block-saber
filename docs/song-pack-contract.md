@@ -248,7 +248,14 @@ the empty text (26.3's codec picks a single content), so NBT read-outs must be t
 function instantiates **atomically**: a `$(var)` referenced by any `$`-line but absent from the caller's
 compound fails the whole call — a silent no-op when nested in a function context — so all walk/recursion state
 travels in the caller storage (the menu diff walk passes both `i` and `slot` in `diff_ctx`); `$`-lines with
-zero variables are a compile error.
+zero variables are a compile error. Two more from the second playtest: an NBT chat read-out prints the raw
+SNBT value (quoted strings) and **`plain:true` does not remove the quotes** — it only swaps the styling visitor
+(quotes always come from `TextComponentTagVisitor.visitString`); to print a stored _string_ bare the component
+must use `interpret:true` instead, which decodes the tag through the lenient component codec (any StringTag →
+literal). And the display-entity `transformation` codec (`com.mojang.math.Transformation`) now demands **all
+four** keys (`translation`, `left_rotation`, `scale`, `right_rotation`) — the 1.20.4-era per-key defaults are
+gone, so a rotation-only compound is a serialization error and the entity silently spawns with the identity
+transform.
 
 - `probe.mcfunction` — liveness sentinel the engine uses to detect removed packs: during the per-reload prune
   rotation (§2.1 amendment 2026-11-27b) `block_saber:song/prune_step` rotates one `bs:songs order` entry per tick
@@ -565,14 +572,19 @@ Block Saber Songs (resourcepack).zip
 ├── pack.mcmeta                  # pack_format 97.1, min 97.1, max 97.99, description "Block Saber Songs — <N> songs"
 ├── pack.png                     # static Block Saber logo (re-generated each build, deterministic)  DECISION (D10)
 └── assets/
+    ├── minecraft/
+    │   └── sounds.json
     └── bsong/
-        ├── sounds.json
         └── sounds/
             ├── 443f3a1b.ogg
             └── 6a07c1d2.ogg
 ```
 
-`assets/bsong/sounds.json` — exact entry shape (one key per installed song):
+A `sounds.json` declares its event ids in **its own folder's namespace**, so the registry sits under `minecraft/`:
+`<token>_play` calls the bare `bsong_<slug>` and `bsong:bsong_<slug>` would be an unknown sound event (first
+in-world playtest: songs were silent until this moved).
+
+`assets/minecraft/sounds.json` — exact entry shape (one key per installed song):
 
 ```json
 {
