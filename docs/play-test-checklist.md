@@ -8,7 +8,8 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 
 - [ ] `/function block_saber:init` runs clean (no red chat, no errors in F3 logs); `uninstall` then `init` twice is idempotent.
 - [ ] Note-cube summon keys audited against the 26.3 entity format (2026-11-25): `Team`, `NoGravity`, `Silent`, `NoAI`, `DeathLootTable`, `DeathTime`, `PersistenceRequired`, `Size` are still PascalCase; only `active_effects`/`equipment`/`fall_distance`/`drop_chances` were renamed — do not "modernize" the others. Watch first spawn for silent team/size failures.
-- [ ] Install a converted `syn-v2-basic` song pack: `/reload`, `/function bs_<slug>:install`, chat shows the green install line; one song marker visible via `/data get entity @e[tag=bs_song,limit=1] bs`.
+- [ ] Install a converted `syn-v2-basic` song pack: `/reload` → the song **auto-registers** (record appears in the registry within a couple of ticks, no command run — check with `/data get storage bs:songs order` + `/data get storage bs:songs <slug>`; 26.3 storage registry per §2.1 amendment — there is no marker any more); `/function bs_<slug>:install` still works as the manual fresh-install path (green chat line).
+- [ ] Drop-menu bring-up: menu items arrive in the inventory on world start, on late join, and after death without keepInventory (tick self-heal, ≤1 tick); dropping any item on the song browser selects **that** song (regression: the per-slot scan once read NBT `Slot:0b–26b`, but menu items live in `inventory.0–26` = `Slot:9b–35b`, so every drop landed on slot 0 = back).
 - [ ] Start the song from the inventory menu: music starts at the expected tick; notes spawn from the origin line and travel toward the player in the correct lanes/heights.
 - [ ] Cut direction models visible and distinct for up/down/left/right/diagonal/dot, red vs blue; white note (syn-v4-basic) renders with the white model. Visuals are billboard-centered display entities rolled by `transformation` quaternions (entity `Rotation` is ignored under billboard); if directions read mirrored (up/right swapped etc.), negate the third quaternion component in all 24 directional `function/notes/*.mcfunction` display lines; if they're off by a fixed 45°, rotate the angle table. Arrow glyph lives on the model's north face — if arrows render with a blank side toward the player, flip faces by composing each quaternion with a 180° roll about the view axis (`[0.0f,0.0f,1.0f,0.0f]`).
 - [ ] Notes reach the player plane in sync with a metronome-plain section (head-check on first 8 notes).
@@ -50,15 +51,16 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 
 ## M4f — song menu lifecycle
 
-- [ ] Two songs installed → both listed; two-characteristics song shows separate Expert entries (Standard + Lawless).
-- [ ] Removing a song's datapack + `/reload` → its menu entry disappears within a tick (prune pass); no chat spam for other songs.
-- [ ] `uninstall` of a song pack cleans marker + scores; base `uninstall` leaves a vanilla-legal world.
-- [ ] Cross-version guard: installing an old-format pack or playing a marker with `bs.contract ≠ #CONST song_contract` shows the red refusal line; hand-corrupted pack (missing `<token>_play`) refuses with the "missing files" line (regression: that check once looked at `bs_bs_<slug>` and refused **everything**).
-- [ ] **First true end-to-end playthrough**: menu → song → difficulty → teleport/scene, music starts from the dispatcher at tick 39 (category `music` — song follows the Music volume slider), notes move at the marker's `mpt_millionths`/`lead_m`, results screen shows real title/artist/diff, Stop/main-menu exits leave no stale `bs:engine play`.
+- [ ] Two songs installed → both listed in `bs:songs order` install order and on the browser page; two-characteristics song shows separate Expert entries (Standard + Lawless).
+- [ ] Removing a song's datapack + `/reload` → the prune rotation (one `bs:songs order` entry per tick after load) drops its record and order entry within a few ticks; no chat spam for other songs. Regression (26.3): a song whose `probe.mcfunction` is comment-only (no `return 1`) gets pruned **while installed** — the whole liveness check rides on `if function` executing the probe and requiring a nonzero result.
+- [ ] Headless bring-up: with zero players online (server console `/reload`), song packs still register — the tick drain has no player gate; queue entry, `bs:songs` record, and order entry all appear before anyone joins.
+- [ ] `uninstall` of a song pack cleans its `bs:songs` record + order entry + completion scores (plus the legacy marker for pre-storage installs); base `uninstall` leaves a vanilla-legal world (also wipes `bs:songs`, `reg_*`, `prune_*`).
+- [ ] Cross-version guard: installing an old-format pack or playing a song whose `bs:songs <slug>` record carries `contract ≠ #CONST song_contract` shows the red refusal line. The play-file existence guard is gone on 26.3 (`if function` can't guard side-effecting targets) — the record + contract check is the whole gate, so a hand-corrupted pack half-errors mid-play as understood v1 behavior.
+- [ ] **First true end-to-end playthrough**: menu → song → difficulty → teleport/scene, music starts from the dispatcher at tick 39 (category `music` — song follows the Music volume slider), notes move at the record's `mpt_millionths`/`lead_m`, results screen shows real title/artist/diff, Stop/main-menu exits leave no stale `bs:engine play`.
 - [ ] Drop-click feel: one drop = one action; verify picking an item up (instead of dropping) behaves acceptably (both remove the slot's item — detection can't tell them apart); filler-pane drops just re-render.
 - [ ] Settings toggles round-trip both ways with correct ON/OFF labels (regression: the old `*= -1` flip froze god mode at 0 and made the lightshow button vanish at −1) and apply live mid-run.
 - [ ] Pagination: with 25+ song packs installed, page forward, then pick a song from page 2 — difficulty page must show its entries (regression: song/difficulty pages once shared the page cursor).
-- [ ] Refusal after mid-run song-pack removal (marker pruned) is loud, and the run's dispatcher failing until the player quits is understood as v1 behavior.
+- [ ] Refusal after mid-run song-pack removal (registry record pruned on the next reload) is loud, and the run's dispatcher failing until the player quits is understood as v1 behavior.
 
 ## M6 — end-to-end
 

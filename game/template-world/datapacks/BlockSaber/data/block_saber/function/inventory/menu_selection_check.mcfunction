@@ -5,33 +5,33 @@
 data remove storage bs:menu click
 execute unless predicate block_saber:menu_empty_slot run return 0
 scoreboard players set @s temp_var_1 -1
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:0b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 0
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:1b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 1
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:2b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 2
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:3b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 3
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:4b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 4
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:5b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 5
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:6b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 6
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:7b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 7
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:8b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 8
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:9b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 9
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:10b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 10
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:11b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 11
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:12b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 12
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:13b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 13
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:14b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 14
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:15b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 15
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:16b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 16
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:17b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 17
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:18b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 18
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:19b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 19
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:20b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 20
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:21b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 21
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:22b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 22
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:23b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 23
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:24b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 24
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:25b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 25
-execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:26b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 26
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:9b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 0
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:10b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 1
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:11b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 2
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:12b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 3
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:13b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 4
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:14b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 5
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:15b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 6
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:16b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 7
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:17b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 8
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:18b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 9
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:19b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 10
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:20b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 11
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:21b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 12
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:22b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 13
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:23b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 14
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:24b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 15
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:25b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 16
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:26b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 17
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:27b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 18
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:28b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 19
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:29b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 20
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:30b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 21
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:31b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 22
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:32b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 23
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:33b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 24
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:34b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 25
+execute if score @s temp_var_1 matches -1 unless entity @s[nbt={Inventory:[{Slot:35b,components:{"minecraft:custom_data":{menu_item:1b}}}]}] run scoreboard players set @s temp_var_1 26
 execute if score @s temp_var_1 matches -1 run return 0
 # slot 0 = back to the main menu; slot 26 = page button (bs:menu page.next, kept in sync with the worn item) or
 # its filler (re-render); slots 1-24 = song slots, resolved through the staged page.song keys (a slot without a

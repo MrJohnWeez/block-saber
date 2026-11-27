@@ -1,6 +1,8 @@
 {
-   "pack":{
-	  "pack_format":63,
-	  "description":"Block Saber base assets and sounds"
-   }
+  "pack": {
+    "pack_format": 97.1,
+    "min_format": 97.1,
+    "max_format": 97.99,
+    "description": "Block Saber base assets and sounds"
+  }
 }

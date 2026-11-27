@@ -5,7 +5,8 @@ Block Saber: a Minecraft datapack rhythm game plus the website that converts Bea
 ## Commands
 
 - `npm run dev` — build once, then serve `dist/` on <http://127.0.0.1:5000> with esbuild and `public/` copy watchers
-- `npm run build` — wipe and rebuild `dist/` (minified JS and CSS, plus `dist/downloads/template-world.zip` from `game/template-world/`)
+- `npm run build` — wipe and rebuild `dist/` (minified JS and CSS, plus `dist/downloads/template-world.zip` and the
+  base datapack/resource pack zips from `game/template-world/`)
 - `npm run typecheck` and `npm run lint` (`lint:fix`) — run both before finishing a change
 - `npm run lint:css` and `npm run lint:html` — Stylelint and html-validate over `public/`
 - `npm run unzip-world` — extract zips in `worlds/` into the local Minecraft `saves` folder
@@ -17,6 +18,8 @@ Block Saber: a Minecraft datapack rhythm game plus the website that converts Bea
 - `src/main.ts` — the site's only script; it wires the Beatsaber map drop zone with `addEventListener`, never with inline handlers.
 - `dev/serve.mjs` — static dev server for `dist/` on port 5000; rejects paths outside `dist/`, no hot reload.
 - `dev/zip-world.mjs` — zips `game/template-world/` into `dist/downloads/template-world.zip` during the build.
+- `dev/zip-base-packs.mjs` — zips the base datapack and resource pack from `game/template-world/` into
+  `dist/downloads/block-saber-base-{datapack,resourcepack}.zip` for the site's download links.
 - `dev/unzip-world.mjs` — installs world zips from `worlds/` into `%APPDATA%\.minecraft\saves` on Windows, `~/.minecraft/saves` elsewhere.
 - `dev/make-fixtures.mjs` — regenerates the synthetic Beat Saber test zips into `test-data/synthetic/` (git-ignored).
 - `game/template-world/` — the actual game: level data, `datapacks/BlockSaber/` (mcfunctions, predicates, structures) and `BlockSaberResourcepack/` (models, textures, sounds). Git LFS for the pngs and oggs.

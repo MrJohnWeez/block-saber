@@ -52,9 +52,13 @@ BlockSaber - QooBee - Blueberry Dream (datapack).zip
 ├── pack.png                                    # real PNG cover (B1 fix), §4
 ├── README-install.txt                          # human install steps incl. the install command
 └── data/
+    ├── minecraft/
+    │   └── tags/function/load.json             # ["bs_443f3a1b:register"] — merged across packs since 1.21
     └── bs_443f3a1b/
         └── function/
             ├── probe.mcfunction
+            ├── register.mcfunction
+            ├── auto_install.mcfunction
             ├── install.mcfunction
             ├── uninstall.mcfunction
             ├── expert_standard_play.mcfunction
@@ -72,10 +76,10 @@ BlockSaber - QooBee - Blueberry Dream (datapack).zip
 Rules:
 
 - `pack.mcmeta`/`pack.png` at zip root; the zip **is** the datapack (no wrapper folder).
-- Data namespace `bs_<slug>` only. **No** files under `data/minecraft/` — function tags (`load.json`, `tick.json`)
-  do **not** merge across packs; shipping one would clobber the base pack's tags. Registration is via `/function
-bs_<slug>:install` (§2).
-- No engine files, no `sounds.json`, no audio in song datapacks.
+- Data namespace `bs_<slug>` owns everything except the one merged hook file `data/minecraft/tags/function/load.json`
+  (§2.1). Function tags **do** merge across packs (true since 1.21; the earlier no-merge rule this document assumed
+  is obsolete — amendment 2026-11-27). No other `data/minecraft/` files, no engine files, no `sounds.json`, no
+  audio in song datapacks.
 - Old Unity template's per-map functions `play`, `tick`, `active_tick`, `spawn_notes_base`, `set_spawn_origin`,
   `game_controls`, `difficulties`, `title`, `display_title`, `map_difficulty_completed`, `init` are **deleted**; the
   base engine (`block_saber:*`) and the marker entity (§2) absorb them 1-for-1.
@@ -125,47 +129,49 @@ characteristics (they only relabel the menu and split files) — **no** characte
 
 ## 2. Song metadata + self-registration
 
-### 2.1 Mechanism: install command + marker entity (locked design choice)
+### 2.1 Mechanism: load-tag self-registration + storage registry (amendment 2026-11-27b, supersedes D2/D3 and the 2026-11-27 marker schema above)
 
-Datapacks cannot be enumerated from mcfunction and function tags don't merge, so song packs self-register with **one
-player-run command** after the pack is dropped into `datapacks/` and `/reload`:
+Datapacks cannot be enumerated from mcfunction, so song packs self-register. The old "one manual `/function
+bs_<slug>:install` per song" rule rested on function tags not merging across packs — they have merged since 1.21 —
+so registration is **automatic on load**. The registry is **command storage**, not entity NBT: as of 26.3 the entity
+save/load path is schema-driven and silently drops unknown tags, so `summon … {bs:{…}}` and
+`data modify entity <e> <unknown>` no longer exist as storage (verified live on the 26.3 jar).
 
-```text
-/function bs_443f3a1b:install
-```
+1. `data/minecraft/tags/function/load.json` runs `bs_<slug>:register` during every data pack (re)load. It stages
+   `{installer: "bs_<slug>:auto_install"}` into `bs:engine reg_slot` and calls `block_saber:song/register_stage`
+   directly — never behind `execute if function` (26.3 evaluates that by EXECUTING the target, see the runtime
+   semantics note under §2.4).
+2. `block_saber:tick` drains one queued entry per tick running `bs_<slug>:auto_install`. No player or loaded chunk
+   is needed (there is no summon any more), so songs present at world start are registered before anyone joins.
+3. `auto_install` (re)writes the song's registry record and **defaults** its `bs_complete` entries to 0 with `add`
+   so completion records survive reloads; a genuine fresh install (records wiped) is the manual path below.
 
-The converter prints this in the site UI and in `README-install.txt`. `install.mcfunction` is idempotent. It:
+`/function bs_<slug>:install` remains the manual fresh-install path (version-guards §4.2, wipes then re-seeds the
+song's state including completion records, announces to chat): version-guard → `ns:uninstall` → write the registry
+record + order entry → `scoreboard players set #<slug>_<token> bs_complete 0` per difficulty → tellraw.
 
-1. version-guards (§4.2);
-2. deletes any previous state for its slug, then summons **one song marker** at fixed coords `0 5 0` and creates
-   its scoreboard entries.
+The registry lives in the `bs:songs` command storage namespace (shared: song packs write their own record, the
+engine reads all):
 
-The marker is the machine-readable song registry: the engine enumerates `@e[type=marker,tag=bs_song]` — that selector
-_is_ the "installed songs" list; no scoreboard enumeration or NBT scanning is needed to find songs, and all static
-metadata travels as **entity data** (read with `data get entity`, copied via `data modify ... from entity`, and fed
-into the engine's internal macro functions to build menu items).
-
-Marker schema (summoned by the song pack, read only by the engine):
+- `bs:songs order` — list of `{slug:"<slug>"}` compounds in install order; iterating it **is** the "installed
+  songs" list (menu pages window over it, D9 unchanged: v1 = registry order, sort by title in v2).
+- `bs:songs <slug>` — the record:
 
 ```mcfunction
-summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_443f3a1b","blocksaber"],bs:{\
-  slug:"443f3a1b",contract:1,sound:"bsong_443f3a1b",\
+data modify storage bs:songs 443f3a1b set value {slug:"443f3a1b",contract:1,sound:"bsong_443f3a1b",\
   title:"Blueberry Dream",artist:"QooBee",level:"Standard Expert / ExpertPlus",\
   diffs:[{id:"expert_standard",diff:"Expert",char:"Standard",notes:964,end_tick:9417,mpt_millionths:504000,lead_m:20},\
-         {id:"expert_plus_standard",diff:"ExpertPlus",char:"Standard",notes:1418,end_tick:9417,mpt_millionths:504000,lead_m:20}]}}
+         {id:"expert_plus_standard",diff:"ExpertPlus",char:"Standard",notes:1418,end_tick:9417,mpt_millionths:504000,lead_m:20}]}
 ```
 
-- `bs.diffs[].id` is exactly the §1.3 token and the prefix of every per-difficulty function file.
-- `bs.diffs[].end_tick` = absolute game tick of the last emitted command (`§3.7`) — engine uses it for result timing.
-- `bs.diffs[].mpt_millionths` = `metersPerTick × 1e6` (§3.1, integer) and `bs.diffs[].lead_m` = lead meters (§3.1,
+- `diffs[].id` is exactly the §1.3 token and the prefix of every per-difficulty function file.
+- `diffs[].end_tick` = absolute game tick of the last emitted command (`§3.7`) — engine uses it for result timing.
+- `diffs[].mpt_millionths` = `metersPerTick × 1e6` (§3.1, integer) and `diffs[].lead_m` = lead meters (§3.1,
   integer). The play-start sequence (§2.3) copies both into the engine's movement state before the first tick — the
-  runtime handoff for the constants the converter derives from BPM. (Amendment 2026-11-25 from M4a: without these,
-  the engine cannot move notes.)
-- `bs.contract` is validated at play time (§4.2).
-- Strings: SNBT-quoted, `"`/`\` escaped, title/artist truncated to 64 chars by the converter.
-- Marker NBT is preserved on chunk save (custom entity NBT via `/data` semantics); position `0 5 0` is inside the
-  always-loaded spawn area of the template world. **DECISION (D3):** fixed-position markers are acceptable for a
-  singleplayer template world; if ever needed, the engine's prune pass (§2.4) is the migration hook.
+  runtime handoff for the constants the converter derives from BPM.
+- `contract` is validated at play time (§4.2).
+- Strings: SNBT-quoted, `"`/`\` escaped, title/artist truncated to 64 chars by the converter. Storage survives
+  restarts (`data/command_storage.dat`), which markers-with-dropped-NBT never could.
 
 ### 2.2 Scoreboards touched by a song pack
 
@@ -187,14 +193,14 @@ bs_complete 0`.
 Existing inventory menus (`game/template-world/.../inventory/*`) keep their `custom_data={action:...}` +
 `block_saber:actions/*` predicate pattern. The engine's `block_saber:inventory/menu_selection_set` becomes:
 
-- iterate `@e[type=marker,tag=bs_song]`, read each marker's `bs` compound into `storage bs:menu`, and place one item
-  per song via an engine-internal `$`-macro `item replace`:
+- walk `bs:songs order` by index (26.3 registry storage, §2.1), read each record's fields into `storage bs:menu`,
+  and place one item per song via an engine-internal `$`-macro `item replace`:
   `minecraft:stick[custom_name=[{"text":"Blueberry Dream — QooBee"}],custom_data={action:"bs_song",slug:"443f3a1b",menu_item:1b},...]`
-- clicking a song opens the difficulty page: one item per `bs.diffs[]` entry with
+- clicking a song opens the difficulty page: one item per record `diffs[]` entry with
   `custom_data={action:"bs_play",slug:"443f3a1b",diff:"expert_standard",menu_item:1b}`.
 - clicking a difficulty item starts the song (`block_saber:song/start` with `{slug, diff, diff_entry}`).
 - 27-slot page, slots 1–24 for songs, slot 0 = back, slot 26 = page button (`custom_data={action:"bs_page",page:N}`
-  — engine-internal). **DECISION (D9):** v1 page order = marker selector order (undefined); sort by title in v2.
+  — engine-internal). **DECISION (D9):** v1 page order = registry order (install order); sort by title in v2.
 
 **Click detection (M4f amendment 2026-11-25):** menus are physical items and a "click" is dropping the item (killed
 by `tick`), so the clicked item is gone by detection time — the originally drafted read of "the clicked slot's
@@ -203,45 +209,88 @@ wildcard `inventory.*` predicates cannot say _which_ one left. Engine mechanism 
 slots with `menu_item:1b` items (buttons + invisible filler panes); a `menu_empty_slot` predicate (not "all slots
 still hold a menu_item") fires on a drop, a per-slot `Slot:Nb` scan claims the first slot missing its item, and the
 slot's identity resolves through per-page lists staged into `storage bs:menu page` at render time
-(`page.song<k>`/`page.diff<k>` — the whole `bs.diffs[]` entry is staged, so `start` gets `mpt_millionths`/`lead_m`
-without re-reading the marker). `custom_data` action names are kept as identification metadata per the shapes
+(`page.song<k>`/`page.diff<k>` — the whole record `diffs[]` entry is staged, so `start` gets `mpt_millionths`/
+`lead_m` without re-reading the registry). `custom_data` action names are kept as identification metadata per the shapes
 above; fixed single-action pages (pause, settings) keep the pure `actions/*` predicate idiom. v1 page button is
 next-only (back restarts at page 1).
 
 **Play start sequence (engine `block_saber:song/start`, called with slug+diff from the menu):**
-`block_saber:stop` cleanup → contract check (§4.2) → copy `mpt_millionths`/`lead_m` from the marker's `bs.diffs[]`
-entry into the engine's movement state → `summon` origin/cursor markers around `game_origin` →
+`block_saber:stop` cleanup → contract check (§4.2) → copy `mpt_millionths`/`lead_m` from the registry record's
+`diffs[]` entry into the engine's movement state → `summon` origin/cursor markers around `game_origin` →
 reset `curr_tick 0`, `bs_finished` flags, `bs_light_*` scores →
 `execute as @s run function bs_<slug>:<diff_char>_play` runs every tick from `game_loop` (in player context), replacing
-today's hardcoded single-scene `block_saber:play` body. `block_saber:stop` must kill markers **except** song markers:
-`kill @e[type=marker,tag=blocksaber,tag=!bs_song]` (engine change; today it kills all markers and would delete
-registrations).
+today's hardcoded single-scene `block_saber:play` body. `block_saber:stop` kills engine markers only
+(`kill @e[type=marker,tag=blocksaber,tag=!bs_song]`) — a leftover-tag guard for pre-storage-registry installs; the
+registry itself never lived in entities as of §2.1 amendment 2026-11-27b.
 
 ### 2.4 Lifecycle files
 
-- `probe.mcfunction` — comment-only file whose existence the engine uses to detect removed packs:
-  `$execute unless function bs_${slug}:probe run kill @s` run per marker from `block_saber:tick` (prune pass).
+**26.3 runtime semantics (verified live on a headless 26.3 server plus the decompiled jar; they shaped
+§2.1/§2.4):**
+`execute if/unless function <f>` **executes** `f` inside the modifier chain and continues iff its result ≠ 0; it
+**requires a `run` destination** (without one the command fails to parse). On a false result the chain stops
+**silently** - no "Test failed", and the store callbacks below never fire. If the target is missing (or a macro
+line cannot instantiate), the whole containing function aborts (for a macro function, _all_ of it: instantiation
+is atomic and runs before any line executes) - so a function that names another pack's function keeps the poison
+in its own file and communicates only via pre-loaded scores/side effects (`block_saber:song/prune_probe_check`,
+`pause_hook`). Probes therefore must `return 1` (a comment-only file is falsy) and `if function` is never an
+existence guard for side-effecting targets. `execute store success/result` is a source callback that fires only
+when the chain ends with a number: condition-only chains write 1/0 as expected, a `run <cmd>` destination writes
+through the command's numeric result - but **not** when the condition failed (the conditional-fail exception
+skips the callback) and **not** for `run function` into a function without an explicit `return` (no numeric
+result, nothing stored). `store result` additionally rejects result-less commands (`run data modify`, `run
+function`) at parse time; `as` does not re-anchor position (`at` does); `function … with <storage>` requires a
+compound; free-form entity NBT is schema-dropped at summon and by `data modify entity`; a failed `execute`
+condition inside a function does not stop its later lines.
+
+- `probe.mcfunction` — liveness sentinel the engine uses to detect removed packs: during the per-reload prune
+  rotation (§2.1 amendment 2026-11-27b) `block_saber:song/prune_step` rotates one `bs:songs order` entry per tick
+  and `prune_probe` keeps or drops its record based on `prune_probe_check`'s
+  `$execute if function bs_$(slug):probe run scoreboard players set #prune_alive bs_temp 1` against the 0 that
+  `prune_step` pre-loads (the poisoned `if function` is quarantined in that file - a missing probe aborts only
+  it). Because 26.3 tests the check by **executing** the probe and requiring result ≠ 0, the probe must be
+  `return 1` (a comment-only file is falsy and would prune live songs):
+
+```mcfunction
+# bs_443f3a1b — Blueberry Dream (QooBee) — probe file; presence + nonzero result marks the song installed.
+return 1
+```
+
+- `register.mcfunction` + `data/minecraft/tags/function/load.json` — the §2.1 auto-registration hook:
+
+```mcfunction
+# bs_443f3a1b — minecraft:load tag hook (contract §2.4): stage this pack's auto-install for the engine's tick drain.
+data modify storage bs:engine reg_slot.installer set value "bs_443f3a1b:auto_install"
+function block_saber:song/register_stage with storage bs:engine reg_slot
+```
+
+- `auto_install.mcfunction` — engine-run (queued, no context requirements): optional legacy-marker kill,
+  `scoreboard objectives add bs_complete dummy`, the `data modify storage bs:songs <slug> set value {...}` record
+  write, the `bs:songs order` upsert, and `scoreboard players add #443f3a1b_<token> bs_complete 0` per difficulty
+  (`add` defaults unset to 0 — completion records survive reloads).
 - `install.mcfunction` — example (real contract v1):
 
 ```mcfunction
 # bs_443f3a1b — Blueberry Dream (QooBee) — Block Saber song contract 1
 execute unless score #CONST song_contract matches 1 run tellraw @s {text:"[BlockSaber] Install the base BlockSaber datapack first.",color:"red"}
 execute unless score #CONST song_contract matches 1 run return 0
-execute unless function block_saber:notes/red_dot run tellraw @s {text:"[BlockSaber] Base engine too old (missing block_saber:notes).",color:"red"}
-execute unless function block_saber:notes/red_dot run return 0
 function bs_443f3a1b:uninstall
-summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_443f3a1b","blocksaber"],bs:{slug:"443f3a1b",contract:1,...}}
+scoreboard objectives add bs_complete dummy
+data modify storage bs:songs 443f3a1b set value {slug:"443f3a1b",contract:1,...}
+execute unless data storage bs:songs order[{slug:"443f3a1b"}] run data modify storage bs:songs order append value {slug:"443f3a1b"}
 scoreboard players set #443f3a1b_expert_standard bs_complete 0
 scoreboard players set #443f3a1b_expert_plus_standard bs_complete 0
 tellraw @s [{text:"[BlockSaber] ",color:"green"},{text:"Blueberry Dream installed (2 difficulties).",color:"white"}]
 ```
 
-- `uninstall.mcfunction` — `kill @e[tag=bs_443f3a1b]` + `scoreboard players reset #443f3a1b_* bs_complete`.
-  Removing the zip without running this is safe: the §2.4 prune pass deletes the orphan marker within one tick;
-  leftover `bs_complete` fake-player entries are inert.
+- `uninstall.mcfunction` — legacy marker kill + `data remove storage bs:songs 443f3a1b` +
+  `data remove storage bs:songs order[{slug:"443f3a1b"}]` + `scoreboard players reset #443f3a1b_* bs_complete`.
+  Removing the zip without running this is safe: the §2.4 prune rotation drops the orphan record on the next
+  reload; leftover `bs_complete` fake-player entries are inert.
 
-**DECISION (D2):** one manual `/function bs_<slug>:install` per song pack (printed by the site, documented in the zip
-and on `public/index.html`). There is no zero-touch alternative that survives the function-tag no-merge rule.
+**DECISION (D2, superseded 2026-11-27):** the old rule "one manual `/function bs_<slug>:install` per song pack, no
+zero-touch alternative" assumed function tags do not merge across packs; they have since 1.21, so song packs ship
+their own `load.json` value and register automatically (§2.1). The manual command stays as the fresh-install path.
 
 ---
 
@@ -485,8 +534,8 @@ emitter does **not** ship them.
 Two directions, both mandatory:
 
 1. **Song pack checks engine** in `install.mcfunction` (§2.4 example): refuses when
-   `execute unless score #CONST song_contract matches 1` or `unless function block_saber:notes/red_dot` fails —
-   player sees a red chat line naming the missing base pack.
+   `execute unless score #CONST song_contract matches 1` fails — player sees a red chat line naming the missing
+   base pack. (Score-based only: 26.3 `unless function` would execute a probed engine function as a side effect.)
 2. **Engine checks song pack** at difficulty-click, before any scene setup: read `data get entity <marker>
 bs.contract` into a temp score; if ≠ `#CONST song_contract`, refuse and send (SNBT tellraw):
 
@@ -579,8 +628,8 @@ vanilla SNBT, which is locale-free — this section is purely a converter-side b
 | #   | Topic                                                        | Status           | Decision                                                                                                                                                                                                       | Owner sign-off                     |
 | --- | ------------------------------------------------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | D1  | Slug algorithm                                               | LOCKED           | sha1(BeatSaver key ∨ Info-hash) → 8 hex → `bs_<slug>`, grow on collision                                                                                                                                       | approved 2026-11-25                |
-| D2  | Registration = manual `/function bs_<slug>:install` + marker | LOCKED           | as §2 (only tag-merge-safe mechanism)                                                                                                                                                                          | approved 2026-11-25                |
-| D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED           | as §2.1                                                                                                                                                                                                        | approved 2026-11-25                |
+| D2  | Registration = manual `/function bs_<slug>:install` + marker | LOCKED (amended) | amendment 2026-11-27b: automatic §2.1 load-tag registration into the `bs:songs` storage registry; `install` stays as the manual fresh-install path                                                             | amended 2026-11-27                 |
+| D3  | Marker fixed position `0 5 0` + prune pass                   | LOCKED (amended) | amendment 2026-11-27b: marker registry dropped - 26.3 silently deletes free-form entity NBT (§2.1); the prune pass survives as the per-reload `bs:songs order` rotation (§2.4)                                 | amended 2026-11-27                 |
 | D4  | Audio category `music`, `stream:true`                        | LOCKED           | as §5                                                                                                                                                                                                          | approved 2026-11-25                |
 | D5  | Arcs skipped; chains → dots                                  | LOCKED           | as §3.3                                                                                                                                                                                                        | approved 2026-11-25                |
 | D6  | v3/v4 → light group mapping + skips                          | LOCKED (amended) | as §3.5 table + per-format value normalization amendments (2026-11-25, M3; v4 half corrected same day vs bsmg.wiki + real lightshow: `eventBoxGroups`, `g` = standard-env light ids, ≥24 ranges M6-calibrated) | approved with amendment 2026-11-25 |

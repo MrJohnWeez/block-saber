@@ -7,7 +7,7 @@ execute unless data storage bs:menu click.slug run return 0
 execute unless data storage bs:menu click.diff run return 0
 execute unless data storage bs:menu click.diff_entry run return 0
 function block_saber:stop
-$data modify storage bs:engine sel.tag set value "bs_${slug}"
-$data modify storage bs:engine sel.slug set value "${slug}"
-$data modify storage bs:engine sel.diff set value "${diff}"
+$data modify storage bs:engine sel.tag set value "bs_$(slug)"
+$data modify storage bs:engine sel.slug set value "$(slug)"
+$data modify storage bs:engine sel.diff set value "$(diff)"
 function block_saber:song/start_handshake with storage bs:engine sel

@@ -1,6 +1,11 @@
 # Stop all games
 execute as @a run function block_saber:stop
 kill @e[type=minecraft:text_display,tag=bs_score_display]
+data remove storage bs:engine reg_queue
+data remove storage bs:engine reg_slot
+data remove storage bs:engine reg_cur
+data remove storage bs:songs order
+data remove storage bs:engine prune_cur
 
 # Define Teams
 team remove team_no_collide

@@ -14,6 +14,29 @@
       <h1>Block Saber</h1>
       <p class="tagline">Turn Beat Saber map zips into Minecraft datapacks for the Block Saber game world.</p>
 
+      <section class="base-packs" aria-label="Base game downloads">
+        <h2>Block Saber base game</h2>
+        <p class="pack-note">
+          Songs converted on this page are data only — they need the Block Saber base game to play. Skip this if your
+          world already runs the current base packs.
+        </p>
+        <div class="pack-actions">
+          <a class="button" href="downloads/template-world.zip" download>Download game world</a>
+          <a class="button button-secondary" href="downloads/block-saber-base-datapack.zip" download>
+            Download base datapack
+          </a>
+          <a class="button button-secondary" href="downloads/block-saber-base-resourcepack.zip" download>
+            Download base resource pack
+          </a>
+        </div>
+        <p class="pack-note">
+          New to Block Saber? Unzip the game world into <code>.minecraft/saves/</code> and play it. Playing on a world
+          of your own? Keep the base datapack zip zipped and drop it into
+          <code>.minecraft/saves/&lt;world&gt;/datapacks/</code>, and put the base resource pack zip into
+          <code>.minecraft/resourcepacks/</code>.
+        </p>
+      </section>
+
       <section class="converter" aria-label="Map converter">
         <div id="drop-zone" class="drop-zone">
           <p>Drag one or more Beat Saber map <code>.zip</code> files here to convert them to Minecraft datapacks.</p>
@@ -34,6 +57,10 @@
         <h2>Installing your converted packs</h2>
         <ol>
           <li>
+            If you don't have the base game yet, install it first using the downloads above: the game world, or the base
+            datapack plus base resource pack for a world of your own.
+          </li>
+          <li>
             Download each song's <strong>datapack</strong> with the button on its row above, and drop the zips
             (unzipped) into your Block Saber world's <code>datapacks</code> folder:
             <code>.minecraft/saves/&lt;world&gt;/datapacks/</code>.
@@ -43,18 +70,26 @@
             <code>.minecraft/resourcepacks/</code> — do not unzip it.
           </li>
           <li>
-            In Minecraft, open <em>Options → Video Settings → Resource Packs</em>, move "Block Saber Songs" to the
-            selected list, and apply. Re-download and replace it whenever you convert new songs.
+            In Minecraft, open <em>Options → Video Settings → Resource Packs</em>, move "Block Saber base assets and
+            sounds" and "Block Saber Songs" to the selected list, and apply. Re-download and replace the songs pack
+            whenever you convert new songs.
           </li>
           <li>
-            Open your Block Saber world and run <code>/reload</code> (or re-enter the world) to load the new songs.
+            Open your Block Saber world and run <code>/reload</code> (or re-enter the world) to load the new songs —
+            each song registers itself automatically, no command needed. A working install says
+            <code>BlockSaber Re-Loaded!</code> in chat and shows three enabled packs to <code>/datapack list</code>.
+          </li>
+          <li>
+            Play: the menu lives in your inventory as items — <strong>drop</strong> the item you want with
+            <kbd>Q</kbd> (Game Selection → a song → a difficulty starts the run). If your inventory is ever empty, the
+            game hands the menu back on the next tick.
           </li>
         </ol>
 
         <aside class="warning">
-          <strong>Minecraft 26.3 or newer is required.</strong> Song packs made by this site use the new song contract
-          and are <em>not</em> compatible with packs from the old 1.18.2-era generator — delete any old Block Saber song
-          datapacks and resource packs before installing. The base game will refuse mismatched packs in chat.
+          <strong>Minecraft 26.3 or newer is required.</strong> Packs made by this site use the new song contract and
+          are <em>not</em> compatible with packs from the old 1.18.2-era generator — delete any old Block Saber base and
+          song datapacks and resource packs before installing. The base game will refuse mismatched packs in chat.
         </aside>
       </section>
     </main>

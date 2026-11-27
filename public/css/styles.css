@@ -66,6 +66,17 @@ code {
   margin: 0;
 }
 
+.base-packs {
+  display: grid;
+  gap: var(--row-gap);
+}
+
+.pack-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
 .converter {
   display: grid;
   gap: var(--block-gap);
@@ -98,6 +109,7 @@ code {
   cursor: pointer;
   font: inherit;
   padding: 8px 16px;
+  text-decoration: none;
 }
 
 .button:disabled {

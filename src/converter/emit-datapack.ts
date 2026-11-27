@@ -155,7 +155,13 @@ export async function emitSongPack(song: ParsedSong, options: EmitDataPackOption
   }
   files.set(`${nsFunctions}/probe.mcfunction`, probeFile(song.slug, song.info));
   files.set(`${nsFunctions}/install.mcfunction`, installFile(namespace, song.slug, song.info, difficulties));
+  files.set(`${nsFunctions}/auto_install.mcfunction`, autoInstallFile(namespace, song.slug, song.info, difficulties));
+  files.set(`${nsFunctions}/register.mcfunction`, registerFile(namespace));
   files.set(`${nsFunctions}/uninstall.mcfunction`, uninstallFile(namespace, song.slug, difficulties));
+  files.set(
+    'data/minecraft/tags/function/load.json',
+    `${JSON.stringify({ values: [`${namespace}:register`] }, null, 2)}\n`,
+  );
   files.set('pack.mcmeta', songMcMeta(song.info, song.slug));
   files.set('README-install.txt', readmeInstall(namespace, song.info, song.slug, difficulties));
   files.set('pack.png', await options.coverConverter.toPng(song.assets.coverBytes));
@@ -548,7 +554,12 @@ function validateSlug(slug: string): string {
 }
 
 function probeFile(slug: string, info: SongInfo): string {
-  return `# bs_${slug} — ${info.title} (${info.songAuthorName}) — probe file; its existence marks this song installed (contract §2.4).\n`;
+  const lines = [
+    `# bs_${slug} — ${info.title} (${info.songAuthorName}) — probe file (contract §2.4): its presence marks the song`,
+    '# installed. 26.3 `execute unless function` runs the probe and tests its result, so it must return nonzero.',
+    'return 1',
+  ];
+  return `${lines.join('\n')}\n`;
 }
 
 function installFile(namespace: string, slug: string, info: SongInfo, difficulties: EmittedDifficulty[]): string {
@@ -556,26 +567,57 @@ function installFile(namespace: string, slug: string, info: SongInfo, difficulti
     `# ${namespace} — ${info.title} (${info.songAuthorName}) — Block Saber song contract ${BS_API_VERSION}`,
     `execute unless score #CONST song_contract matches ${BS_API_VERSION} run tellraw @s {text:"[BlockSaber] Install the base BlockSaber datapack first.",color:"red"}`,
     `execute unless score #CONST song_contract matches ${BS_API_VERSION} run return 0`,
-    'execute unless function block_saber:notes/red_dot run tellraw @s {text:"[BlockSaber] Base engine too old (missing block_saber:notes).",color:"red"}',
-    'execute unless function block_saber:notes/red_dot run return 0',
     `function ${namespace}:uninstall`,
-    markerSummon(slug, info, difficulties),
+    'scoreboard objectives add bs_complete dummy',
+    `data modify storage bs:songs ${slug} set value ${songRecord(slug, info, difficulties)}`,
+    orderUpsert(slug),
     ...difficulties.map((diff) => `scoreboard players set #${slug}_${diff.token} bs_complete 0`),
     `tellraw @s [{text:"[BlockSaber] ",color:"green"},{text:${JSON.stringify(`${truncate64(info.title)} installed (${difficulties.length} difficulties).`)},color:"white"}]`,
   ];
   return `${lines.join('\n')}\n`;
 }
 
+function registerFile(namespace: string): string {
+  const lines = [
+    `# ${namespace} — minecraft:load tag hook (contract §2.4): stage this pack's auto-install for the engine's`,
+    "# tick drain. The engine owns the shared bs:songs registry and does its writes outside this pack's load",
+    '# context, one queue entry per tick (and a later tick also survives pack-order uncertainty at load).',
+    '# The call is direct: 26.3 `execute if function` would EXECUTE register_stage inside its condition, so an',
+    '# existence guard around it is impossible (and pointless when the direct call is one line shorter).',
+    `data modify storage bs:engine reg_slot.installer set value "${namespace}:auto_install"`,
+    'function block_saber:song/register_stage with storage bs:engine reg_slot',
+  ];
+  return `${lines.join('\n')}\n`;
+}
+
+function autoInstallFile(namespace: string, slug: string, info: SongInfo, difficulties: EmittedDifficulty[]): string {
+  const lines = [
+    `# ${namespace} — auto-install run by the base engine on the tick after load (contract §2.4): rewrite this`,
+    '# song\u2019s bs:songs registry record (§2.1: 26.3 dropped free-form entity NBT, so the registry is storage).',
+    '# Completion records survive reloads, so scores are defaulted to 0 with add - never reset; a genuine fresh',
+    '# install is the manual ns:install path. The marker kill only cleans up pre-storage-registry installs.',
+    `kill @e[type=minecraft:marker,tag=${namespace}]`,
+    'scoreboard objectives add bs_complete dummy',
+    `data modify storage bs:songs ${slug} set value ${songRecord(slug, info, difficulties)}`,
+    orderUpsert(slug),
+    ...difficulties.map((diff) => `scoreboard players add #${slug}_${diff.token} bs_complete 0`),
+  ];
+  return `${lines.join('\n')}\n`;
+}
+
 function uninstallFile(namespace: string, slug: string, difficulties: EmittedDifficulty[]): string {
   const lines = [
-    `# ${namespace} — removes the song marker and completion entries installed by ${namespace}:install.`,
-    `kill @e[tag=${namespace}]`,
+    `# ${namespace} — removes the bs:songs registry record, order entry, legacy marker, and completion entries`,
+    `# installed by ${namespace}:install.`,
+    `kill @e[type=minecraft:marker,tag=${namespace}]`,
+    `data remove storage bs:songs ${slug}`,
+    `data remove storage bs:songs order[{slug:"${slug}"}]`,
     ...difficulties.map((diff) => `scoreboard players reset #${slug}_${diff.token} bs_complete`),
   ];
   return `${lines.join('\n')}\n`;
 }
 
-function markerSummon(slug: string, info: SongInfo, difficulties: EmittedDifficulty[]): string {
+function songRecord(slug: string, info: SongInfo, difficulties: EmittedDifficulty[]): string {
   const diffs = difficulties
     .map(
       (diff) =>
@@ -583,11 +625,14 @@ function markerSummon(slug: string, info: SongInfo, difficulties: EmittedDifficu
     )
     .join(',');
   return (
-    `summon minecraft:marker 0 5 0 {Tags:["bs_song","bs_${slug}","blocksaber"],` +
-    `bs:{slug:${snbt(slug)},contract:${BS_API_VERSION},sound:${snbt(`bsong_${slug}`)},` +
+    `{slug:${snbt(slug)},contract:${BS_API_VERSION},sound:${snbt(`bsong_${slug}`)},` +
     `title:${snbt(truncate64(info.title))},artist:${snbt(truncate64(info.songAuthorName))},` +
-    `level:${snbt(levelSummary(difficulties))},diffs:[${diffs}]}}`
+    `level:${snbt(levelSummary(difficulties))},diffs:[${diffs}]}`
   );
+}
+
+function orderUpsert(slug: string): string {
+  return `execute unless data storage bs:songs order[{slug:"${slug}"}] run data modify storage bs:songs order append value {slug:"${slug}"}`;
 }
 
 function levelSummary(difficulties: EmittedDifficulty[]): string {
@@ -634,7 +679,8 @@ Namespace: ${namespace} — song contract ${BS_API_VERSION} — ${difficulties.l
    .minecraft/saves/<world>/datapacks/
 2. The world must also run the BlockSaber base datapack (game/template-world) — song packs are data only.
 3. Start Minecraft 26.3+ (data pack format 121), load the world, then run /reload.
-4. Register the song by running this command in chat:
+4. The song registers itself automatically on that reload — no command needed. To force a fresh
+   registration (this also wipes this song's completion records), run:
 
    /function ${namespace}:install
 

@@ -1,11 +1,9 @@
-function block_saber:uninstall
-
 # World commands
-gamerule commandBlockOutput false
-gamerule sendCommandFeedback false
-gamerule logAdminCommands true
-gamerule doMobSpawning false
-gamerule announceAdvancements false
+gamerule command_block_output false
+gamerule send_command_feedback false
+gamerule log_admin_commands true
+gamerule spawn_mobs false
+gamerule show_advancement_messages false
 difficulty normal
 
 #Define Teams
@@ -76,6 +74,13 @@ scoreboard players set #CONST bs_godmode 0
 scoreboard objectives add CONST_2 dummy
 scoreboard players set #CONST CONST_2 2
 
+# Song registry prune rotation (contract §2.4): arm a one-pass sweep over the songs that existed at load; load
+# tag hooks only touch bs:engine reg_queue, so this count is safe regardless of init's order vs their load hooks.
+scoreboard players set #prune bs_temp 0
+scoreboard players set #prune_left bs_temp 0
+execute if data storage bs:songs order store result score #prune bs_temp run data get storage bs:songs order
+scoreboard players operation #prune_left bs_temp = #prune bs_temp
+
 # Menu browser state (bs_menu_page = current 0-based page of the song/difficulty browsers; the constants feed the
 # 24-songs-per-page window math and the ON/OFF toggle flip)
 scoreboard objectives add bs_menu_page dummy
@@ -95,4 +100,6 @@ scoreboard players set @a is_playing 0
 scoreboard objectives setdisplay sidebar display
 
 say BlockSaber Re-Loaded!
+tellraw @a [{text:"[BlockSaber] ",color:"gold"},{text:"The menu lives in your inventory as items: ",color:"gray"},{text:"DROP",color:"yellow",bold:true},{text:" the item you want with ",color:"gray"},{text:"Q",color:"yellow",bold:true},{text:" to pick it.",color:"gray"}]
+tellraw @a [{text:"[BlockSaber] ",color:"gold"},{text:"Songs register themselves automatically when their datapacks are in the world's datapacks folder and the game reloads.",color:"gray"}]
 execute as @a run function block_saber:inventory/menu_main_set
