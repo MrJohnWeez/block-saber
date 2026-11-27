@@ -320,8 +320,9 @@ function playFile(
   leadTicks: number,
   specs: Array<{ kind: string; stream: StreamBuild }>,
 ): string {
+  // The music origin is the fixed End stage anchor (§2.3), matching the old converter's template.
   const lines = [
-    `execute if score @s curr_tick matches ${fmtInt(leadTicks)} run playsound bsong_${namespace.slice(3)} music @a 0.0 0.0 0.0 1 1`,
+    `execute if score @s curr_tick matches ${fmtInt(leadTicks)} run playsound bsong_${namespace.slice(3)} music @a 0.0 150.0 500.0 1 1`,
   ];
   for (const { kind, stream } of specs) {
     stream.gates.forEach((gate, index) => {
