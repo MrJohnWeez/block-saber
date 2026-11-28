@@ -11,18 +11,18 @@ Log line for the sub-step. Failing sections block the next sub-step from startin
 - [ ] Install a converted `syn-v2-basic` song pack: `/reload` → the song **auto-registers** (record appears in the registry within a couple of ticks, no command run — check with `/data get storage bs:songs order` + `/data get storage bs:songs <slug>`; 26.3 storage registry per §2.1 amendment — there is no marker any more); `/function bs_<slug>:install` still works as the manual fresh-install path (green chat line).
 - [ ] Drop-menu bring-up: menu items arrive in the inventory on world start, on late join, and after death without keepInventory (tick self-heal, ≤1 tick); dropping any item on the song browser selects **that** song (regression: the per-slot scan once read NBT `Slot:0b–26b`, but menu items live in `inventory.0–26` = `Slot:9b–35b`, so every drop landed on slot 0 = back).
 - [ ] Start the song from the inventory menu: music starts at the expected tick; notes spawn from the origin line and travel toward the player in the correct lanes/heights.
-- [ ] Cut direction models visible and distinct for up/down/left/right/diagonal/dot, red vs blue; white note (syn-v4-basic) renders with the white model. Visuals are billboard-centered display entities rolled by `transformation` quaternions (entity `Rotation` is ignored under billboard); if directions read mirrored (up/right swapped etc.), negate the third quaternion component in all 24 directional `function/notes/*.mcfunction` display lines; if they're off by a fixed 45°, rotate the angle table. Arrow glyph lives on the model's north face — if arrows render with a blank side toward the player, flip faces by composing each quaternion with a 180° roll about the view axis (`[0.0f,0.0f,1.0f,0.0f]`).
+- [ ] Cut direction models visible and distinct for up/down/left/right/diagonal/dot, red vs blue; white note (syn-v4-basic) renders with the white model. Visuals are non-billboard display entities: `left_rotation` is the fixed yaw-180° base `[0,1,0,0]`, `right_rotation` the per-direction roll (entity `Rotation` is never set); if directions read mirrored (up/right swapped etc.), negate the third quaternion component of `right_rotation` in all 24 directional `function/notes/*.mcfunction` display lines; if they're off by a fixed 45°, rotate the angle table. Arrow glyph lives on the model's north face — the yaw base is what turns it toward the player, so a blank side toward the player means the `left_rotation` base regressed.
 - [ ] Notes reach the player plane in sync with a metronome-plain section (head-check on first 8 notes).
 - [ ] Notes despawn behind the player without lag spikes or stray particles; `/kill @e[tag=blocksaber,tag=!bs_song]` during play does not error the loop.
 
 ## M4b — hit detection + white either-saber
 
-- [ ] Red note with red saber → correct-point feedback; blue saber → wrong-point (per old behavior).
-- [ ] Same for blue note/saber. All 9 cut directions judged correctly at least once.
-- [ ] WHITE note: hit by red saber ✓, by blue saber ✓, both count correct once only (no double score).
-- [ ] Bomb: passing through with any saber → penalty; avoiding → nothing.
+- [ ] Red/blue note struck by **either** saber → correct-point feedback (port decision: the old wrong-saber `@s[name="…Saber"]` branches were dead code; scoring is color-neutral per contract D7). All 9 cut directions judged correctly at least once.
+- [ ] WHITE note: struck by either saber → correct once only (no double score — `correct_row` broadcasts per `bs_row` and `note_correct` kills the cube, so a second hit cannot re-trigger).
+- [ ] Bomb: struck by any saber → penalty; avoiding → nothing.
 - [ ] Missed note behind player → miss feedback once, no ghost re-triggers.
 - [ ] Score/combo/multiplier tick up like the 1.18 tool on a known song (DifficultyTestSong): compare total score on full combo.
+- [ ] **Judgment is the 26.3 health window** (regression 2026-11-27: M4b shipped as TODO stubs, so every run scored 0): note cubes spawn `attributes:[{id:"minecraft:max_health",base:100.0}],Health:100f` and any melee hit lands the per-tick snapshot at `..99` while the cube stays **alive** (no racing the death-removal tick, which the old `Health < 3` trick relied on since a size-0 magma cube is 1 HP). 26.3 NBT facts: summon `Health` above max clamps to max at spawn, so the attribute raise is mandatory; `attributes` list entries are `{id, base}` — a wrong shape (`type`/`value`) silently replaces the base with 0. If hits ever stop scoring again, check the cube's `Health`/`attributes` NBT first, then the snapshot-before-check order in `notes/handle`.
 
 ## M4c — walls
 

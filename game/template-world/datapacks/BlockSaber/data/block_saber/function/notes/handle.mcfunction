@@ -2,6 +2,7 @@
 execute as @e[type=minecraft:magma_cube,tag=bs_note] store result score @s bs_note_health run data get entity @s Health
 execute as @e[type=minecraft:magma_cube,tag=bs_note_blue] run function block_saber:song/hit/right_check
 execute as @e[type=minecraft:magma_cube,tag=bs_note_red] run function block_saber:song/hit/left_check
+execute as @e[type=minecraft:magma_cube,tag=bs_note_white] run function block_saber:song/hit/white_check
 execute as @e[type=minecraft:magma_cube,tag=bs_note_bomb] run function block_saber:song/hit/bomb_check
 # Wall checks (port of the check_red_wall_* drivers): eye band from the player's scale, then one driver pass per wall anchor
 function block_saber:song/wall_eye_height

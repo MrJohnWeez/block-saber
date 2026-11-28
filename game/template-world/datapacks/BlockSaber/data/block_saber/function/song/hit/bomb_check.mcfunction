@@ -1,4 +1,6 @@
-# Scaffolding ported from _root_class:check_bomb_collide (runs as each bomb cube); penalty belongs to M4b
-scoreboard players operation #bs_temp bs_temp = @s bs_row
-# TODO(M4b): hit-cube branch: bs_note_health below threshold, or hit by a named saber -> function block_saber:song/hit/note_wrong
-# TODO(M4b): proximity branch: old checked distance ..0.21 from the fakePlayerEyes marker; M4b must re-summon an equivalent bs marker (port of calculate_fake_eye_height)
+# Bomb judgment (port of _root_class:check_bomb_collide), run as each bomb cube after the health snapshot.
+# Striking a bomb is always a penalty (old health-below-3 branch); the old name-based saber branches were dead code.
+# The old ..0.21 fakePlayerEyes proximity branch is dropped: the port deleted that marker when wall checks moved
+# inline (song/wall_eye_height), and body-contact penalties are already covered by the wall collision checks.
+# Same 100-health window as left_check: ..99 means the bomb was struck.
+execute if score @s bs_note_health matches ..99 run function block_saber:song/hit/note_wrong
