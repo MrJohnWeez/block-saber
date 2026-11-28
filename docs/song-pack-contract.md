@@ -349,9 +349,12 @@ right at a Z=0 anchor and stranded the whole note track ~500 blocks off-stage on
 - One clock: spawn ticks and `curr_tick` are the same timeline. A note at `gameTick T` spawns at the cursor with
   `z = -(frac)` and **arrives at the player at tick `T + LEAD_TICKS`**, so audio must start at game tick
   `LEAD_TICKS`. The dispatcher's first line is therefore always
-  `execute if score @s curr_tick matches <LEAD_TICKS> run playsound ...`, positioned at the fixed End stage anchor
-  `0 150 500` (§2.3) with volume `1` so it is audible exactly where the player stands — the old converter's
-  template used the same fixed origin.
+  `execute if score @s curr_tick matches <LEAD_TICKS> in minecraft:the_end run playsound ...`, positioned at the
+  fixed End stage anchor `0 150 500` (§2.3) with volume `1` so it is audible exactly where the player stands — the
+  old converter's template used the same fixed origin. The `in minecraft:the_end` clause is load-bearing:
+  positional `playsound` resolves its coordinates in the **executing** dimension, and the dispatcher chain runs
+  from the tick function's overworld context — without the clause the track plays at the overworld coordinates
+  and the End-stage player hears nothing.
 - Walls keep fractional durations (B5): each 1-beat segment of `0.21 m` becomes its own spawn command
   (`segmentTick = gameTick + trunc(i × 0.21 / metersPerTick)`), fractional remainder in `z`.
 
@@ -372,7 +375,7 @@ Emitted first in every group; runs as the playing player from `game_loop` every 
 last note command at tick 7939, last wall command at 9377, last light command at 7103; `LEAD_TICKS = 39`):
 
 ```mcfunction
-execute if score @s curr_tick matches 39 run playsound bsong_443f3a1b music @a 0.0 150.0 500.0 1 1
+execute if score @s curr_tick matches 39 in minecraft:the_end run playsound bsong_443f3a1b music @a 0.0 150.0 500.0 1 1
 execute if score @s curr_tick matches 0..3927 run function bs_443f3a1b:expert_standard_notes_lvl_1
 execute if score @s curr_tick matches 3928..7979 run function bs_443f3a1b:expert_standard_notes_lvl_2
 execute if score @s curr_tick matches 0..9417 run function bs_443f3a1b:expert_standard_walls_lvl_1
